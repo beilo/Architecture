@@ -13,7 +13,7 @@ import com.example.leipe.architecture.model.bean.WXHttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/** adapter
  * Created by leipe on 2017/6/27.
  */
 
