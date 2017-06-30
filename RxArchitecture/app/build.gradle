@@ -72,4 +72,6 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:'+rootProject.rxAndroidVersion
     compile 'com.jakewharton.rxbinding2:rxbinding:'+rootProject.rxbindingVersion
 
+    compile 'com.gyf.barlibrary:barlibrary:2.2.5'
+
 }

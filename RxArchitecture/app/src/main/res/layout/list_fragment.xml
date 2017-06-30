@@ -24,6 +24,9 @@
     android:background="@color/cardview_light_background"
     android:orientation="vertical">
 
+
+    <include layout="@layout/view_toolbar"/>
+
     <TextView
         android:id="@+id/loading_tv"
         android:layout_width="match_parent"

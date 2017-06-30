@@ -23,4 +23,5 @@
     <dimen name="comment_padding">8dp</dimen>
     <dimen name="comment_minHeight">64dp</dimen>
     <dimen name="product_item_min_height">100dp</dimen>
+    <dimen name="drawer_icon_size">24dp</dimen>
 </resources>

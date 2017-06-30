@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,9 @@ import com.example.leipe.rx.base.BaseFragment;
 import com.example.leipe.rx.base.NetWorkObserver;
 import com.example.leipe.rx.model.bean.WXListBean;
 import com.example.leipe.rx.model.bean.WXHttpResult;
+import com.example.leipe.rx.view.adapter.WXAdapter;
 import com.example.leipe.rx.viewmodel.WXViewModel;
+import com.gyf.barlibrary.ImmersionBar;
 
 import java.util.List;
 
@@ -30,6 +33,7 @@ public class WXListSupportFragment extends BaseFragment {
     final int layout = R.layout.list_fragment;
     TextView tv_loading;
     RecyclerView rl_list;
+    Toolbar toolbar;
 
     WXAdapter mAdapter;
     private WXViewModel viewModel;
@@ -48,6 +52,8 @@ public class WXListSupportFragment extends BaseFragment {
         View inflate = LayoutInflater.from(_mActivity).inflate(layout, container, false);
         tv_loading = inflate.findViewById(R.id.loading_tv);
         rl_list = inflate.findViewById(R.id.products_list);
+        toolbar = inflate.findViewById(R.id.toolbar);
+        ImmersionBar.with(this).titleBar(toolbar).init();
         isLoading();
         return inflate;
     }
@@ -67,9 +73,8 @@ public class WXListSupportFragment extends BaseFragment {
         rl_list.setAdapter(mAdapter);
 
 
-        //        WXViewModel.Factory factory = new WXViewModel.Factory(
-        //                _mActivity.getApplication());
-        viewModel = ViewModelProviders.of(this).get(WXViewModel.class);
+        WXViewModel.Factory factory = new WXViewModel.Factory();
+        viewModel = ViewModelProviders.of(this, factory).get(WXViewModel.class);
 
 
         viewModel.getWxDataCall()

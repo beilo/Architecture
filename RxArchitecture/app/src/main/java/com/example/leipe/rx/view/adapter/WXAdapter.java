@@ -1,4 +1,4 @@
-package com.example.leipe.rx.view;
+package com.example.leipe.rx.view.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
