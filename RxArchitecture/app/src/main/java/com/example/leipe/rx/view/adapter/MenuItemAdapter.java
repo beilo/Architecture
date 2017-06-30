@@ -30,8 +30,8 @@ public class MenuItemAdapter extends BaseAdapter {
 
     private List<LvMenuItem> mItems = new ArrayList<LvMenuItem>(
             Arrays.asList(
-                    new LvMenuItem(R.drawable.i_driver, "Home"),
-                    new LvMenuItem(R.drawable.i_ship, "Messages")
+                    new LvMenuItem(R.drawable.i_driver, "微信热门"),
+                    new LvMenuItem(R.drawable.i_ship, "知乎热门")
             ));
 
     public MenuItemAdapter(Context context) {

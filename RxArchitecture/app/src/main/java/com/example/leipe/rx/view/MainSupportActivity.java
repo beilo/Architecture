@@ -34,7 +34,7 @@ public class MainSupportActivity extends BaseActivity {
 
     private void setUpDrawer() {
         LayoutInflater inflater = LayoutInflater.from(this);
-        // drawLeftMenu.addHeaderView(inflater.inflate(R.layout.header_just_username, drawLeftMenu, false));
+        drawLeftMenu.addHeaderView(inflater.inflate(R.layout.header_just_username, drawLeftMenu, false));
         drawLeftMenu.setAdapter(new MenuItemAdapter(this));
         drawLeftMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -41,14 +41,8 @@ public abstract class NetWorkObserver<T,R> implements Observer<T> {
             case 200:
                 onData((R) ((WXHttpResult) t).newslist);
                 break;
-            case 100:
-                onErrorCode(100, ((WXHttpResult) t).getMsg());
-                break;
-            case 300:
-                onErrorCode(300, ((WXHttpResult) t).getMsg());
-                break;
-            case 400:
-                onErrorCode(400, ((WXHttpResult) t).getMsg());
+            default:
+                onErrorCode(((WXHttpResult) t).getCode(),((WXHttpResult) t).getMsg());
                 break;
         }
         onComplete();

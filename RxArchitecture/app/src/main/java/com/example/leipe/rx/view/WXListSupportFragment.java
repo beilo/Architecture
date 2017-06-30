@@ -53,6 +53,7 @@ public class WXListSupportFragment extends BaseFragment {
         tv_loading = inflate.findViewById(R.id.loading_tv);
         rl_list = inflate.findViewById(R.id.products_list);
         toolbar = inflate.findViewById(R.id.toolbar);
+        toolbar.setTitle("微信热门");
         ImmersionBar.with(this).titleBar(toolbar).init();
         isLoading();
         return inflate;
