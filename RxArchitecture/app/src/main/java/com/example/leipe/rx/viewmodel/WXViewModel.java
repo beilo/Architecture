@@ -43,6 +43,7 @@ public class WXViewModel extends AndroidViewModel {
 
         wxRepository.getWXDataCall()
                 .compose(RxHelper.<WXHttpResult<List<WXListBean>>>rxSchedulerHelper())
+//                .compose(RxHelper.<List<WXListBean>>handleResult()) 注释的原因是统一处理失去了错误码,view层无法知道
                 .subscribe(new Consumer<WXHttpResult<List<WXListBean>>>() {
                     @Override
                     public void accept(@NonNull WXHttpResult<List<WXListBean>> wxListBeanWXHttpResult) throws Exception {
