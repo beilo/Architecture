@@ -1,6 +1,7 @@
 package com.example.leipe.rx.base;
 
 import com.example.leipe.rx.model.http.WeChatApis;
+import com.example.leipe.rx.model.http.ZhihuApis;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -24,17 +25,19 @@ public class RetrofitHelper {
         return INSTANCE;
     }
 
-    private Retrofit retrofit;
+    private Retrofit.Builder retrofit;
 
     private RetrofitHelper() {
         retrofit = new Retrofit.Builder()
-                .baseUrl(WeChatApis.HOST)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
     }
 
-    public Retrofit getRetrofit() {
-        return retrofit;
+    public Retrofit getWxRetrofit() {
+        return retrofit.baseUrl(WeChatApis.HOST).build();
+    }
+
+    public Retrofit getZhihuRetrofit() {
+        return retrofit.baseUrl(ZhihuApis.HOST).build();
     }
 }

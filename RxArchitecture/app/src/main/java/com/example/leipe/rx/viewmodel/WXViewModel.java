@@ -7,7 +7,7 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import com.example.leipe.rx.model.bean.WXHttpResult;
 import com.example.leipe.rx.model.bean.WXListBean;
-import com.example.leipe.rx.model.http.RxHelper;
+import com.example.leipe.rx.base.RxHelper;
 import com.example.leipe.rx.repository.WXRepository;
 
 import java.util.List;

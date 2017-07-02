@@ -115,4 +115,11 @@ public class BaseSupportActivity extends LifecycleActivity implements ISupportAc
         mDelegate.loadRootFragment(containerId, toFragment);
     }
 
+    public void loadMultipleRootFragment(int containerId, int showPosition, ISupportFragment... toFragments){
+        mDelegate.loadMultipleRootFragment(containerId,showPosition,toFragments);
+    }
+
+    public void showHideFragment(ISupportFragment showFragment) {
+        mDelegate.showHideFragment(showFragment, null);
+    }
 }

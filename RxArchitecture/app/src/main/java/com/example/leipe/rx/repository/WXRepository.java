@@ -15,7 +15,7 @@ import io.reactivex.Flowable;
 public class WXRepository {
     // TODO: 2017/6/29 是否可用dagger2封装
     private WeChatApis weChatApis = RetrofitHelper.getDefault()
-            .getRetrofit()
+            .getWxRetrofit()
             .create(WeChatApis.class);
 
 

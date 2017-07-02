@@ -1,7 +1,6 @@
-package com.example.leipe.rx.model.http;
+package com.example.leipe.rx.base;
 
 
-import com.example.leipe.rx.base.ApiException;
 import com.example.leipe.rx.model.bean.WXHttpResult;
 
 import org.reactivestreams.Publisher;
@@ -39,7 +38,7 @@ public class RxHelper {
     }
 
     /**
-     * 对结果进行预处理
+     * WX对结果进行预处理
      *
      * @param <T>
      * @return

@@ -1,4 +1,4 @@
-package com.example.leipe.rx.view;
+package com.example.leipe.rx.ui.wx;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import com.example.leipe.rx.base.BaseFragment;
 import com.example.leipe.rx.base.NetWorkObserver;
 import com.example.leipe.rx.model.bean.WXListBean;
 import com.example.leipe.rx.model.bean.WXHttpResult;
-import com.example.leipe.rx.view.adapter.WXAdapter;
+import com.example.leipe.rx.ui.adapter.WXAdapter;
 import com.example.leipe.rx.viewmodel.WXViewModel;
 import com.gyf.barlibrary.ImmersionBar;
 
@@ -29,7 +29,7 @@ import java.util.List;
  */
 
 public class WXListSupportFragment extends BaseFragment {
-    final String TAG = this.getClass().getSimpleName();
+
     final int layout = R.layout.list_fragment;
     TextView tv_loading;
     RecyclerView rl_list;

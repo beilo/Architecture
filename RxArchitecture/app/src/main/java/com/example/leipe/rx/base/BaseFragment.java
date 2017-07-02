@@ -8,11 +8,15 @@ import android.view.ViewGroup;
 
 import com.example.leipe.rx.base.support.BaseSupportFragment;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
 /**
  * Created by leipe on 2017/6/29.
  */
 
 public abstract class BaseFragment extends BaseSupportFragment {
+    protected final String TAG = this.getClass().getSimpleName();
     protected View mView;
 
     @Nullable
@@ -24,7 +28,24 @@ public abstract class BaseFragment extends BaseSupportFragment {
 
     @Override
     public void onDestroyView() {
+        unSubscribe();
         super.onDestroyView();
+
+    }
+
+    protected CompositeDisposable mCompositeDisposable;
+
+    protected void unSubscribe() {
+        if (mCompositeDisposable != null) {
+            mCompositeDisposable.dispose();
+        }
+    }
+
+    protected void addSubscribe(Disposable subscription) {
+        if (mCompositeDisposable == null) {
+            mCompositeDisposable = new CompositeDisposable();
+        }
+        mCompositeDisposable.add(subscription);
     }
 
 

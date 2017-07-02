@@ -1,4 +1,4 @@
-package com.example.leipe.rx.view.adapter;
+package com.example.leipe.rx.ui.adapter;
 
 import android.content.Context;
 import android.graphics.PorterDuff;

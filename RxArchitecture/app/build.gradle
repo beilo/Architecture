@@ -36,6 +36,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:' + rootProject.supportLibVersion;
     compile 'android.arch.lifecycle:extensions:' + rootProject.archLifecycleVersion;
     annotationProcessor "android.arch.lifecycle:compiler:" + rootProject.archLifecycleVersion;
+    compile 'com.android.support:design:'+rootProject.supportLibVersion;
 
     testCompile 'junit:junit:4.12'
 

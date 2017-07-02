@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:name=".app.App"
         android:theme="@style/NoActionBarTheme">
-        <activity android:name="com.example.leipe.rx.view.MainSupportActivity">
+        <activity android:name="com.example.leipe.rx.ui.MainSupportActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -1,7 +1,8 @@
-package com.example.leipe.rx.view;
+package com.example.leipe.rx.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,11 @@ import android.widget.ListView;
 
 import com.example.leipe.rx.R;
 import com.example.leipe.rx.base.BaseActivity;
-import com.example.leipe.rx.view.adapter.MenuItemAdapter;
+import com.example.leipe.rx.ui.adapter.MenuItemAdapter;
+import com.example.leipe.rx.ui.wx.WXListSupportFragment;
+import com.example.leipe.rx.ui.zhihu.ZhihuListFragment;
+
+import me.yokeyword.fragmentation.ISupportFragment;
 
 /**
  * Created by leipe on 2017/6/27.
@@ -22,13 +27,17 @@ public class MainSupportActivity extends BaseActivity {
     DrawerLayout drawLayout;
     ListView drawLeftMenu;
 
+    ISupportFragment[] fragmentList = new ISupportFragment[2];
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
         setUpDrawer();
         if (savedInstanceState == null) {
-            loadRootFragment(R.id.fragment_container, WXListSupportFragment.newInstance());
+            fragmentList[0] = WXListSupportFragment.newInstance();
+            fragmentList[1] = ZhihuListFragment.newInstance();
+            loadMultipleRootFragment(R.id.fragment_container, 0, fragmentList);
         }
     }
 
@@ -39,7 +48,13 @@ public class MainSupportActivity extends BaseActivity {
         drawLeftMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                if (l == 0) {
+                    showHideFragment(fragmentList[0]);
+                    drawLayout.closeDrawer(GravityCompat.START);
+                } else if (l == 1) {
+                    showHideFragment(fragmentList[1]);
+                    drawLayout.closeDrawer(GravityCompat.START);
+                }
             }
         });
     }
