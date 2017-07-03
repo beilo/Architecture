@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. http://www.jianshu.com/p/ae0013a4f71a -->
+        <item name="colorPrimary">#3A5FCD</item>
+        <item name="colorPrimaryDark">#3A5FCD</item> <!--深蓝色-->
+    </style>
+
+    <style name="NoActionBarTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="NoActionBarTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
 </resources>

@@ -1,4 +1,4 @@
-package com.example.leipe.architecture.viewmodel;
+package com.example.leipe.architecture.viewmodel.wx;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;

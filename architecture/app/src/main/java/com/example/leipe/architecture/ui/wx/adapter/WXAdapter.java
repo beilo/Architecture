@@ -1,4 +1,4 @@
-package com.example.leipe.architecture.view;
+package com.example.leipe.architecture.ui.wx.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 public class WXAdapter extends RecyclerView.Adapter<WXAdapter.ProductViewHolder> {
-    final int item_layout = R.layout.product_item;
+    final int item_layout = R.layout.item_product;
 
     private Context mContext;
     private List<? extends WXHttpResponse.NewslistBean> mProductList;

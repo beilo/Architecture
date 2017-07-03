@@ -1,6 +1,7 @@
 package com.example.leipe.architecture.base;
 
 import com.example.leipe.architecture.model.http.WeChatApis;
+import com.example.leipe.architecture.model.http.ZhihuApis;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -23,16 +24,18 @@ public class RetrofitHelper {
         return INSTANCE;
     }
 
-    private Retrofit retrofit;
+    private Retrofit.Builder retrofit;
 
     private RetrofitHelper() {
         retrofit = new Retrofit.Builder()
-                .baseUrl(WeChatApis.HOST)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+                .addConverterFactory(GsonConverterFactory.create());
     }
 
-    public Retrofit getRetrofit() {
-        return retrofit;
+    public Retrofit getWxRetrofit() {
+        return retrofit.baseUrl(WeChatApis.HOST).build();
+    }
+
+    public Retrofit getZhihuRetrofit() {
+        return retrofit.baseUrl(ZhihuApis.HOST).build();
     }
 }

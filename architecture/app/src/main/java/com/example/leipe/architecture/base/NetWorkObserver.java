@@ -24,44 +24,24 @@ public abstract class NetWorkObserver<T extends WXHttpResponse> implements Obser
 
     }
 
-    public void onErrorCodeNull() {
-
-    }
-
-    public void onErrorCode100() {
-
-    }
-
-    public void onErrorCode300() {
-
-    }
-
-    public void onErrorCode400() {
+    public void onErrorCode(int code,String msg) {
 
     }
 
     @Override
     public void onChanged(@Nullable T t) {
         if (t == null) {
-            onErrorCodeNull();
+            onErrorCode(0,"null");
         } else {
             switch (t.getCode()) {
                 case 200:
                     onData(t);
                     break;
                 case 100:
-                    onErrorCode100();
-                    break;
-                case 300:
-                    onErrorCode300();
-                    break;
-                case 400:
-                    onErrorCode400();
+                    onErrorCode(100,"100");
                     break;
             }
         }
         onComplete();
     }
-
-
 }

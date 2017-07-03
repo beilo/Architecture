@@ -34,6 +34,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:' + rootProject.supportLibVersion;
     compile 'com.android.support:cardview-v7:' + rootProject.supportLibVersion;
     compile 'com.android.support:recyclerview-v7:' + rootProject.supportLibVersion;
+    compile 'com.android.support:design:'+rootProject.supportLibVersion;
+
     compile 'android.arch.lifecycle:extensions:' + rootProject.archLifecycleVersion;
     compile 'android.arch.persistence.room:runtime:' + rootProject.archRoomVersion;
     annotationProcessor "android.arch.lifecycle:compiler:" + rootProject.archLifecycleVersion;
@@ -60,4 +62,9 @@ dependencies {
     compile 'me.yokeyword:fragmentation-core:1.0.1'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+    compile 'com.gyf.barlibrary:barlibrary:2.2.5'
+
+    compile 'com.github.bumptech.glide:glide:'+rootProject.glideVersion
+    compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
 }
