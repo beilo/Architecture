@@ -19,17 +19,22 @@ import java.util.ArrayList;
  */
 
 public class ZhihuAdapter extends RecyclerView.Adapter<ZhihuAdapter.ZhihuViewHolder> {
-private final int item_layout = R.layout.item_daily;
+    private final int item_layout = R.layout.item_daily;
 
     private HotListBean listBean;
     private Context mContext;
+    private OnItemClick onItemClick;
 
-    public ZhihuAdapter(Context mContext,HotListBean listBean) {
+    public void setItemClick(OnItemClick onItemClick) {
+        this.onItemClick = onItemClick;
+    }
+
+    public ZhihuAdapter(Context mContext, HotListBean listBean) {
         if (listBean == null) {
             HotListBean bean = new HotListBean();
             bean.setRecent(new ArrayList<HotListBean.RecentBean>());
             this.listBean = bean;
-        }else {
+        } else {
             this.listBean = listBean;
         }
         this.mContext = mContext;
@@ -37,14 +42,15 @@ private final int item_layout = R.layout.item_daily;
 
     /**
      * 刷新数据
+     *
      * @param listBean
      */
-    public void refreshData(HotListBean listBean){
+    public void refreshData(HotListBean listBean) {
         if (listBean == null) {
             HotListBean bean = new HotListBean();
             bean.setRecent(new ArrayList<HotListBean.RecentBean>());
             this.listBean = bean;
-        }else {
+        } else {
             this.listBean = listBean;
         }
         notifyDataSetChanged();
@@ -57,12 +63,18 @@ private final int item_layout = R.layout.item_daily;
     }
 
     @Override
-    public void onBindViewHolder(ZhihuAdapter.ZhihuViewHolder holder, int position) {
-        HotListBean.RecentBean item = listBean.getRecent().get(position);
+    public void onBindViewHolder(ZhihuAdapter.ZhihuViewHolder holder, final int position) {
+        final HotListBean.RecentBean item = listBean.getRecent().get(position);
         Glide.with(mContext)
                 .load(item.getThumbnail())
                 .into(holder.img_item);
         holder.tv_title.setText(item.getTitle());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClick.onClick(view,item,position);
+            }
+        });
     }
 
     @Override
@@ -70,13 +82,19 @@ private final int item_layout = R.layout.item_daily;
         return listBean.getRecent().size();
     }
 
-    static class ZhihuViewHolder extends RecyclerView.ViewHolder{
+    static class ZhihuViewHolder extends RecyclerView.ViewHolder {
         ImageView img_item;
         TextView tv_title;
+
         ZhihuViewHolder(View itemView) {
             super(itemView);
             img_item = itemView.findViewById(R.id.iv_daily_item_image);
             tv_title = itemView.findViewById(R.id.tv_daily_item_title);
         }
+    }
+
+
+    public interface OnItemClick {
+        void onClick(View view, HotListBean.RecentBean item,int position);
     }
 }

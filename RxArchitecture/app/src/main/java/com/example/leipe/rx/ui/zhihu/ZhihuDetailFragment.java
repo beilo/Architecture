@@ -1,7 +1,6 @@
 package com.example.leipe.rx.ui.zhihu;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,16 +25,7 @@ import com.example.leipe.rx.model.bean.ZhihuDetail;
 import com.example.leipe.rx.model.bean.ZhihuDetailBean;
 import com.example.leipe.rx.util.HtmlUtil;
 import com.example.leipe.rx.viewmodel.ZhihuDetailViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.Flowable;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Function;
+import com.gyf.barlibrary.ImmersionBar;
 
 /**
  * Created by 被咯苏州 on 2017/7/2.
@@ -68,6 +58,16 @@ public class ZhihuDetailFragment extends BaseFragment implements View.OnClickLis
 
     private ZhihuDetailViewModel viewModel;
 
+
+    public static ZhihuDetailFragment newInstance(int id, boolean isNotTransition) {
+        ZhihuDetailFragment fragment = new ZhihuDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", id);
+        bundle.putBoolean("isNotTransition", isNotTransition);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         img_detail_bar = view.findViewById(R.id.detail_bar_image);
@@ -80,6 +80,12 @@ public class ZhihuDetailFragment extends BaseFragment implements View.OnClickLis
         tv_detail_bottom_like = view.findViewById(R.id.tv_detail_bottom_like);
         tv_detail_bottom_comment = view.findViewById(R.id.tv_detail_bottom_comment);
         tv_detail_bottom_share = view.findViewById(R.id.tv_detail_bottom_share);
+
+        tv_detail_bottom_like.setOnClickListener(this);
+        tv_detail_bottom_comment.setOnClickListener(this);
+        tv_detail_bottom_share.setOnClickListener(this);
+
+        ImmersionBar.with(this).titleBar(toolbar).init();
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -87,9 +93,9 @@ public class ZhihuDetailFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        Intent intent = _mActivity.getIntent();
-        id = intent.getExtras().getInt("id");
-        isNotTransition = intent.getBooleanExtra("isNotTransition", false);
+        Bundle arguments = getArguments();
+        id = arguments.getInt("id");
+        isNotTransition = arguments.getBoolean("isNotTransition", false);
         WebSettings settings = view_main.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setLoadWithOverviewMode(true);
@@ -142,45 +148,16 @@ public class ZhihuDetailFragment extends BaseFragment implements View.OnClickLis
 
     private void loadDetailData() {
         ZhihuDetailViewModel.Factory factory = new ZhihuDetailViewModel.Factory();
-        viewModel = ViewModelProviders.of(this,factory).get(ZhihuDetailViewModel.class);
-        CommonSubscriber<ZhihuDetailBean> infoFlowable = viewModel.getDetailInfo(id)
-                .subscribeWith(new CommonSubscriber<ZhihuDetailBean>(_mActivity) {
+        viewModel = ViewModelProviders.of(this, factory).get(ZhihuDetailViewModel.class);
+
+        addSubscribe(viewModel.getDetailInfo(id)
+                .subscribeWith(new CommonSubscriber<ZhihuDetail>(_mActivity) {
                     @Override
-                    public void onNext(ZhihuDetailBean zhihuDetailBean) {
-                        loadWebViewInfo(zhihuDetailBean);
+                    public void onNext(ZhihuDetail zhihuDetail) {
+                        loadWebViewInfo(zhihuDetail.getZhihuDetailBean());
+                        loadBottomInfo(zhihuDetail.getDetailExtraBean());
                     }
-                });
-        CommonSubscriber<DetailExtraBean> extraInfoFlowable = viewModel.getDetailExtraInfo(id)
-                .subscribeWith(new CommonSubscriber<DetailExtraBean>(_mActivity) {
-                    @Override
-                    public void onNext(DetailExtraBean detailExtraBean) {
-                        loadBottomInfo(detailExtraBean);
-                    }
-                });
-        
-
-
-
-
-
-
-
-
-
-
-
-        Wrong 3rd argument type.
-                Found: 'io.reactivex.functions.BiFunction<com.example.leipe.rx.model.bean.ZhihuDetailBean,
-                        com.example.leipe.rx.model.bean.DetailExtraBean,
-                                java.lang.String>',
-                required: 'io.reactivex.functions.BiFunction<? super com.example.leipe.rx.model.bean.ZhihuDetailBean,
-                        ? super com.example.leipe.rx.model.bean.ZhihuDetailBean,
-        ? extends java.lang.String>' more...
-
-
-
-
-
+                }));
     }
 
     private void loadWebViewInfo(ZhihuDetailBean zhihuDetailBean) {
@@ -194,13 +171,13 @@ public class ZhihuDetailFragment extends BaseFragment implements View.OnClickLis
             }
         }
         clp_toolbar.setTitle(zhihuDetailBean.getTitle());
-        String htmlData = HtmlUtil.createHtmlData(zhihuDetailBean.getBody(),zhihuDetailBean.getCss(),zhihuDetailBean.getJs());
+        String htmlData = HtmlUtil.createHtmlData(zhihuDetailBean.getBody(), zhihuDetailBean.getCss(), zhihuDetailBean.getJs());
         view_main.loadData(htmlData, HtmlUtil.MIME_TYPE, HtmlUtil.ENCODING);
     }
 
     private void loadBottomInfo(DetailExtraBean detailExtraBean) {
-        tv_detail_bottom_like.setText(String.format("%d个赞",detailExtraBean.getPopularity()));
-        tv_detail_bottom_comment.setText(String.format("%d条评论",detailExtraBean.getComments()));
+        tv_detail_bottom_like.setText(String.format("%d个赞", detailExtraBean.getPopularity()));
+        tv_detail_bottom_comment.setText(String.format("%d条评论", detailExtraBean.getComments()));
         allNum = detailExtraBean.getComments();
         shortNum = detailExtraBean.getShort_comments();
         longNum = detailExtraBean.getLong_comments();
@@ -221,5 +198,11 @@ public class ZhihuDetailFragment extends BaseFragment implements View.OnClickLis
             case R.id.tv_detail_bottom_share:
                 break;
         }
+    }
+
+    @Override
+    public boolean onBackPressedSupport() {
+        pop();
+        return true;
     }
 }

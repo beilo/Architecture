@@ -55,6 +55,13 @@ public class ZhihuListFragment extends BaseFragment {
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         mAdapter = new ZhihuAdapter(_mActivity, null);
+        mAdapter.setItemClick(new ZhihuAdapter.OnItemClick() {
+
+            @Override
+            public void onClick(View view, HotListBean.RecentBean item, int position) {
+                start(ZhihuDetailFragment.newInstance(item.getNews_id(),true));
+            }
+        });
         rl_list.setLayoutManager(new LinearLayoutManager(_mActivity));
         rl_list.setAdapter(mAdapter);
 

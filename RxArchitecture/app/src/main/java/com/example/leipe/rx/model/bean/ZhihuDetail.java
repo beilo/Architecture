@@ -1,15 +1,23 @@
 package com.example.leipe.rx.model.bean;
 
-/**
- * Created by 被咯苏州 on 2017/7/2.
+/** 用于整合操作 Flowable.zip
+ * Created by leipe on 2017/7/3.
  */
 
 public class ZhihuDetail {
-    ZhihuDetailBean detail;
-    DetailExtraBean extraBean;
+    ZhihuDetailBean zhihuDetailBean;
+    DetailExtraBean detailExtraBean;
 
-    public ZhihuDetail(ZhihuDetailBean detail, DetailExtraBean extraBean) {
-        this.detail = detail;
-        this.extraBean = extraBean;
+    public ZhihuDetail(ZhihuDetailBean zhihuDetailBean, DetailExtraBean detailExtraBean) {
+        this.zhihuDetailBean = zhihuDetailBean;
+        this.detailExtraBean = detailExtraBean;
+    }
+
+    public ZhihuDetailBean getZhihuDetailBean() {
+        return zhihuDetailBean;
+    }
+
+    public DetailExtraBean getDetailExtraBean() {
+        return detailExtraBean;
     }
 }
