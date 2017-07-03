@@ -1,6 +1,7 @@
 package com.example.leipe.rx.base;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import io.reactivex.subscribers.ResourceSubscriber;
 
@@ -27,8 +28,9 @@ public abstract class CommonSubscriber<T> extends ResourceSubscriber<T>{
         }
         if (e instanceof ApiException){
             _onError(((ApiException) e).code,e.getMessage());
+        }else {
+            Toast.makeText(mContext,e.getMessage(),Toast.LENGTH_LONG).show();
         }
-
     }
 
     public void _onError(int code,String msg){

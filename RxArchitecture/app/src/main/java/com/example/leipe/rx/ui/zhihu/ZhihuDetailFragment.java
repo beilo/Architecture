@@ -13,11 +13,13 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.leipe.rx.R;
+import com.example.leipe.rx.base.BaseActivity;
 import com.example.leipe.rx.base.BaseFragment;
 import com.example.leipe.rx.base.CommonSubscriber;
 import com.example.leipe.rx.model.bean.DetailExtraBean;
@@ -41,6 +43,7 @@ public class ZhihuDetailFragment extends BaseFragment implements View.OnClickLis
     private NestedScrollView recycler_list;
     private WebView view_main;
     // 下部
+    private FrameLayout fl_bottom;
     private TextView tv_detail_bottom_like;
     private TextView tv_detail_bottom_comment;
     private TextView tv_detail_bottom_share;
@@ -77,6 +80,7 @@ public class ZhihuDetailFragment extends BaseFragment implements View.OnClickLis
         recycler_list = view.findViewById(R.id.nsv_scroller);
         view_main = view.findViewById(R.id.view_main);
 
+        fl_bottom = view.findViewById(R.id.fl_bottom);
         tv_detail_bottom_like = view.findViewById(R.id.tv_detail_bottom_like);
         tv_detail_bottom_comment = view.findViewById(R.id.tv_detail_bottom_comment);
         tv_detail_bottom_share = view.findViewById(R.id.tv_detail_bottom_share);
@@ -85,7 +89,32 @@ public class ZhihuDetailFragment extends BaseFragment implements View.OnClickLis
         tv_detail_bottom_comment.setOnClickListener(this);
         tv_detail_bottom_share.setOnClickListener(this);
 
-        ImmersionBar.with(this).titleBar(toolbar).init();
+        recycler_list.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY - oldScrollY > 0 && isBottomShow) {
+                    isBottomShow = false;
+                    fl_bottom.animate().translationY(fl_bottom.getHeight());
+                } else if (scrollY - oldScrollY < 0 && !isBottomShow) {
+                    isBottomShow = true;
+                    fl_bottom.animate().translationY(0);
+                }
+            }
+        });
+
+        ImmersionBar.with(this)
+                .titleBar(toolbar)
+                .init();
+        ((BaseActivity) _mActivity).setSupportActionBar(toolbar);
+        ((BaseActivity) _mActivity).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((BaseActivity) _mActivity).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressedSupport();
+            }
+        });
+
         super.onViewCreated(view, savedInstanceState);
     }
 

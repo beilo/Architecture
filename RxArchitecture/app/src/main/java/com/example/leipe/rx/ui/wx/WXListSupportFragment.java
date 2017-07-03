@@ -15,8 +15,8 @@ import android.widget.TextView;
 import com.example.leipe.rx.R;
 import com.example.leipe.rx.base.BaseFragment;
 import com.example.leipe.rx.base.NetWorkObserver;
-import com.example.leipe.rx.model.bean.WXListBean;
 import com.example.leipe.rx.model.bean.WXHttpResult;
+import com.example.leipe.rx.model.bean.WXListBean;
 import com.example.leipe.rx.ui.adapter.WXAdapter;
 import com.example.leipe.rx.viewmodel.WXViewModel;
 import com.gyf.barlibrary.ImmersionBar;
@@ -54,7 +54,7 @@ public class WXListSupportFragment extends BaseFragment {
         rl_list = inflate.findViewById(R.id.products_list);
         toolbar = inflate.findViewById(R.id.toolbar);
         toolbar.setTitle("微信热门");
-        ImmersionBar.with(this).titleBar(toolbar).init();
+        ImmersionBar.with(this).titleBar(toolbar).barColor(R.color.colorPrimary).init();
         isLoading();
         return inflate;
     }
@@ -64,7 +64,13 @@ public class WXListSupportFragment extends BaseFragment {
         return layout;
     }
 
-    int index = 0;
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        WXViewModel.Factory factory = new WXViewModel.Factory();
+        viewModel = ViewModelProviders.of(this, factory).get(WXViewModel.class);
+        super.onViewCreated(view, savedInstanceState);
+    }
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
@@ -72,11 +78,6 @@ public class WXListSupportFragment extends BaseFragment {
         mAdapter = new WXAdapter(_mActivity, null);
         rl_list.setLayoutManager(new LinearLayoutManager(_mActivity));
         rl_list.setAdapter(mAdapter);
-
-
-        WXViewModel.Factory factory = new WXViewModel.Factory();
-        viewModel = ViewModelProviders.of(this, factory).get(WXViewModel.class);
-
 
         viewModel.getWxDataCall()
                 .observe(this, new NetWorkObserver<WXHttpResult<List<WXListBean>>, List<WXListBean>>(_mActivity) {

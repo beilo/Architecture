@@ -37,7 +37,7 @@ public class MainSupportActivity extends BaseActivity {
         if (savedInstanceState == null) {
             fragmentList[0] = WXListSupportFragment.newInstance();
             fragmentList[1] = ZhihuListFragment.newInstance();
-            loadMultipleRootFragment(R.id.fragment_container, 0, fragmentList);
+            loadMultipleRootFragment(R.id.fragment_container, 1, fragmentList);
         }
     }
 
