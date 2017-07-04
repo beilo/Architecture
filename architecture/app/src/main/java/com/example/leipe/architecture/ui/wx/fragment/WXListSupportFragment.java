@@ -13,12 +13,16 @@ import android.widget.TextView;
 import com.example.leipe.architecture.R;
 import com.example.leipe.architecture.base.BaseFragment;
 import com.example.leipe.architecture.base.NetWorkObserver;
-import com.example.leipe.architecture.model.bean.WXHttpResponse;
+import com.example.leipe.architecture.model.bean.WXHttpResult;
+import com.example.leipe.architecture.model.bean.WXListBean;
 import com.example.leipe.architecture.ui.wx.adapter.WXAdapter;
 import com.example.leipe.architecture.viewmodel.wx.WXViewModel;
 import com.gyf.barlibrary.ImmersionBar;
 
-/** 微信热门前50条
+import java.util.List;
+
+/**
+ * 微信热门前50条
  * Created by leipe on 2017/6/27.
  */
 
@@ -49,7 +53,7 @@ public class WXListSupportFragment extends BaseFragment {
         ImmersionBar.with(this).titleBar(toolbar).init();
         isLoading();
         WXViewModel.Factory factory = new WXViewModel.Factory();
-        viewModel = ViewModelProviders.of(this,factory).get(WXViewModel.class);
+        viewModel = ViewModelProviders.of(this, factory).get(WXViewModel.class);
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -61,14 +65,13 @@ public class WXListSupportFragment extends BaseFragment {
         rl_list.setAdapter(mAdapter);
 
         viewModel.getWxDataCall()
-                .observe(this, new NetWorkObserver<WXHttpResponse>(_mActivity) {
+                .observe(this, new NetWorkObserver<WXHttpResult<List<WXListBean>>>(_mActivity) {
                     @Override
-                    public void onData(WXHttpResponse wxHttpResponse) {
-                        // 这里就有了活跃的LiveData
-                        if (wxHttpResponse != null) {
+                    public void onData(WXHttpResult<List<WXListBean>> listWXHttpResult) {
+                        if (listWXHttpResult != null) {
                             isLoading = false;
                             isLoading();
-                            mAdapter.refreshData(wxHttpResponse.getNewslist());
+                            mAdapter.refreshData(listWXHttpResult.getNewslist());
                         }
                     }
                 });

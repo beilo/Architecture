@@ -1,8 +1,11 @@
 package com.example.leipe.architecture.repository;
 
 import com.example.leipe.architecture.base.RetrofitHelper;
-import com.example.leipe.architecture.model.bean.WXHttpResponse;
+import com.example.leipe.architecture.model.bean.WXHttpResult;
+import com.example.leipe.architecture.model.bean.WXListBean;
 import com.example.leipe.architecture.model.http.WeChatApis;
+
+import java.util.List;
 
 import retrofit2.Call;
 
@@ -16,7 +19,7 @@ public class WXRepository {
             .getWxRetrofit()
             .create(WeChatApis.class);
 
-    public Call<WXHttpResponse> getWXDataCall() {
+    public Call<WXHttpResult<List<WXListBean>>> getWXDataCall() {
         return weChatApis.getWXHot(WeChatApis.KEY, 50, 1);
     }
 }

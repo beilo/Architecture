@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.leipe.architecture.R;
-import com.example.leipe.architecture.model.bean.WXHttpResponse;
+import com.example.leipe.architecture.model.bean.WXListBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/** adapter
+/**
+ * adapter
  * Created by leipe on 2017/6/27.
  */
 
@@ -21,9 +22,9 @@ public class WXAdapter extends RecyclerView.Adapter<WXAdapter.ProductViewHolder>
     final int item_layout = R.layout.item_product;
 
     private Context mContext;
-    private List<? extends WXHttpResponse.NewslistBean> mProductList;
+    private List<WXListBean> mProductList;
 
-    public WXAdapter(Context mContext, List<? extends WXHttpResponse.NewslistBean> mProductList) {
+    public WXAdapter(Context mContext, List<WXListBean> mProductList) {
         if (mProductList == null) {
             this.mProductList = new ArrayList<>();
         } else {
@@ -32,7 +33,7 @@ public class WXAdapter extends RecyclerView.Adapter<WXAdapter.ProductViewHolder>
         this.mContext = mContext;
     }
 
-    public void refreshData(List<? extends WXHttpResponse.NewslistBean> mProductList) {
+    public void refreshData(List<WXListBean> mProductList) {
         if (mProductList == null) {
             this.mProductList = new ArrayList<>();
         } else {
@@ -49,7 +50,7 @@ public class WXAdapter extends RecyclerView.Adapter<WXAdapter.ProductViewHolder>
 
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
-        WXHttpResponse.NewslistBean product = mProductList.get(position);
+        WXListBean product = mProductList.get(position);
         holder.tv_name.setText(product.getTitle());
         holder.tv_price.setText(product.getPicUrl());
         holder.tv_description.setText(product.getDescription());
@@ -67,9 +68,9 @@ public class WXAdapter extends RecyclerView.Adapter<WXAdapter.ProductViewHolder>
 
         public ProductViewHolder(View itemView) {
             super(itemView);
-            tv_name = (TextView) itemView.findViewById(R.id.name);
-            tv_price = (TextView) itemView.findViewById(R.id.price);
-            tv_description = (TextView) itemView.findViewById(R.id.description);
+            tv_name = itemView.findViewById(R.id.name);
+            tv_price = itemView.findViewById(R.id.price);
+            tv_description = itemView.findViewById(R.id.description);
         }
     }
 }
