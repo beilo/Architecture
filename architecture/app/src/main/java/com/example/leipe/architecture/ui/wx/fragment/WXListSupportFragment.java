@@ -48,7 +48,8 @@ public class WXListSupportFragment extends BaseFragment {
         toolbar.setTitle("微信热门");
         ImmersionBar.with(this).titleBar(toolbar).init();
         isLoading();
-        viewModel = ViewModelProviders.of(this).get(WXViewModel.class);
+        WXViewModel.Factory factory = new WXViewModel.Factory();
+        viewModel = ViewModelProviders.of(this,factory).get(WXViewModel.class);
         super.onViewCreated(view, savedInstanceState);
     }
 

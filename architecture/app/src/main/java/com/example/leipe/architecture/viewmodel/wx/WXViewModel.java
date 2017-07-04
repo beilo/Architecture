@@ -1,9 +1,9 @@
 package com.example.leipe.architecture.viewmodel.wx;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
 
 import com.example.leipe.architecture.model.bean.WXHttpResponse;
 import com.example.leipe.architecture.repository.WXRepository;
@@ -13,10 +13,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /** ViewMddel 控制用于页面的数据,所有数据处理都在这边处理
- * Created by leipe on 2017/6/28.
+ * Creted by leipe on 2017/6/28.
  */
 
-public class WXViewModel extends AndroidViewModel {
+public class WXViewModel extends ViewModel {
 
 
     private MutableLiveData<WXHttpResponse> wxHttpResponseLiveData = new MutableLiveData<>();
@@ -24,8 +24,7 @@ public class WXViewModel extends AndroidViewModel {
     private WXRepository wxRepository;
 
 
-    public WXViewModel(Application application) {
-        super(application);
+    public WXViewModel() {
         this.wxRepository = new WXRepository();
     }
 
@@ -46,5 +45,15 @@ public class WXViewModel extends AndroidViewModel {
                     }
                 });
         return wxHttpResponseLiveData;
+    }
+
+    public static class Factory extends ViewModelProvider.NewInstanceFactory{
+        public Factory() {
+        }
+
+        @Override
+        public <T extends ViewModel> T create(Class<T> modelClass) {
+            return (T) new WXViewModel();
+        }
     }
 }

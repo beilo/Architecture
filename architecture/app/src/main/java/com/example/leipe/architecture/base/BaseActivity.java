@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.example.leipe.architecture.app.App;
 import com.example.leipe.architecture.base.support.BaseSupportActivity;
 import com.gyf.barlibrary.ImmersionBar;
 
@@ -21,13 +20,11 @@ public abstract class BaseActivity extends BaseSupportActivity {
         setContentView(getLayout());
         mContext = this;
         ImmersionBar.with(this).init();
-        App.getInstance().addActivity(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        App.getInstance().removeActivity(this);
         ImmersionBar.with(this).destroy();
     }
 
