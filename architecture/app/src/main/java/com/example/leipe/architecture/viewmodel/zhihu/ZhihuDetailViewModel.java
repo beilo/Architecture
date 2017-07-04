@@ -27,44 +27,46 @@ public class ZhihuDetailViewModel extends ViewModel {
 
     ZhihuDetailViewModel() {
     }
+
     private MutableLiveData<ZhihuDetailBean> detailLiveData;
 
-    public LiveData<ZhihuDetailBean> getDetail(int id){
-        repository.getDetailInfo(id)
-            .enqueue(new Callback<ZhihuDetailBean>() {
-                @Override
-                public void onResponse(Call<ZhihuDetailBean> call, Response<ZhihuDetailBean> response) {
-                    if(detailLiveData == null){
-                        detailLiveData = new MutableLiveData<>();
-                    }
-                    detailLiveData.setValue(response.body());
-                }
+    public LiveData<ZhihuDetailBean> getDetail(int id) {
+        if (detailLiveData == null) {
+            detailLiveData = new MutableLiveData<>();
+            repository.getDetailInfo(id)
+                    .enqueue(new Callback<ZhihuDetailBean>() {
+                        @Override
+                        public void onResponse(Call<ZhihuDetailBean> call, Response<ZhihuDetailBean> response) {
+                            detailLiveData.setValue(response.body());
+                        }
 
-                @Override
-                public void onFailure(Call<ZhihuDetailBean> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<ZhihuDetailBean> call, Throwable t) {
 
-                }
-            });
+                        }
+                    });
+        }
         return detailLiveData;
     }
 
     private MutableLiveData<DetailExtraBean> detailExtraLiveData;
-    public LiveData<DetailExtraBean> getDetailExtra(int id){
-        repository.getDetailExtraInfo(id)
-                .enqueue(new Callback<DetailExtraBean>() {
-                    @Override
-                    public void onResponse(Call<DetailExtraBean> call, Response<DetailExtraBean> response) {
-                        if(detailExtraLiveData == null){
-                            detailExtraLiveData = new MutableLiveData<>();
+
+    public LiveData<DetailExtraBean> getDetailExtra(int id) {
+        if (detailExtraLiveData == null) {
+            detailExtraLiveData = new MutableLiveData<>();
+            repository.getDetailExtraInfo(id)
+                    .enqueue(new Callback<DetailExtraBean>() {
+                        @Override
+                        public void onResponse(Call<DetailExtraBean> call, Response<DetailExtraBean> response) {
+                            detailExtraLiveData.setValue(response.body());
                         }
-                        detailExtraLiveData.setValue(response.body());
-                    }
 
-                    @Override
-                    public void onFailure(Call<DetailExtraBean> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<DetailExtraBean> call, Throwable t) {
 
-                    }
-                });
+                        }
+                    });
+        }
         return detailExtraLiveData;
     }
 

@@ -111,6 +111,8 @@ public class ZhihuDetailFragment extends BaseFragment implements View.OnClickLis
             }
         });
 
+        ZhihuDetailViewModel.Factory factory = new ZhihuDetailViewModel.Factory();
+        viewModel = ViewModelProviders.of(this, factory).get(ZhihuDetailViewModel.class);
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -172,8 +174,6 @@ public class ZhihuDetailFragment extends BaseFragment implements View.OnClickLis
     }
 
     private void loadDetailData() {
-        ZhihuDetailViewModel.Factory factory = new ZhihuDetailViewModel.Factory();
-        viewModel = ViewModelProviders.of(this, factory).get(ZhihuDetailViewModel.class);
 
         viewModel.getDetail(id)
                 .observe(this, new Observer<ZhihuDetailBean>() {
