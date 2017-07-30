@@ -1,5 +1,6 @@
 package com.example.leipe.architecture.model.http;
 
+import com.example.leipe.architecture.model.bean.DailyListBean;
 import com.example.leipe.architecture.model.bean.DetailExtraBean;
 import com.example.leipe.architecture.model.bean.HotListBean;
 import com.example.leipe.architecture.model.bean.ZhihuDetailBean;
@@ -32,4 +33,10 @@ public interface ZhihuApis {
      */
     @GET("story-extra/{id}")
     Call<DetailExtraBean> getDetailExtraInfo(@Path("id") int id);
+
+    /**
+     * 最新日报
+     */
+    @GET("news/latest")
+    Call<DailyListBean> getDailyList();
 }

@@ -1,7 +1,8 @@
 package com.example.leipe.architecture.repository;
 
 
-import com.example.leipe.architecture.base.RetrofitHelper;
+import com.example.leipe.architecture.base.http.RetrofitHelper;
+import com.example.leipe.architecture.model.bean.DailyListBean;
 import com.example.leipe.architecture.model.bean.DetailExtraBean;
 import com.example.leipe.architecture.model.bean.HotListBean;
 import com.example.leipe.architecture.model.bean.ZhihuDetailBean;
@@ -32,4 +33,11 @@ public class ZhihuRepository {
     public Call<DetailExtraBean> getDetailExtraInfo(int id) {
         return zhihuApis.getDetailExtraInfo(id);
     }
+
+    // 最新日报
+    public Call<DailyListBean> getDailyList(){
+        return zhihuApis.getDailyList();
+    }
+
+
 }

@@ -1,11 +1,11 @@
-package com.example.leipe.architecture.model.bean;
+package com.example.leipe.architecture.model.http.result;
 
 import java.io.Serializable;
 
 /** 网络基础类
  * Created by 被咯苏州 on 2016/9/6.
  */
-public class WXHttpResult<T> implements Serializable {
+public class WXHttpResponse<T> implements Serializable {
     private int code;
     private String msg;
     public T newslist;
@@ -14,7 +14,7 @@ public class WXHttpResult<T> implements Serializable {
         return code == 200;
     }
 
-    public WXHttpResult() {
+    public WXHttpResponse() {
     }
 
     public int getCode() {

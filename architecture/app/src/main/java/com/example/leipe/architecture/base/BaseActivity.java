@@ -19,7 +19,8 @@ public abstract class BaseActivity extends BaseSupportActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
         mContext = this;
-        ImmersionBar.with(this).init();
+        ImmersionBar immersionBar = ImmersionBar.with(this);
+        immersionBar.init();
     }
 
     @Override

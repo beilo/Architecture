@@ -1,10 +1,10 @@
-package com.example.leipe.architecture.base;
+package com.example.leipe.architecture.base.http;
 
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
-import com.example.leipe.architecture.model.bean.WXHttpResult;
+import com.example.leipe.architecture.model.http.result.WXHttpResponse;
 
 
 /**
@@ -12,7 +12,7 @@ import com.example.leipe.architecture.model.bean.WXHttpResult;
  * Created by leipe on 2017/6/29.
  */
 
-public abstract class NetWorkObserver<T> implements Observer<T> {
+public abstract class NetWorkObserver<T extends WXHttpResponse,R> implements Observer<T> {
 
     Context mContext;
 
@@ -21,7 +21,7 @@ public abstract class NetWorkObserver<T> implements Observer<T> {
     }
 
     // 成功获取到数据
-    public abstract void onData(T t);
+    public abstract void onData(R r);
 
     // 不管成功失败都会调用
     public void onComplete() {
@@ -34,15 +34,15 @@ public abstract class NetWorkObserver<T> implements Observer<T> {
 
     @Override
     public void onChanged(@Nullable T t) {
-        if (t instanceof WXHttpResult) {
-            switch (((WXHttpResult) t).getCode()) {
-                case 200:
-                    onData(t);
-                    break;
-                case 100:
-                    onErrorCode(100, "100");
-                    break;
-            }
+        if (t == null){
+            onErrorCode(100, "t is null");
+            onComplete();
+            return;
+        }
+        if (t.getCode() == 200){
+            onData((R) t.getNewslist());
+        }else {
+            onErrorCode(t.getCode(), t.getMsg());
         }
         onComplete();
     }
