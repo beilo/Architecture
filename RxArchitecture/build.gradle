@@ -23,23 +23,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-
-ext {
-    buildToolsVersion = "25.0.2"
-    supportLibVersion = "25.3.1"
-    runnerVersion = "0.5"
-    rulesVersion = "0.5"
-    espressoVersion = "2.2.2"
-    archLifecycleVersion = "1.0.0-alpha1"
-
-    retrofitVersion = "2.2.0"
-    gsonVersion = "2.8.0"
-    okhttpVersion = "3.7.0"
-    glideVersion = "3.7.0"
-    stethoVersion = "1.5.0"
-    daggerVersion = "2.0.2"
-    rxjavaVersion = "2.0.7"
-    rxAndroidVersion = "2.0.1"
-    rxbindingVersion = "2.0.0"
-}
