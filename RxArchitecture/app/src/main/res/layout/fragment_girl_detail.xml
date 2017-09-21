@@ -4,10 +4,12 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <include layout="@layout/view_toolbar"/>
+
     <ImageView
         android:layout_margin="20dp"
         android:id="@+id/iv_girl_detail"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:transitionName="shareView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

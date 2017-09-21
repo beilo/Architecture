@@ -3,6 +3,7 @@ package com.minister.architecture.ui.gank;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,8 @@ public class GirlDetailFragment extends BaseSupportFragment {
 
     @BindView(R.id.iv_girl_detail)
     ImageView img_detail;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     public static GirlDetailFragment newInstance(Bundle bundle){
         GirlDetailFragment fragment = new GirlDetailFragment();
@@ -63,6 +66,7 @@ public class GirlDetailFragment extends BaseSupportFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_girl_detail, container, false);
         unbinder = ButterKnife.bind(this, inflate);
+        setToolbar(toolbar,"图片详情");
         return inflate;
     }
 

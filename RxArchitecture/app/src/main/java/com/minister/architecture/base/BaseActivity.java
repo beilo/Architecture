@@ -8,11 +8,13 @@ import me.yokeyword.fragmentation.SupportActivity;
  */
 
 public class BaseActivity extends SupportActivity {
-    final String TAG = this.getClass().getSimpleName();
+    protected final String TAG = this.getClass().getSimpleName();
     protected Unbinder unbinder;
 
+
+
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
         if (unbinder != null) {
             unbinder.unbind();

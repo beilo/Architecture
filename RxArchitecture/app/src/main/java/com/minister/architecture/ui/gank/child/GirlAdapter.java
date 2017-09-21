@@ -1,22 +1,17 @@
 package com.minister.architecture.ui.gank.child;
 
-import android.graphics.Bitmap;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.minister.architecture.R;
 import com.minister.architecture.app.MyApp;
 import com.minister.architecture.model.bean.GankItemBean;
+import com.minister.architecture.widget.ScaleImageView;
 
 import java.util.List;
 
@@ -37,7 +32,7 @@ public class GirlAdapter extends BaseQuickAdapter<GankItemBean, BaseViewHolder> 
      * 会导致快速滑动状态下产生重新排列,重写getItemViewType并设置StaggeredGridLayoutManager.GAP_HANDLING_NONE解决了这个问题，原因目前未知
      * https://github.com/oxoooo/mr-mantou-android/blob/master/app/src/main/java/ooo/oxo/mr/MainAdapter.java
      *
-     * @param  position
+     * @param position
      * @return int
      */
     @Override
@@ -47,32 +42,16 @@ public class GirlAdapter extends BaseQuickAdapter<GankItemBean, BaseViewHolder> 
 
     @Override
     protected void convert(final BaseViewHolder helper, GankItemBean item) {
-        final ImageView imageView = helper.getView(R.id.imageView);
-        if (mData.get(helper.getAdapterPosition()).getHeight() > 0) {
-            ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
-            layoutParams.height = mData.get(helper.getAdapterPosition()).getHeight();
-        }
+        ScaleImageView imageView = helper.getView(R.id.imageView);
         ViewCompat.setTransitionName(imageView, String.valueOf(helper.getAdapterPosition()) + "_image");
-        Glide
-                .with(mContext)
-                .load(item.getUrl())
-                .asBitmap()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(new SimpleTarget<Bitmap>(MyApp.SCREEN_WIDTH / 2, MyApp.SCREEN_WIDTH / 2) {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        if (helper.getAdapterPosition() != RecyclerView.NO_POSITION) {
-                            if (mData.get(helper.getAdapterPosition()).getHeight() <= 0) {
-                                int width = resource.getWidth();
-                                int height = resource.getHeight();
-                                int realHeight = (MyApp.SCREEN_WIDTH / 2) * height / width;
-                                mData.get(helper.getAdapterPosition()).setHeight(realHeight);
-                                ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
-                                layoutParams.height = realHeight;
-                            }
-                            imageView.setImageBitmap(resource);
-                        }
-                    }
-                });
+        imageView.setInitSize(MyApp.SCREEN_WIDTH / 2, item.getHeight());
+        if (item.getHeight() > 0) {
+            Glide
+                    .with(mContext)
+                    .load(item.getUrl())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .crossFade()
+                    .into(imageView);
+        }
     }
 }

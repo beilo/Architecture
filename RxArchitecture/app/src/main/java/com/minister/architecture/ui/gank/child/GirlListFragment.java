@@ -2,23 +2,30 @@ package com.minister.architecture.ui.gank.child;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.Target;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.minister.architecture.R;
+import com.minister.architecture.app.MyApp;
 import com.minister.architecture.base.BaseSupportFragment;
 import com.minister.architecture.model.bean.GankItemBean;
 import com.minister.architecture.ui.gank.GankViewModel;
 import com.minister.architecture.ui.gank.GirlDetailFragment;
+import com.minister.architecture.util.RxHelp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +34,14 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import me.yokeyword.fragmentation.ISupportFragment;
 
 import static com.minister.architecture.ui.gank.GirlDetailFragment.IT_GANK_GRIL_ID;
@@ -71,7 +84,7 @@ public class GirlListFragment extends BaseSupportFragment {
                         .subscribe(new Consumer<List<GankItemBean>>() {
                             @Override
                             public void accept(@NonNull List<GankItemBean> gankItemBeen) throws Exception {
-                                mAdapter.replaceData(gankItemBeen);
+                                setImageHeight(gankItemBeen, true);
                                 mRefresh.setRefreshing(false);
                             }
                         }, new Consumer<Throwable>() {
@@ -130,7 +143,7 @@ public class GirlListFragment extends BaseSupportFragment {
                                         .subscribe(new Consumer<List<GankItemBean>>() {
                                             @Override
                                             public void accept(@NonNull List<GankItemBean> gankItemBeen) throws Exception {
-                                                mAdapter.addData(gankItemBeen);
+                                                setImageHeight(gankItemBeen, false);
                                                 mAdapter.loadMoreComplete();
                                             }
                                         }, new Consumer<Throwable>() {
@@ -181,6 +194,60 @@ public class GirlListFragment extends BaseSupportFragment {
                 //                _mActivity.startActivity(intent, compat.toBundle());
             }
         });
+    }
+
+    public void setImageHeight(final List<GankItemBean> gankItemBeanList, final boolean isRefresh) {
+        final List<GankItemBean> newList = new ArrayList<>();
+        Flowable
+                .create(new FlowableOnSubscribe<GankItemBean>() {
+                    @Override
+                    public void subscribe(@NonNull FlowableEmitter<GankItemBean> e) throws Exception {
+                        for (int i = 0; i < gankItemBeanList.size(); i++) {
+                            e.onNext(gankItemBeanList.get(i));
+                        }
+                        e.onComplete();
+                    }
+                }, BackpressureStrategy.ERROR)
+                .map(new Function<GankItemBean, GankItemBean>() {
+                    @Override
+                    public GankItemBean apply(@NonNull GankItemBean gankItemBeen) throws Exception {
+                        Bitmap bitmap = Glide
+                                .with(_mActivity)
+                                .load(gankItemBeen.getUrl())
+                                .asBitmap()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                                .get();
+                        int bHeight = bitmap.getHeight();
+                        int bWeight = bitmap.getWidth();
+                        int realHeight = (MyApp.SCREEN_WIDTH / 2) / bWeight * bHeight;
+                        gankItemBeen.setHeight(realHeight);
+                        bitmap.recycle();
+                        Log.d(TAG, "imgHeight: " + gankItemBeen.getHeight());
+                        return gankItemBeen;
+                    }
+                })
+                .compose(RxHelp.<GankItemBean>rxScheduler())
+                .subscribe(new Consumer<GankItemBean>() {
+                    @Override
+                    public void accept(@NonNull GankItemBean gankItemBeen) throws Exception {
+                        newList.add(gankItemBeen);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        Toast.makeText(_mActivity, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }, new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        if (isRefresh) {
+                            mAdapter.replaceData(newList);
+                        } else {
+                            mAdapter.addData(newList);
+                        }
+                    }
+                });
     }
 
     public interface OnStartGirlDetaiListener {

@@ -20,6 +20,7 @@ public class MainActivity extends BaseSupportActivity {
         }
     }
 
+
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
         // 默认横向切换

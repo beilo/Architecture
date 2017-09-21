@@ -13,7 +13,7 @@
         android:foreground="?attr/selectableItemBackground"
         app:cardElevation="3dp"
         app:cardCornerRadius="2dp">
-        <ImageView
+        <com.minister.architecture.widget.ScaleImageView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/imageView"
             android:layout_width="wrap_content"

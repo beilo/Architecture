@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,8 @@ public class ZhiHuDetailFragment extends BaseSupportFragment {
     ImageView mImgContainer;
     @BindView(R.id.web_container)
     WebView mWebContainer;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     public static ZhiHuDetailFragment newInstance(int id) {
         Bundle bundle = new Bundle();
@@ -62,6 +65,7 @@ public class ZhiHuDetailFragment extends BaseSupportFragment {
         View inflate = inflater.inflate(R.layout.fragment_daily_detail, container, false);
         unbinder = ButterKnife.bind(this, inflate);
         mZhihuViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ZhiHuViewModel.class);
+        setToolbar(toolbar,"干货集中营");
         initWebView();
         return inflate;
     }
