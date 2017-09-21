@@ -84,7 +84,7 @@ public class GirlListFragment extends BaseSupportFragment {
                         .subscribe(new Consumer<List<GankItemBean>>() {
                             @Override
                             public void accept(@NonNull List<GankItemBean> gankItemBeen) throws Exception {
-                                setImageHeight(gankItemBeen, true);
+                                setImageHeight(gankItemBeen,true);
                                 mRefresh.setRefreshing(false);
                             }
                         }, new Consumer<Throwable>() {
@@ -143,7 +143,7 @@ public class GirlListFragment extends BaseSupportFragment {
                                         .subscribe(new Consumer<List<GankItemBean>>() {
                                             @Override
                                             public void accept(@NonNull List<GankItemBean> gankItemBeen) throws Exception {
-                                                setImageHeight(gankItemBeen, false);
+                                                setImageHeight(gankItemBeen,false);
                                                 mAdapter.loadMoreComplete();
                                             }
                                         }, new Consumer<Throwable>() {
@@ -220,7 +220,7 @@ public class GirlListFragment extends BaseSupportFragment {
                                 .get();
                         int bHeight = bitmap.getHeight();
                         int bWeight = bitmap.getWidth();
-                        int realHeight = (MyApp.SCREEN_WIDTH / 2) / bWeight * bHeight;
+                        int realHeight = (int) ((float)(MyApp.SCREEN_WIDTH / 2) / bWeight * bHeight);
                         gankItemBeen.setHeight(realHeight);
                         bitmap.recycle();
                         Log.d(TAG, "imgHeight: " + gankItemBeen.getHeight());

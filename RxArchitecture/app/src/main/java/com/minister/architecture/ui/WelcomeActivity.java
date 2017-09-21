@@ -67,12 +67,19 @@ public class WelcomeActivity extends BaseSupportActivity {
                             @Override
                             public void accept(@NonNull Throwable throwable) throws Exception {
                                 Toast.makeText(mContext, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                goMainActivity("");
                             }
                         }));
     }
 
 
     private void goMainActivity(String url) {
+        if ("".equals(url)) {
+            Intent intent = new Intent(mContext, MainActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
         Glide
                 .with(mContext)
                 .load(url)
