@@ -2,10 +2,9 @@ package com.minister.architecture.ui.gank.child;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.minister.architecture.R;
 import com.minister.architecture.base.BaseSupportFragment;
 import com.minister.architecture.model.bean.GankItemBean;
+import com.minister.architecture.ui.MainFragment;
 import com.minister.architecture.ui.gank.GankViewModel;
 
 import java.util.ArrayList;
@@ -133,9 +133,11 @@ public class TechListFragment extends BaseSupportFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 GankItemBean item = (GankItemBean) adapter.getItem(position);
-                Uri uri = Uri.parse(item.getUrl());
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                Fragment parentFragment = getParentFragment().getParentFragment();
+                if (parentFragment instanceof MainFragment) {
+                    MainFragment mainFragment = (MainFragment) parentFragment;
+                    mainFragment.startTechDetailFragment(TechDetailFragment.newInstance(item.getUrl()));
+                }
             }
         });
 

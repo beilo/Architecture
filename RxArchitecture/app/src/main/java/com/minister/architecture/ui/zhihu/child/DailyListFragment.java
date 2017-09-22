@@ -24,6 +24,7 @@ import com.minister.architecture.util.GlideImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +104,7 @@ public class DailyListFragment extends BaseSupportFragment {
         loadData();
     }
 
+    List<DailyListBean.TopStoriesBean> mTopStories = new ArrayList<>();
 
     private View initHeadBanner() {
         View inflate = getLayoutInflater().inflate(R.layout.view_head_viewpage, (ViewGroup) mRecyclerView.getParent(), false);
@@ -119,6 +121,19 @@ public class DailyListFragment extends BaseSupportFragment {
         banner.setDelayTime(3500);
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.RIGHT);
+        //设置点击跳转详情页
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                DailyListBean.TopStoriesBean item = mTopStories.get(position);
+                Fragment parentFragment = getParentFragment().getParentFragment();
+                if (parentFragment instanceof MainFragment){
+                    MainFragment mainFragment = (MainFragment) parentFragment;
+                    ZhiHuDetailFragment zhiHuDetailFragment = ZhiHuDetailFragment.newInstance(item.getId());
+                    mainFragment.startDailyDetailFragment(zhiHuDetailFragment);
+                }
+            }
+        });
         return inflate;
     }
 
@@ -129,10 +144,10 @@ public class DailyListFragment extends BaseSupportFragment {
                         .subscribe(new Consumer<DailyListBean>() {
                             @Override
                             public void accept(@NonNull DailyListBean dailyListBean) throws Exception {
-                                List<DailyListBean.TopStoriesBean> topStories = dailyListBean.getTop_stories();
+                                mTopStories = dailyListBean.getTop_stories();
                                 List<String> images = new ArrayList<>();
                                 List<String> titles = new ArrayList<>();
-                                for (DailyListBean.TopStoriesBean item : topStories) {
+                                for (DailyListBean.TopStoriesBean item : mTopStories) {
                                     images.add(item.getImage());
                                     titles.add(item.getTitle());
                                 }

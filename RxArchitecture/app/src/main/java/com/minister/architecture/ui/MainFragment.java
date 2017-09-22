@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.minister.architecture.R;
 import com.minister.architecture.base.BaseSupportFragment;
 import com.minister.architecture.ui.gank.GankTabFragment;
+import com.minister.architecture.ui.gank.child.TechDetailFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuDetailFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuTabFragment;
 import com.minister.architecture.widget.bottomBar.BottomBar;
@@ -53,6 +54,10 @@ public class MainFragment extends BaseSupportFragment {
 
     public void startDailyDetailFragment(ZhiHuDetailFragment zhiHuDetailFragment){ // 第二种:子fg和父fg通信的方式
         start(zhiHuDetailFragment);
+    }
+
+    public void startTechDetailFragment(TechDetailFragment techDetailFragment){
+        start(techDetailFragment);
     }
 
 

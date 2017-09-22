@@ -20,6 +20,7 @@ import com.minister.architecture.ui.MainFragment;
 import com.minister.architecture.ui.gank.GankTabFragment;
 import com.minister.architecture.ui.gank.GirlDetailFragment;
 import com.minister.architecture.ui.gank.child.GirlListFragment;
+import com.minister.architecture.ui.gank.child.TechDetailFragment;
 import com.minister.architecture.ui.gank.child.TechListFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuDetailFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuTabFragment;
@@ -36,6 +37,9 @@ public abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract TechListFragment contributeRepoTechListFragmentGank();
+
+    @ContributesAndroidInjector
+    abstract TechDetailFragment contributeTechDetailFragment();
 
     @ContributesAndroidInjector
     abstract GirlListFragment contributeRepoGirlListFragment();
