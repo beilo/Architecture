@@ -1,4 +1,4 @@
-package com.minister.architecture.ui.gank.child;
+package com.minister.architecture.ui.gank;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -59,7 +59,6 @@ public class TechDetailFragment extends BaseSupportFragment {
 
     private void initWebView() {
         WebSettings settings = webContainer.getSettings();
-        settings.setBlockNetworkImage(true);
         settings.setAppCacheEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);

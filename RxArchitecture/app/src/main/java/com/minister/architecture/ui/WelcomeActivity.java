@@ -1,5 +1,6 @@
 package com.minister.architecture.ui;
 
+import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -50,7 +51,7 @@ public class WelcomeActivity extends BaseSupportActivity {
         setContentView(R.layout.activity_welcome);
         mContext = this;
         unbinder = ButterKnife.bind(this);
-        mGankViewModel = ViewModelProviders.of(this, mViewModelFactory).get(GankViewModel.class);
+        mGankViewModel = (GankViewModel) setViewModel(GankViewModel.class);
         initView();
     }
 
@@ -97,5 +98,11 @@ public class WelcomeActivity extends BaseSupportActivity {
                 });
 
     }
+
+    public ViewModel setViewModel(Class className){
+        return ViewModelProviders.of(this, mViewModelFactory).get(className);
+    }
+
+
 
 }

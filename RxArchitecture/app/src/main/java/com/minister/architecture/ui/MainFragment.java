@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.minister.architecture.R;
 import com.minister.architecture.base.BaseSupportFragment;
 import com.minister.architecture.ui.gank.GankTabFragment;
-import com.minister.architecture.ui.gank.child.TechDetailFragment;
+import com.minister.architecture.ui.gank.TechDetailFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuDetailFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuTabFragment;
 import com.minister.architecture.widget.bottomBar.BottomBar;

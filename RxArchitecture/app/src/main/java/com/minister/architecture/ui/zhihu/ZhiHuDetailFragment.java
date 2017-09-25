@@ -65,14 +65,13 @@ public class ZhiHuDetailFragment extends BaseSupportFragment {
         View inflate = inflater.inflate(R.layout.fragment_daily_detail, container, false);
         unbinder = ButterKnife.bind(this, inflate);
         mZhihuViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ZhiHuViewModel.class);
-        setToolbar(toolbar,"干货集中营");
+        setToolbar(toolbar,"知乎日报详情");
         initWebView();
         return inflate;
     }
 
     private void initWebView() {
         WebSettings settings = mWebContainer.getSettings();
-        settings.setBlockNetworkImage(true);
         settings.setAppCacheEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
@@ -85,6 +84,7 @@ public class ZhiHuDetailFragment extends BaseSupportFragment {
         settings.setLoadWithOverviewMode(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setSupportZoom(true);
+        settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         mWebContainer.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

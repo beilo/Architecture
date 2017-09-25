@@ -20,7 +20,7 @@ import com.minister.architecture.ui.MainFragment;
 import com.minister.architecture.ui.gank.GankTabFragment;
 import com.minister.architecture.ui.gank.GirlDetailFragment;
 import com.minister.architecture.ui.gank.child.GirlListFragment;
-import com.minister.architecture.ui.gank.child.TechDetailFragment;
+import com.minister.architecture.ui.gank.TechDetailFragment;
 import com.minister.architecture.ui.gank.child.TechListFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuDetailFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuTabFragment;
