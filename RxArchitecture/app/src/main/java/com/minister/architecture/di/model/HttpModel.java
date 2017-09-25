@@ -38,26 +38,26 @@ public class HttpModel {
 
     @Singleton
     @Provides
-    GankApi providesGankApi(Retrofit.Builder builder, OkHttpClient client) {
+    public GankApi providesGankApi(Retrofit.Builder builder, OkHttpClient client) {
         return createRetrofit(builder, client, GankApi.HOST).create(GankApi.class);
     }
 
 
     @Singleton
     @Provides
-    WeChatApis providesWeChatApis(Retrofit.Builder builder, OkHttpClient client) {
+    public WeChatApis providesWeChatApis(Retrofit.Builder builder, OkHttpClient client) {
         return createRetrofit(builder, client, WeChatApis.HOST).create(WeChatApis.class);
     }
 
     @Singleton
     @Provides
-    ZhihuApis providesZhihuApis(Retrofit.Builder builder, OkHttpClient client) {
+    public ZhihuApis providesZhihuApis(Retrofit.Builder builder, OkHttpClient client) {
         return createRetrofit(builder, client, ZhihuApis.HOST).create(ZhihuApis.class);
     }
 
     @Singleton
     @Provides
-    OkHttpClient providesOkHttpClient(OkHttpClient.Builder builder, final MyApp app) {
+    public OkHttpClient providesOkHttpClient(OkHttpClient.Builder builder, final MyApp app) {
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                 @Override
@@ -113,13 +113,13 @@ public class HttpModel {
 
     @Singleton
     @Provides
-    Retrofit.Builder providesRetrofitBuilder() {
+    public Retrofit.Builder providesRetrofitBuilder() {
         return new Retrofit.Builder();
     }
 
     @Singleton
     @Provides
-    OkHttpClient.Builder providesOkHttpClientBuilder() {
+    public OkHttpClient.Builder providesOkHttpClientBuilder() {
         return new OkHttpClient.Builder();
     }
 
