@@ -6,7 +6,6 @@ import android.net.ConnectivityManager;
 import com.minister.architecture.BuildConfig;
 import com.minister.architecture.app.MyApp;
 import com.minister.architecture.model.http.GankApi;
-import com.minister.architecture.model.http.WeChatApis;
 import com.minister.architecture.model.http.ZhihuApis;
 import com.orhanobut.logger.Logger;
 
@@ -42,13 +41,6 @@ public class HttpModel {
         return createRetrofit(builder, client, GankApi.HOST).create(GankApi.class);
     }
 
-
-    @Singleton
-    @Provides
-    public WeChatApis providesWeChatApis(Retrofit.Builder builder, OkHttpClient client) {
-        return createRetrofit(builder, client, WeChatApis.HOST).create(WeChatApis.class);
-    }
-
     @Singleton
     @Provides
     public ZhihuApis providesZhihuApis(Retrofit.Builder builder, OkHttpClient client) {
@@ -65,7 +57,7 @@ public class HttpModel {
                     Logger.t("OkHttp").d(message);
                 }
             });
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(loggingInterceptor);
         }
         File cacheFile = new File(app.getCacheDir().getAbsolutePath() + File.separator + "data" + "/NetCache");

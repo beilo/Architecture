@@ -3,6 +3,7 @@ package com.minister.architecture.base;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -53,9 +54,16 @@ public class BaseSupportFragment extends SupportFragment
         }
     }
 
-    protected void setToolbar(Toolbar toolbar,String title){
+    protected void setToolbar(Toolbar toolbar, String title , @DrawableRes int navIconId){
+        if(navIconId != 0){
+            toolbar.setNavigationIcon(navIconId);
+        }
         toolbar.setTitle(title);
-        toolbar.setTitleTextColor(ResourcesUtil.getColor(_mActivity,R.color.white));
+        toolbar.setTitleTextColor(ResourcesUtil.getColor(_mActivity, R.color.white));
+    }
+
+    protected void setToolbar(Toolbar toolbar, String title){
+        setToolbar(toolbar,title,R.drawable.ic_back);
     }
 
     private boolean isImmersionBarEnabled() {

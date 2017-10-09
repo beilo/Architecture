@@ -55,6 +55,12 @@ public class TechDetailFragment extends BaseSupportFragment {
         setToolbar(toolbar, "Android Detail");
         initWebView();
         webContainer.loadUrl(getArguments().getString(URL));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pop();
+            }
+        });
     }
 
     private void initWebView() {

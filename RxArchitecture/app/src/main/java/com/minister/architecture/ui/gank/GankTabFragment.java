@@ -69,7 +69,7 @@ public class GankTabFragment extends BaseSupportFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_tab, container, false);
         unbinder = ButterKnife.bind(this, inflate);
-        setToolbar(toolbar,"干货集中营");
+        setToolbar(toolbar,"干货集中营",0);
         initView();
         return inflate;
     }

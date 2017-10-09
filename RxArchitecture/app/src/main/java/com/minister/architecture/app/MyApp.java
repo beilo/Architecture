@@ -7,9 +7,11 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.minister.architecture.BuildConfig;
 import com.minister.architecture.di.injector.AppInjector;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import javax.inject.Inject;
 
@@ -63,10 +65,12 @@ public class MyApp extends Application implements HasActivityInjector {
                 })
                 .install();
 
+        //初始化Bugly
+        CrashReport.initCrashReport(getApplicationContext(), "aface5f237", BuildConfig.DEBUG);
+
         //初始化屏幕宽高
         getScreenSize();
     }
-
 
     public void getScreenSize() {
         WindowManager windowManager = (WindowManager)this.getSystemService(Context.WINDOW_SERVICE);
