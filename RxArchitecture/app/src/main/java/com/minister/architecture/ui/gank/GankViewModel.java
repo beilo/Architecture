@@ -142,4 +142,11 @@ public class GankViewModel extends ViewModel {
     }
 
 
+    public Flowable<List<GankItemBean>> getRandomGirl(){
+        return mGankRepository
+                .getRandomGirl(1)
+                .compose(RxHelp.<GankHttpResponse<List<GankItemBean>>>rxScheduler())
+                .compose(RxHelp.<List<GankItemBean>>handleResult());
+    }
+
 }

@@ -6,9 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -61,27 +65,49 @@ public class GirlDetailFragment extends BaseSupportFragment {
         setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.girl_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_girl_detail, container, false);
         unbinder = ButterKnife.bind(this, inflate);
+
         setToolbar(toolbar,"图片详情");
-        initToolbar();
-        return inflate;
-    }
-
-    @OnClick(R.id.iv_girl_detail)
-    public void onViewClicked() {
-        pop();
-    }
-
-    private void initToolbar() {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pop();
             }
         });
+        toolbar.inflateMenu(R.menu.girl_menu); // http://wuxiaolong.me/2015/12/21/fragmentToolbar/
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_like: // 收藏
+                        Toast.makeText(_mActivity, "收藏", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_share: // 分享
+                        Toast.makeText(_mActivity, "分享", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_save: // 保存
+                        Toast.makeText(_mActivity, "保存", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return true;
+            }
+        });
+
+        return inflate;
+    }
+
+    @OnClick(R.id.iv_girl_detail)
+    public void onViewClicked() {
+        pop();
     }
 }

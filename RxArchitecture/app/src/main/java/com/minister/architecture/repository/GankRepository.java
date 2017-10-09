@@ -23,13 +23,15 @@ public class GankRepository {
         this.gankApi = gankApi;
     }
 
-
     public Flowable<GankHttpResponse<List<GankItemBean>>> getTechList(String tech, int num, int page) {
         return gankApi.getTechList(tech, num, page);
     }
 
-
     public Flowable<GankHttpResponse<List<GankItemBean>>> getGirlList(int num, int page) {
         return gankApi.getGirlList(num, page);
+    }
+
+    public Flowable<GankHttpResponse<List<GankItemBean>>> getRandomGirl(int num){
+        return gankApi.getRandomGirl(num);
     }
 }

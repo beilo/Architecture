@@ -1,8 +1,6 @@
 package com.minister.architecture.model.http;
 
 
-import android.arch.lifecycle.LiveData;
-
 import com.minister.architecture.model.bean.GankItemBean;
 import com.minister.architecture.model.http.result.GankHttpResponse;
 
@@ -35,5 +33,5 @@ public interface GankApi {
      * 随机妹纸图
      */
     @GET("random/data/福利/{num}")
-    LiveData<GankHttpResponse<List<GankItemBean>>> getRandomGirl(@Path("num") int num);
+    Flowable<GankHttpResponse<List<GankItemBean>>> getRandomGirl(@Path("num") int num);
 }
