@@ -66,8 +66,18 @@ public class ZhiHuDetailFragment extends BaseSupportFragment {
         unbinder = ButterKnife.bind(this, inflate);
         mZhihuViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ZhiHuViewModel.class);
         setToolbar(toolbar,"知乎日报详情");
+        initToolbar();
         initWebView();
         return inflate;
+    }
+
+    private void initToolbar() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pop();
+            }
+        });
     }
 
     private void initWebView() {

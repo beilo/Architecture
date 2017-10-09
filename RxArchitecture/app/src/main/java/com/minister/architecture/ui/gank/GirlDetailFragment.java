@@ -67,20 +67,21 @@ public class GirlDetailFragment extends BaseSupportFragment {
         View inflate = inflater.inflate(R.layout.fragment_girl_detail, container, false);
         unbinder = ButterKnife.bind(this, inflate);
         setToolbar(toolbar,"图片详情");
+        initToolbar();
         return inflate;
     }
 
     @OnClick(R.id.iv_girl_detail)
     public void onViewClicked() {
-        onBackPressedSupport();
-    }
-
-
-
-    @Override
-    public boolean onBackPressedSupport() {
         pop();
-        return true;
     }
 
+    private void initToolbar() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pop();
+            }
+        });
+    }
 }
