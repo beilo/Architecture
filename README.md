@@ -35,3 +35,4 @@
 - [ ] 去除dogger2 (待定)
 - [ ] repository的完善,增加SQLite本地缓存
 - [ ] 更多的功能
+- [ ] RxHelper.rxSchedulerHelper 从VM层迁移到V层.这不应该属于VM管理
