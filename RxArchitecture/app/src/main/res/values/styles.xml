@@ -1,21 +1,36 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
     </style>
 
-    <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. http://www.jianshu.com/p/ae0013a4f71a -->
-        <item name="colorPrimary">#3A5FCD</item>
-        <item name="colorPrimaryDark">#3A5FCD</item> <!--深蓝色-->
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_bg</item>
+        <item name="android:windowIsTranslucent">false</item>
     </style>
 
-    <style name="NoActionBarTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="NoActionBarTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="ToolBarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
 
+        <item name="android:popupTheme">@style/ToolbarPopupTheme</item>
+        <item name="android:actionMenuTextAppearance">@style/ToolbarMenuTextSize</item>
+    </style>
+    
+    <style name="ToolbarMenuTextSize" parent="TextAppearance.AppCompat.Menu">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:colorBackground">#212121</item>
+    </style>
+    <!-- toolbar弹出菜单样式 -->
+    <style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat">
+        <item name="android:colorBackground">#212121</item>
+    </style>
 </resources>
