@@ -1,7 +1,6 @@
 package com.example.leipe.architecture.ui.zhihu.fragment;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +17,6 @@ import com.example.leipe.architecture.model.bean.DailyListBean;
 import com.example.leipe.architecture.ui.MainFragment;
 import com.example.leipe.architecture.ui.zhihu.adapter.TopPagerAdapter;
 import com.example.leipe.architecture.ui.zhihu.adapter.ZhihuDailyAdapter;
-import com.example.leipe.architecture.viewmodel.GithubViewModelFactory;
 import com.example.leipe.architecture.viewmodel.zhihu.ZhihuViewModel;
 
 import butterknife.BindView;
@@ -51,8 +49,7 @@ public class ZhihuDailyFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setToolbar(toolbar,"知乎热门");
-        GithubViewModelFactory factory = new GithubViewModelFactory(ZhihuViewModel.class, new ZhihuViewModel());
-        viewModel = ViewModelProviders.of(this, factory).get(ZhihuViewModel.class);
+        viewModel = (ZhihuViewModel) getViewModel(ZhihuViewModel.class, new ZhihuViewModel());
         mainFragment = (MainFragment) getParentFragment();
     }
 

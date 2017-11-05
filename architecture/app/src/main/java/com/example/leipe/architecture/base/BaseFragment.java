@@ -1,5 +1,7 @@
 package com.example.leipe.architecture.base;
 
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
 import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.leipe.architecture.base.support.BaseSupportFragment;
+import com.example.leipe.architecture.viewmodel.GithubViewModelFactory;
 import com.gyf.barlibrary.ImmersionBar;
 
 import butterknife.ButterKnife;
@@ -42,6 +45,12 @@ public abstract class BaseFragment extends BaseSupportFragment {
         unbinder = ButterKnife.bind(this, mView);
         return mView;
     }
+
+    public ViewModel getViewModel(Class<? extends ViewModel> className, ViewModel viewModel){
+        GithubViewModelFactory factory = new GithubViewModelFactory(className, viewModel);
+        return ViewModelProviders.of(this, factory).get(className);
+    }
+
 
     @Override
     public void onDestroyView() {

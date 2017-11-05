@@ -32,7 +32,8 @@ public class MenuItemAdapter extends BaseAdapter {
             Arrays.asList(
                     new LvMenuItem(R.drawable.i_driver, "微信热门"),
                     new LvMenuItem(R.drawable.i_ship, "知乎热门"),
-                    new LvMenuItem(R.drawable.i_track, "知乎日报")
+                    new LvMenuItem(R.drawable.i_track, "知乎日报"),
+                    new LvMenuItem(R.drawable.ic_daily_like, "技术前线")
             ));
 
     public MenuItemAdapter(Context context) {

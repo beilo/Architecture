@@ -15,6 +15,7 @@ import com.example.leipe.architecture.R;
 import com.example.leipe.architecture.app.Router;
 import com.example.leipe.architecture.base.BaseFragment;
 import com.example.leipe.architecture.model.bean.HotListBean;
+import com.example.leipe.architecture.ui.MainFragment;
 import com.example.leipe.architecture.ui.zhihu.adapter.ZhihuAdapter;
 import com.example.leipe.architecture.viewmodel.zhihu.ZhihuViewModel;
 
@@ -58,7 +59,7 @@ public class ZhihuHotFragment extends BaseFragment {
         mAdapter.setItemClick(new ZhihuAdapter.OnItemClick() {
             @Override
             public void onClick(View view, HotListBean.RecentBean item, int position) {
-                start(ZhihuDetailFragment.newInstance(item.getNews_id(),true));
+                ((MainFragment) getParentFragment()).start(ZhihuDetailFragment.newInstance(item.getNews_id(),true));
             }
         });
         rl_list.setLayoutManager(new LinearLayoutManager(_mActivity));

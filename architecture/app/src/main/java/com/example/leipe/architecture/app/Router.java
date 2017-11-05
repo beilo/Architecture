@@ -14,4 +14,8 @@ public class Router {
 
     public static final String ZHIHU_HOT = "/zhihu/hot";
     public static final String ZHIHU_DAILY = "/zhihu/daily";
+
+
+    public static final String Gank_TECH_LIST = "/gank/tech/list";
+
 }
