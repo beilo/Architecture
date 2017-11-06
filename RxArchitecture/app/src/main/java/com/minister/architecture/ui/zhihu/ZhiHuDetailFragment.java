@@ -24,6 +24,7 @@ import com.minister.architecture.app.MyApp;
 import com.minister.architecture.base.BaseSupportFragment;
 import com.minister.architecture.model.bean.ZhihuDetailBean;
 import com.minister.architecture.util.HtmlUtil;
+import com.minister.architecture.util.RxHelp;
 
 import javax.inject.Inject;
 
@@ -118,6 +119,7 @@ public class ZhiHuDetailFragment extends BaseSupportFragment {
         mDisposable
                 .add(mZhihuViewModel
                         .getDetailInfo(getArguments().getInt(ID))
+                        .compose(RxHelp.<ZhihuDetailBean>rxScheduler())
                         .subscribe(new Consumer<ZhihuDetailBean>() {
                             @Override
                             public void accept(@NonNull ZhihuDetailBean zhihuDetailBean) throws Exception {

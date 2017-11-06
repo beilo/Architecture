@@ -17,6 +17,7 @@ import com.minister.architecture.R;
 import com.minister.architecture.base.BaseSupportActivity;
 import com.minister.architecture.model.bean.GankItemBean;
 import com.minister.architecture.ui.gank.GankViewModel;
+import com.minister.architecture.util.RxHelp;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -59,6 +60,7 @@ public class WelcomeActivity extends BaseSupportActivity {
         mDisposable.add(
                 mGankViewModel
                         .getGirlList()
+                        .compose(RxHelp.<List<GankItemBean>>rxScheduler())
                         .subscribe(new Consumer<List<GankItemBean>>() {
                             @Override
                             public void accept(@NonNull List<GankItemBean> gankItemBeen) throws Exception {
@@ -103,6 +105,8 @@ public class WelcomeActivity extends BaseSupportActivity {
         return ViewModelProviders.of(this, mViewModelFactory).get(className);
     }
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

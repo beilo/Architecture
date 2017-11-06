@@ -9,7 +9,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.transition.TransitionInflater;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +33,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import io.reactivex.FlowableEmitter;
-import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
@@ -61,6 +57,7 @@ public class GirlListFragment extends BaseSupportFragment {
 
     @Inject
     ViewModelProvider.Factory mViewModelFactory;
+
     GankViewModel mGankViewModel;
 
     GirlAdapter mAdapter;
@@ -81,10 +78,11 @@ public class GirlListFragment extends BaseSupportFragment {
         mDisposable.add(
                 mGankViewModel
                         .getGirlList()
+                        .compose(RxHelp.<List<GankItemBean>>rxScheduler())
                         .subscribe(new Consumer<List<GankItemBean>>() {
                             @Override
                             public void accept(@NonNull List<GankItemBean> gankItemBeen) throws Exception {
-                                setImageHeight(gankItemBeen,true);
+                                setImageHeight(gankItemBeen, true);
                                 mRefresh.setRefreshing(false);
                             }
                         }, new Consumer<Throwable>() {
@@ -140,10 +138,11 @@ public class GirlListFragment extends BaseSupportFragment {
                         mDisposable.add(
                                 mGankViewModel
                                         .pullUpLoadGirl()
+                                        .compose(RxHelp.<List<GankItemBean>>rxScheduler())
                                         .subscribe(new Consumer<List<GankItemBean>>() {
                                             @Override
                                             public void accept(@NonNull List<GankItemBean> gankItemBeen) throws Exception {
-                                                setImageHeight(gankItemBeen,false);
+                                                setImageHeight(gankItemBeen, false);
                                                 mAdapter.loadMoreComplete();
                                             }
                                         }, new Consumer<Throwable>() {
@@ -199,31 +198,24 @@ public class GirlListFragment extends BaseSupportFragment {
     public void setImageHeight(final List<GankItemBean> gankItemBeanList, final boolean isRefresh) {
         final List<GankItemBean> newList = new ArrayList<>();
         Flowable
-                .create(new FlowableOnSubscribe<GankItemBean>() {
-                    @Override
-                    public void subscribe(@NonNull FlowableEmitter<GankItemBean> e) throws Exception {
-                        for (int i = 0; i < gankItemBeanList.size(); i++) {
-                            e.onNext(gankItemBeanList.get(i));
-                        }
-                        e.onComplete();
-                    }
-                }, BackpressureStrategy.ERROR)
+                .fromIterable(gankItemBeanList)
                 .map(new Function<GankItemBean, GankItemBean>() {
                     @Override
                     public GankItemBean apply(@NonNull GankItemBean gankItemBeen) throws Exception {
-                        Bitmap bitmap = Glide
-                                .with(_mActivity)
-                                .load(gankItemBeen.getUrl())
-                                .asBitmap()
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                                .get();
-                        int bHeight = bitmap.getHeight();
-                        int bWeight = bitmap.getWidth();
-                        int realHeight = (int) ((float)(MyApp.SCREEN_WIDTH / 2) / bWeight * bHeight);
-                        gankItemBeen.setHeight(realHeight);
-                        bitmap.recycle();
-                        Log.d(TAG, "imgHeight: " + gankItemBeen.getHeight());
+                        if (gankItemBeen.getHeight() == 0) {
+                            Bitmap bitmap = Glide
+                                    .with(_mActivity)
+                                    .load(gankItemBeen.getUrl())
+                                    .asBitmap()
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                                    .get();
+                            int bHeight = bitmap.getHeight();
+                            int bWeight = bitmap.getWidth();
+                            int realHeight = (int) ((float) (MyApp.SCREEN_WIDTH / 2) / bWeight * bHeight);
+                            gankItemBeen.setHeight(realHeight);
+                            bitmap.recycle();
+                        }
                         return gankItemBeen;
                     }
                 })

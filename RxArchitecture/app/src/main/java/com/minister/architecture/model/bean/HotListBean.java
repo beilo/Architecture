@@ -1,5 +1,8 @@
 package com.minister.architecture.model.bean;
 
+
+import org.greenrobot.greendao.annotation.Entity;
+
 import java.util.List;
 
 /**
@@ -27,6 +30,7 @@ public class HotListBean {
         this.recent = recent;
     }
 
+    @Entity
     public static class RecentBean {
         private int news_id;
         private String url;

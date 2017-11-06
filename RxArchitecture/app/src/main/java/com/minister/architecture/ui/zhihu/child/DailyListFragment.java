@@ -21,6 +21,7 @@ import com.minister.architecture.ui.MainFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuDetailFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuViewModel;
 import com.minister.architecture.util.GlideImageLoader;
+import com.minister.architecture.util.RxHelp;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -141,6 +142,7 @@ public class DailyListFragment extends BaseSupportFragment {
         mDisposable
                 .add(mZhiHuViewModel
                         .getDailyList()
+                        .compose(RxHelp.<DailyListBean>rxScheduler())
                         .subscribe(new Consumer<DailyListBean>() {
                             @Override
                             public void accept(@NonNull DailyListBean dailyListBean) throws Exception {

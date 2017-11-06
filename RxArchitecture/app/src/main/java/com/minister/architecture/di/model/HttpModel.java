@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 
 import com.minister.architecture.BuildConfig;
 import com.minister.architecture.app.MyApp;
+import com.minister.architecture.model.bean.DaoSession;
 import com.minister.architecture.model.http.GankApi;
 import com.minister.architecture.model.http.ZhihuApis;
 import com.orhanobut.logger.Logger;
@@ -34,6 +35,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module(includes = ViewModelModule.class)
 public class HttpModel {
+
+    @Singleton
+    @Provides
+    public DaoSession providesDaoSession(MyApp app){
+        return app.getDaoSession();
+    }
 
     @Singleton
     @Provides

@@ -33,8 +33,7 @@ public class ZhiHuViewModel extends ViewModel {
      */
     public Flowable<HotListBean> getHotList() {
         return repository
-                .getHotList()
-                .compose(RxHelp.<HotListBean>rxScheduler());
+                .getHotList();
     }
 
     /**
@@ -45,8 +44,7 @@ public class ZhiHuViewModel extends ViewModel {
      */
     public Flowable<ZhihuDetailBean> getDetailInfo(int id) {
         return repository
-                .getDetailInfo(id)
-                .compose(RxHelp.<ZhihuDetailBean>rxScheduler());
+                .getDetailInfo(id);
     }
 
     /**
@@ -56,8 +54,7 @@ public class ZhiHuViewModel extends ViewModel {
      */
     public Flowable<DailyListBean> getDailyList() {
         return repository
-                .getDailyList()
-                .compose(RxHelp.<DailyListBean>rxScheduler());
+                .getDailyList();
     }
 
     /**

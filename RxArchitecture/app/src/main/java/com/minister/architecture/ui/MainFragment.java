@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.minister.architecture.R;
 import com.minister.architecture.base.BaseSupportFragment;
+import com.minister.architecture.event.TabEvent;
 import com.minister.architecture.ui.gank.GankTabFragment;
 import com.minister.architecture.ui.gank.TechDetailFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuDetailFragment;
@@ -20,6 +21,7 @@ import com.minister.architecture.widget.bottomBar.BottomBarTab;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.ISupportFragment;
 
 /** 主 fragment
@@ -87,7 +89,7 @@ public class MainFragment extends BaseSupportFragment {
 
             @Override
             public void onTabReselected(int position) {
-
+                EventBusActivityScope.getDefault(_mActivity).post(new TabEvent(position));
             }
         });
     }

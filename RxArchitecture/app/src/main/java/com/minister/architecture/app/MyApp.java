@@ -3,12 +3,15 @@ package com.minister.architecture.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
 import com.minister.architecture.BuildConfig;
 import com.minister.architecture.di.injector.AppInjector;
+import com.minister.architecture.model.bean.DaoMaster;
+import com.minister.architecture.model.bean.DaoSession;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -37,6 +40,8 @@ public class MyApp extends Application implements HasActivityInjector {
         return instance;
     }
 
+    private DaoSession daoSession;
+
     @Inject
     DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
 
@@ -62,10 +67,28 @@ public class MyApp extends Application implements HasActivityInjector {
 
         //初始化屏幕宽高
         getScreenSize();
+
+        // 初始化SqLite
+        initGreenDao();
+    }
+
+    private void initGreenDao() {
+        //创建数据库girl.db"
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "girl.db", null);
+        //获取可写数据库
+        SQLiteDatabase db = helper.getWritableDatabase();
+        //获取数据库对象
+        DaoMaster dao = new DaoMaster(db);
+        //获取Dao对象管理者
+        daoSession = dao.newSession();
+    }
+
+    public DaoSession getDaoSession() {
+        return daoSession;
     }
 
     public void getScreenSize() {
-        WindowManager windowManager = (WindowManager)this.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
         Display display = windowManager.getDefaultDisplay();
         display.getMetrics(dm);
@@ -73,7 +96,7 @@ public class MyApp extends Application implements HasActivityInjector {
         DIMEN_DPI = dm.densityDpi;
         SCREEN_WIDTH = dm.widthPixels;
         SCREEN_HEIGHT = dm.heightPixels;
-        if(SCREEN_WIDTH > SCREEN_HEIGHT) {
+        if (SCREEN_WIDTH > SCREEN_HEIGHT) {
             int t = SCREEN_HEIGHT;
             SCREEN_HEIGHT = SCREEN_WIDTH;
             SCREEN_WIDTH = t;

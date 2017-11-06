@@ -24,6 +24,7 @@ import com.minister.architecture.model.bean.GankItemBean;
 import com.minister.architecture.ui.MainFragment;
 import com.minister.architecture.ui.gank.GankViewModel;
 import com.minister.architecture.ui.gank.TechDetailFragment;
+import com.minister.architecture.util.RxHelp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +86,7 @@ public class TechListFragment extends BaseSupportFragment {
             public void onRefresh() {
                 mDisposable.add(
                         mGankViewModel.getTechList()
+                                .compose(RxHelp.<List<GankItemBean>>rxScheduler())
                                 .subscribe(new Consumer<List<GankItemBean>>() {
                                     @Override
                                     public void accept(@NonNull List<GankItemBean> gankItemBeen) throws Exception {
@@ -118,6 +120,7 @@ public class TechListFragment extends BaseSupportFragment {
                                                 Toast.makeText(_mActivity, "上拉加载成功", Toast.LENGTH_SHORT).show();
                                             }
                                         })
+                                        .compose(RxHelp.<List<GankItemBean>>rxScheduler())
                                         .subscribe(new Consumer<List<GankItemBean>>() {
                                             @Override
                                             public void accept(@NonNull List<GankItemBean> gankItemBeen) throws Exception {
@@ -172,6 +175,7 @@ public class TechListFragment extends BaseSupportFragment {
                                 return map;
                             }
                         })
+                        .compose(RxHelp.<ArrayMap<String,List<GankItemBean>>>rxScheduler())
                         .subscribe(new Consumer<ArrayMap<String, List<GankItemBean>>>() {
                             @Override
                             public void accept(@NonNull ArrayMap<String, List<GankItemBean>> stringListArrayMap) throws Exception {

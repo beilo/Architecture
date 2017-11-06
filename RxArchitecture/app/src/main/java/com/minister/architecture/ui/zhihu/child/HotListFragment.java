@@ -20,6 +20,7 @@ import com.minister.architecture.model.bean.HotListBean;
 import com.minister.architecture.ui.MainFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuDetailFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuViewModel;
+import com.minister.architecture.util.RxHelp;
 
 import java.util.ArrayList;
 
@@ -99,6 +100,7 @@ public class HotListFragment extends BaseSupportFragment {
         mDisposable
                 .add(mZhihuViewModel
                         .getHotList()
+                        .compose(RxHelp.<HotListBean>rxScheduler())
                         .subscribe(new Consumer<HotListBean>() {
                             @Override
                             public void accept(@NonNull HotListBean hotListBean) throws Exception {

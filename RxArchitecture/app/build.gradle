@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.minister.architecture"
         minSdkVersion 22
@@ -44,7 +45,7 @@ dependencies {
     // 沉浸式状态栏和沉浸式导航栏管理
     compile 'com.gyf.barlibrary:barlibrary:2.3.0'
     // lifecycle
-    compile 'android.arch.lifecycle:runtime:1.0.0-alpha9-1'
+    compile 'android.arch.lifecycle:runtime:1.0.3'
     compile 'android.arch.lifecycle:extensions:1.0.0-alpha9-1'
     annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha9-1"
     // fragmentation
@@ -65,6 +66,8 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
+    // greendao
+    compile 'org.greenrobot:greendao:3.2.2'
     // newWork
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
@@ -75,6 +78,9 @@ dependencies {
     compile 'com.orhanobut:logger:2.1.1'
     // banner
     compile 'com.youth.banner:banner:1.4.10'
+
+    compile 'me.yokeyword:eventbus-activity-scope:1.0.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.10.0'

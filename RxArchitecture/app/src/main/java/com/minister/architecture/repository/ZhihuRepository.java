@@ -10,6 +10,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Flowable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Predicate;
 
 /**
  * 知乎Api 数据提供工厂
@@ -30,7 +32,16 @@ public class ZhihuRepository {
      * @return Flowable<HotListBean>
      */
     public Flowable<HotListBean> getHotList() {
-        return zhihuApis.getHotList();
+        Flowable<HotListBean> hotList = zhihuApis.getHotList();
+        Flowable<HotListBean> hotListBeanFlowable = Flowable.concat(hotList, hotList)
+                .filter(new Predicate<HotListBean>() {
+                    @Override
+                    public boolean test(@NonNull HotListBean data) throws Exception {
+                        data.getRecent().get(0).getThumbnail();
+                        return true;
+                    }
+                }).firstElement().toFlowable();
+        return hotListBeanFlowable;
     }
 
     /**

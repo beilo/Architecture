@@ -50,16 +50,11 @@ public class BaseSupportActivity extends SupportActivity
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         if (mDisposable != null) {
             mDisposable.clear();
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
         if (unbinder != null) {
             unbinder.unbind();
         }

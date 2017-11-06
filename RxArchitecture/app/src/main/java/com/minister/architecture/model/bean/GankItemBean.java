@@ -3,12 +3,21 @@ package com.minister.architecture.model.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.greenrobot.greendao.annotation.Convert;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.converter.PropertyConverter;
+
 import java.util.List;
 
 /**
  * Created by codeest on 16/8/20.
  */
-
+@Entity
 public class GankItemBean implements Parcelable {
 
 
@@ -24,7 +33,7 @@ public class GankItemBean implements Parcelable {
      * who : 小鄧子
      * images : ["http://img.gank.io/3b0b193d-6abf-4714-9d5a-5508404666f4"]
      */
-
+    @Id
     private String _id;
     private String createdAt;
     private String desc;
@@ -34,9 +43,12 @@ public class GankItemBean implements Parcelable {
     private String url;
     private boolean used;
     private String who;
+    @Convert(converter = GankItemConverter.class,columnType = String.class)
     private List<String> images;
 
+    // 记录图片高度，用于处理瀑布流混乱的问题
     private int height;
+
 
     public int getHeight() {
         return height;
@@ -146,6 +158,10 @@ public class GankItemBean implements Parcelable {
         dest.writeStringList(this.images);
     }
 
+    public boolean getUsed() {
+        return this.used;
+    }
+
     public GankItemBean() {
     }
 
@@ -162,6 +178,22 @@ public class GankItemBean implements Parcelable {
         this.images = in.createStringArrayList();
     }
 
+    @Generated(hash = 1524262729)
+    public GankItemBean(String _id, String createdAt, String desc, String publishedAt, String source, String type,
+            String url, boolean used, String who, List<String> images, int height) {
+        this._id = _id;
+        this.createdAt = createdAt;
+        this.desc = desc;
+        this.publishedAt = publishedAt;
+        this.source = source;
+        this.type = type;
+        this.url = url;
+        this.used = used;
+        this.who = who;
+        this.images = images;
+        this.height = height;
+    }
+
     public static final Parcelable.Creator<GankItemBean> CREATOR = new Parcelable.Creator<GankItemBean>() {
         @Override
         public GankItemBean createFromParcel(Parcel source) {
@@ -173,4 +205,23 @@ public class GankItemBean implements Parcelable {
             return new GankItemBean[size];
         }
     };
+
+    public static class GankItemConverter implements PropertyConverter<List<String>,String>{
+
+        @Override
+        public List<String> convertToEntityProperty(String databaseValue) {
+            if(databaseValue == null){
+                return null;
+            }
+            return new Gson().fromJson(databaseValue,new TypeToken<List<String>>(){}.getType());
+        }
+
+        @Override
+        public String convertToDatabaseValue(List<String> entityProperty) {
+            if(entityProperty == null){
+                return null;
+            }
+            return new Gson().toJson(entityProperty);
+        }
+    }
 }
