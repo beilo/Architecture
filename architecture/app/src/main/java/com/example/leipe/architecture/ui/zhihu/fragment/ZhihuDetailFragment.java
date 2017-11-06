@@ -9,7 +9,6 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
-import android.transition.Transition;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -25,9 +24,8 @@ import com.example.leipe.architecture.model.bean.DetailExtraBean;
 import com.example.leipe.architecture.model.bean.ZhihuDetailBean;
 import com.example.leipe.architecture.util.HtmlUtil;
 import com.example.leipe.architecture.viewmodel.zhihu.ZhihuDetailViewModel;
-import com.gyf.barlibrary.ImmersionBar;
 
-/**
+/** 知乎详情页面
  * Created by 被咯苏州 on 2017/7/2.
  */
 
@@ -99,10 +97,7 @@ public class ZhihuDetailFragment extends BaseFragment implements View.OnClickLis
                 }
             }
         });
-
-        ImmersionBar.with(this)
-                .titleBar(toolbar)
-                .init();
+        setToolbar(toolbar,null);
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,39 +131,39 @@ public class ZhihuDetailFragment extends BaseFragment implements View.OnClickLis
             }
         });
 
-        (_mActivity.getWindow().getSharedElementEnterTransition()).addListener(new Transition.TransitionListener() {
-            @Override
-            public void onTransitionStart(Transition transition) {
-            }
-
-            @Override
-            public void onTransitionEnd(Transition transition) {
-                /**
-                 * 测试发现部分手机(如红米note2)上加载图片会变形,没有达到centerCrop效果
-                 * 查阅资料发现Glide配合SharedElementTransition是有坑的,需要在Transition动画结束后再加载图片
-                 * https://github.com/TWiStErRob/glide-support/blob/master/src/glide3/java/com/bumptech/glide/supportapp/github/_847_shared_transition/DetailFragment.java
-                 */
-                isTransitionEnd = true;
-                if (imgUrl != null) {
-                    isImageShow = true;
-                    Glide.with(_mActivity)
-                            .load(imgUrl)
-                            .into(img_detail_bar);
-                }
-            }
-
-            @Override
-            public void onTransitionCancel(Transition transition) {
-            }
-
-            @Override
-            public void onTransitionPause(Transition transition) {
-            }
-
-            @Override
-            public void onTransitionResume(Transition transition) {
-            }
-        });
+        // (_mActivity.getWindow().getSharedElementEnterTransition()).addListener(new Transition.TransitionListener() {
+        //     @Override
+        //     public void onTransitionStart(Transition transition) {
+        //     }
+        //
+        //     @Override
+        //     public void onTransitionEnd(Transition transition) {
+        //         /**
+        //          * 测试发现部分手机(如红米note2)上加载图片会变形,没有达到centerCrop效果
+        //          * 查阅资料发现Glide配合SharedElementTransition是有坑的,需要在Transition动画结束后再加载图片
+        //          * https://github.com/TWiStErRob/glide-support/blob/master/src/glide3/java/com/bumptech/glide/supportapp/github/_847_shared_transition/DetailFragment.java
+        //          */
+        //         isTransitionEnd = true;
+        //         if (imgUrl != null) {
+        //             isImageShow = true;
+        //             Glide.with(_mActivity)
+        //                     .load(imgUrl)
+        //                     .into(img_detail_bar);
+        //         }
+        //     }
+        //
+        //     @Override
+        //     public void onTransitionCancel(Transition transition) {
+        //     }
+        //
+        //     @Override
+        //     public void onTransitionPause(Transition transition) {
+        //     }
+        //
+        //     @Override
+        //     public void onTransitionResume(Transition transition) {
+        //     }
+        // });
 
         loadDetailData();
     }

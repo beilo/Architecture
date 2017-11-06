@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.antfortune.freeline'
 
 android {
     compileSdkVersion 26
@@ -10,6 +11,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
     }
     buildTypes {
         release {
@@ -31,40 +38,50 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:' + rootProject.supportLibVersion;
-    compile 'com.android.support:cardview-v7:' + rootProject.supportLibVersion;
-    compile 'com.android.support:recyclerview-v7:' + rootProject.supportLibVersion;
-    compile 'com.android.support:design:'+rootProject.supportLibVersion;
 
-    compile 'android.arch.lifecycle:extensions:' + rootProject.archLifecycleVersion;
-    compile 'android.arch.persistence.room:runtime:' + rootProject.archRoomVersion;
-    annotationProcessor "android.arch.lifecycle:compiler:" + rootProject.archLifecycleVersion;
-    annotationProcessor "android.arch.persistence.room:compiler:" + rootProject.archRoomVersion;
-
+    // Test
     testCompile 'junit:junit:4.12'
-
-    // Testing-only dependencies
     androidTestCompile 'com.android.support.test:runner:' + rootProject.runnerVersion;
     androidTestCompile 'com.android.support.test:rules:' + rootProject.rulesVersion;
     androidTestCompile 'com.android.support.test.espresso:espresso-core:' + rootProject.espressoVersion;
-
     androidTestCompile ('com.android.support.test.espresso:espresso-contrib:2.2'){
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude module: 'recyclerview-v7'
     }
-
     // Force usage of dependencies in the test app, since it is internally used by the runner module.
     androidTestCompile 'com.android.support:support-annotations:' + rootProject.supportLibVersion;
     androidTestCompile 'com.android.support:support-v4:' + rootProject.supportLibVersion;
     androidTestCompile 'com.android.support:recyclerview-v7:' + rootProject.supportLibVersion;
 
+
+
+
+    // support
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:appcompat-v7:' + rootProject.supportLibVersion;
+    compile 'com.android.support:cardview-v7:' + rootProject.supportLibVersion;
+    compile 'com.android.support:recyclerview-v7:' + rootProject.supportLibVersion;
+    compile 'com.android.support:design:'+rootProject.supportLibVersion;
+    // lifecycle
+    compile 'android.arch.lifecycle:extensions:' + rootProject.archLifecycleVersion;
+    annotationProcessor "android.arch.lifecycle:compiler:" + rootProject.archLifecycleVersion;
+    // fragmentation
     compile 'me.yokeyword:fragmentation-core:1.0.1'
+
+    // retrofit2
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-
-    compile 'com.gyf.barlibrary:barlibrary:2.2.5'
-
+    // 沉浸式状态栏和沉浸式导航栏管理
+    compile 'com.gyf.barlibrary:barlibrary:2.2.6'
+    // glide
     compile 'com.github.bumptech.glide:glide:'+rootProject.glideVersion
     compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
+    // Butter Knife
+    compile 'com.jakewharton:butterknife:8.7.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+
+    // ARouter
+    compile 'com.alibaba:arouter-api:1.2.1.1'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.2.1'
 }

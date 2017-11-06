@@ -16,6 +16,7 @@ import me.yokeyword.fragmentation.ExtraTransaction;
 import me.yokeyword.fragmentation.ISupportActivity;
 import me.yokeyword.fragmentation.ISupportFragment;
 import me.yokeyword.fragmentation.SupportActivityDelegate;
+import me.yokeyword.fragmentation.SupportHelper;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
@@ -147,7 +148,16 @@ public class BaseSupportActivity extends LifecycleActivity implements ISupportAc
 
 
 
+    /**
+     * 获取栈内的fragment对象
+     */
+    public <T extends ISupportFragment> T findChildFragment(Class<T> fragmentClass) {
+        return SupportHelper.findFragment(getSupportFragmentManager(), fragmentClass);
+    }
 
+    public ISupportFragment getTopFragment() {
+        return SupportHelper.getTopFragment(getSupportFragmentManager());
+    }
 
 
 

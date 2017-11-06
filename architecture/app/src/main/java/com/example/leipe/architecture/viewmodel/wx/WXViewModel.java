@@ -5,7 +5,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
-import com.example.leipe.architecture.model.bean.WXHttpResult;
+import com.example.leipe.architecture.model.http.result.WXHttpResponse;
 import com.example.leipe.architecture.model.bean.WXListBean;
 import com.example.leipe.architecture.repository.WXRepository;
 
@@ -23,7 +23,7 @@ import retrofit2.Response;
 public class WXViewModel extends ViewModel {
 
 
-    private MutableLiveData<WXHttpResult<List<WXListBean>>> wxHttpResponseLiveData;
+    private MutableLiveData<WXHttpResponse<List<WXListBean>>> wxHttpResponseLiveData;
 
     private WXRepository wxRepository;
 
@@ -37,18 +37,18 @@ public class WXViewModel extends ViewModel {
      *
      * @return
      */
-    public LiveData<WXHttpResult<List<WXListBean>>> getWxDataCall() {
+    public LiveData<WXHttpResponse<List<WXListBean>>> getWxDataCall() {
         if (wxHttpResponseLiveData == null) {
             wxHttpResponseLiveData = new MutableLiveData<>();
             wxRepository.getWXDataCall()
-                    .enqueue(new Callback<WXHttpResult<List<WXListBean>>>() {
+                    .enqueue(new Callback<WXHttpResponse<List<WXListBean>>>() {
                         @Override
-                        public void onResponse(Call<WXHttpResult<List<WXListBean>>> call, Response<WXHttpResult<List<WXListBean>>> response) {
+                        public void onResponse(Call<WXHttpResponse<List<WXListBean>>> call, Response<WXHttpResponse<List<WXListBean>>> response) {
                             wxHttpResponseLiveData.setValue(response.body());
                         }
 
                         @Override
-                        public void onFailure(Call<WXHttpResult<List<WXListBean>>> call, Throwable t) {
+                        public void onFailure(Call<WXHttpResponse<List<WXListBean>>> call, Throwable t) {
                         }
                     });
         }

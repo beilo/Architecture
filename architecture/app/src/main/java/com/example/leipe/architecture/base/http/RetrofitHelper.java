@@ -1,5 +1,6 @@
-package com.example.leipe.architecture.base;
+package com.example.leipe.architecture.base.http;
 
+import com.example.leipe.architecture.model.http.GankApi;
 import com.example.leipe.architecture.model.http.WeChatApis;
 import com.example.leipe.architecture.model.http.ZhihuApis;
 
@@ -38,4 +39,9 @@ public class RetrofitHelper {
     public Retrofit getZhihuRetrofit() {
         return retrofit.baseUrl(ZhihuApis.HOST).build();
     }
+
+    public Retrofit getGankRetrofit(){
+        return retrofit.baseUrl(GankApi.HOST).build();
+    }
+
 }

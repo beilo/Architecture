@@ -10,19 +10,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.leipe.architecture.R;
+import com.example.leipe.architecture.app.Router;
 import com.example.leipe.architecture.base.BaseFragment;
 import com.example.leipe.architecture.model.bean.HotListBean;
+import com.example.leipe.architecture.ui.MainFragment;
 import com.example.leipe.architecture.ui.zhihu.adapter.ZhihuAdapter;
 import com.example.leipe.architecture.viewmodel.zhihu.ZhihuViewModel;
-import com.gyf.barlibrary.ImmersionBar;
 
 /**
- * 这个fg只使用了rx和viewModel 没有使用LiveData
+ * 知乎热门列表
  * Created by leipe on 2017/6/30.
  */
-
-public class ZhihuListFragment extends BaseFragment {
+@Route(path = Router.ZHIHU_HOT)
+public class ZhihuHotFragment extends BaseFragment {
     private final int layout = R.layout.list_fragment;
     TextView tv_loading;
     RecyclerView rl_list;
@@ -33,8 +35,8 @@ public class ZhihuListFragment extends BaseFragment {
     private boolean isLoading = true;
     ZhihuAdapter mAdapter;
 
-    public static ZhihuListFragment newInstance() {
-        ZhihuListFragment fragment = new ZhihuListFragment();
+    public static ZhihuHotFragment newInstance() {
+        ZhihuHotFragment fragment = new ZhihuHotFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
@@ -46,8 +48,7 @@ public class ZhihuListFragment extends BaseFragment {
         tv_loading = view.findViewById(R.id.loading_tv);
         rl_list = view.findViewById(R.id.products_list);
         toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setTitle("知乎热门");
-        ImmersionBar.with(this).titleBar(toolbar).init();
+        setToolbar(toolbar,"知乎热门");
         isLoading();
     }
 
@@ -56,10 +57,9 @@ public class ZhihuListFragment extends BaseFragment {
         super.onLazyInitView(savedInstanceState);
         mAdapter = new ZhihuAdapter(_mActivity, null);
         mAdapter.setItemClick(new ZhihuAdapter.OnItemClick() {
-
             @Override
             public void onClick(View view, HotListBean.RecentBean item, int position) {
-                start(ZhihuDetailFragment.newInstance(item.getNews_id(),true));
+                ((MainFragment) getParentFragment()).start(ZhihuDetailFragment.newInstance(item.getNews_id(),true));
             }
         });
         rl_list.setLayoutManager(new LinearLayoutManager(_mActivity));

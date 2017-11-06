@@ -326,4 +326,16 @@ public class BaseSupportFragment extends LifecycleFragment implements ISupportFr
     public <T extends ISupportFragment> T findChildFragment(Class<T> fragmentClass) {
         return SupportHelper.findFragment(getChildFragmentManager(), fragmentClass);
     }
+
+    public ISupportFragment getTopFragment() {
+        return SupportHelper.getTopFragment(getChildFragmentManager());
+    }
+
+    public void loadMultipleRootFragment(int containerId, int showPosition, ISupportFragment... toFragments) {
+        mDelegate.loadMultipleRootFragment(containerId, showPosition, toFragments);
+    }
+
+    public void showHideFragment(ISupportFragment showFragment) {
+        mDelegate.showHideFragment(showFragment, null);
+    }
 }

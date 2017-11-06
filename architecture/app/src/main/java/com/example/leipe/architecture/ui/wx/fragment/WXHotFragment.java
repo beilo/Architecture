@@ -10,14 +10,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.example.leipe.architecture.R;
+import com.example.leipe.architecture.app.Router;
 import com.example.leipe.architecture.base.BaseFragment;
-import com.example.leipe.architecture.base.NetWorkObserver;
-import com.example.leipe.architecture.model.bean.WXHttpResult;
+import com.example.leipe.architecture.base.http.NetWorkObserver;
+import com.example.leipe.architecture.model.http.result.WXHttpResponse;
 import com.example.leipe.architecture.model.bean.WXListBean;
 import com.example.leipe.architecture.ui.wx.adapter.WXAdapter;
 import com.example.leipe.architecture.viewmodel.wx.WXViewModel;
-import com.gyf.barlibrary.ImmersionBar;
 
 import java.util.List;
 
@@ -25,8 +26,8 @@ import java.util.List;
  * 微信热门前50条
  * Created by leipe on 2017/6/27.
  */
-
-public class WXListSupportFragment extends BaseFragment {
+@Route(path = Router.WX_HOT)
+public class WXHotFragment extends BaseFragment {
     final String TAG = this.getClass().getSimpleName();
     final int layout = R.layout.list_fragment;
     TextView tv_loading;
@@ -37,8 +38,8 @@ public class WXListSupportFragment extends BaseFragment {
     private WXViewModel viewModel;
     private boolean isLoading = true;
 
-    public static WXListSupportFragment newInstance() {
-        WXListSupportFragment fragment = new WXListSupportFragment();
+    public static WXHotFragment newInstance() {
+        WXHotFragment fragment = new WXHotFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
@@ -49,8 +50,7 @@ public class WXListSupportFragment extends BaseFragment {
         tv_loading = view.findViewById(R.id.loading_tv);
         rl_list = view.findViewById(R.id.products_list);
         toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setTitle("微信热门");
-        ImmersionBar.with(this).titleBar(toolbar).init();
+        setToolbar(toolbar,"微信热门");
         isLoading();
         WXViewModel.Factory factory = new WXViewModel.Factory();
         viewModel = ViewModelProviders.of(this, factory).get(WXViewModel.class);
@@ -65,16 +65,16 @@ public class WXListSupportFragment extends BaseFragment {
         rl_list.setAdapter(mAdapter);
 
         viewModel.getWxDataCall()
-                .observe(this, new NetWorkObserver<WXHttpResult<List<WXListBean>>>(_mActivity) {
+                .observe(this, new NetWorkObserver<WXHttpResponse<List<WXListBean>>, List<WXListBean>>(_mActivity) {
                     @Override
-                    public void onData(WXHttpResult<List<WXListBean>> listWXHttpResult) {
-                        if (listWXHttpResult != null) {
-                            isLoading = false;
-                            isLoading();
-                            mAdapter.refreshData(listWXHttpResult.getNewslist());
-                        }
+                    public void onData(List<WXListBean> wxListBeen) {
+                        isLoading = false;
+                        isLoading();
+                        mAdapter.refreshData(wxListBeen);
                     }
                 });
+
+
         // 异步,还没有活跃的LiveData
         Log.e(TAG + "==onLazyInitView", String.valueOf(viewModel.getWxDataCall().hasActiveObservers()));
     }
