@@ -2,6 +2,7 @@ package com.minister.architecture;
 
 import android.os.Bundle;
 
+import com.bumptech.glide.Glide;
 import com.minister.architecture.base.BaseSupportActivity;
 import com.minister.architecture.ui.MainFragment;
 
@@ -27,5 +28,19 @@ public class MainActivity extends BaseSupportActivity {
         return new DefaultHorizontalAnimator();
     }
 
+    // https://juejin.im/post/59cf0f9e6fb9a00a4b0c73d4?utm_source=gold_browser_extension
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        if (level == TRIM_MEMORY_UI_HIDDEN){
+            Glide.get(this).clearMemory();
+        }
+        Glide.get(this).trimMemory(level);
+    }
 
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        Glide.get(this).clearMemory();
+    }
 }
