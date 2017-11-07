@@ -55,4 +55,9 @@ public class GankHttpResponse<T> {
         results = null;
         error = true;
     }
+
+    public GankHttpResponse(boolean error, T results) {
+        this.error = error;
+        this.results = results;
+    }
 }

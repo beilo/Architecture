@@ -33,6 +33,7 @@ import io.reactivex.functions.Consumer;
 /**
  * 启动页
  * Created by leipe on 2017/9/18.
+ * @author leipe
  */
 public class WelcomeActivity extends BaseSupportActivity {
 
