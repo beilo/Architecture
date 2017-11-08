@@ -22,7 +22,7 @@ import com.minister.architecture.R;
 import com.minister.architecture.base.BaseSupportFragment;
 import com.minister.architecture.model.bean.GankItemBean;
 import com.minister.architecture.ui.MainFragment;
-import com.minister.architecture.ui.gank.GankViewModel;
+import com.minister.architecture.viewmodel.GankViewModel;
 import com.minister.architecture.ui.gank.TechDetailFragment;
 import com.minister.architecture.util.RxHelp;
 

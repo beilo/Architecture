@@ -32,7 +32,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 /**
- * Created by leipe on 2017/11/7.
+ * @author leipe
  */
 @RunWith(JUnit4.class)
 public class GankApiTest {
@@ -116,8 +116,6 @@ public class GankApiTest {
         assertEquals(data.getResults().get(0).getDesc(),"8.13");
         assertEquals(data.getResults().get(0).getType(),DataTestUtil.unicodeToString("\\u798f\\u5229"));
     }
-
-
 
 
     private void enqueueResponse(String fileName) throws IOException {

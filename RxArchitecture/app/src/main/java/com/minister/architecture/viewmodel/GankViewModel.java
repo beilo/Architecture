@@ -1,4 +1,4 @@
-package com.minister.architecture.ui.gank;
+package com.minister.architecture.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
 
@@ -33,7 +33,7 @@ import io.reactivex.subscribers.DefaultSubscriber;
 
 public class GankViewModel extends ViewModel {
 
-    @Inject
+
     DaoSession daoSession;
 
     private GankRepository mGankRepository;
@@ -43,8 +43,9 @@ public class GankViewModel extends ViewModel {
     private String tech = "Android";
 
     @Inject
-    public GankViewModel(GankRepository mGankRepository) {
+    public GankViewModel(GankRepository mGankRepository,DaoSession daoSession) {
         this.mGankRepository = mGankRepository;
+        this.daoSession = daoSession;
     }
 
     /**

@@ -19,7 +19,7 @@ import com.minister.architecture.base.BaseSupportFragment;
 import com.minister.architecture.model.bean.DailyListBean;
 import com.minister.architecture.ui.MainFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuDetailFragment;
-import com.minister.architecture.ui.zhihu.ZhiHuViewModel;
+import com.minister.architecture.viewmodel.ZhiHuViewModel;
 import com.minister.architecture.util.GlideImageLoader;
 import com.minister.architecture.util.RxHelp;
 import com.youth.banner.Banner;

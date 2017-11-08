@@ -4,8 +4,8 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.minister.architecture.di.ViewModelKey;
-import com.minister.architecture.ui.gank.GankViewModel;
-import com.minister.architecture.ui.zhihu.ZhiHuViewModel;
+import com.minister.architecture.viewmodel.GankViewModel;
+import com.minister.architecture.viewmodel.ZhiHuViewModel;
 import com.minister.architecture.viewmodel.GithubViewModelFactory;
 
 import dagger.Binds;

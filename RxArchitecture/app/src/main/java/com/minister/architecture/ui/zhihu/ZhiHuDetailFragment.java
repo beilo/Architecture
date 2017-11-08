@@ -25,6 +25,7 @@ import com.minister.architecture.base.BaseSupportFragment;
 import com.minister.architecture.model.bean.ZhihuDetailBean;
 import com.minister.architecture.util.HtmlUtil;
 import com.minister.architecture.util.RxHelp;
+import com.minister.architecture.viewmodel.ZhiHuViewModel;
 
 import javax.inject.Inject;
 

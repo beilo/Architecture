@@ -16,7 +16,7 @@ import com.minister.architecture.MainActivity;
 import com.minister.architecture.R;
 import com.minister.architecture.base.BaseSupportActivity;
 import com.minister.architecture.model.bean.GankItemBean;
-import com.minister.architecture.ui.gank.GankViewModel;
+import com.minister.architecture.viewmodel.GankViewModel;
 import com.minister.architecture.util.RxHelp;
 
 import java.util.List;

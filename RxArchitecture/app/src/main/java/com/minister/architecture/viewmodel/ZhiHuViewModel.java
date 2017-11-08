@@ -1,4 +1,4 @@
-package com.minister.architecture.ui.zhihu;
+package com.minister.architecture.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
 
