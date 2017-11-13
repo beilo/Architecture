@@ -2,6 +2,8 @@ package com.minister.architecture.repository;
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.minister.architecture.model.http.GankApi;
 
 import org.junit.Before;
@@ -52,4 +54,16 @@ public class GankRepositoryTest {
         verify(api,times(1)).getRandomGirl(1);
     }
 
+
+    @Test
+    public void test() throws Exception{
+        String images = "[]";
+        int currentIndex;
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .disableHtmlEscaping()
+                .create();
+        ImagesBean imagesBean = gson.fromJson(images, ImagesBean.class);
+        currentIndex = imagesBean.getCurrentIndex();
+    }
 }

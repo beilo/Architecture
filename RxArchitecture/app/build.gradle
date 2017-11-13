@@ -45,6 +45,8 @@ dependencies {
     compile 'com.android.support:design:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:support-v4:26.+'
+    // sonic
+    compile 'com.tencent.sonic:sdk:2.0.0-alpha'
     // glide
     compile 'com.github.bumptech.glide:glide:3.8.0'
     // 沉浸式状态栏和沉浸式导航栏管理
