@@ -1,10 +1,11 @@
 package com.minister.architecture.repository;
 
 import com.minister.architecture.app.MyApp;
+import com.minister.architecture.model.bean.DaoSession;
 import com.minister.architecture.model.bean.GankItemBean;
+import com.minister.architecture.model.bean.GankItemBeanDao;
 import com.minister.architecture.model.http.GankApi;
 import com.minister.architecture.model.http.result.GankHttpResponse;
-import com.minister.architecture.util.ApiException;
 import com.minister.architecture.util.NetWorkUtils;
 
 import java.util.List;
@@ -24,10 +25,12 @@ public class GankRepository {
     MyApp app;
 
     private final GankApi gankApi;
+    private final DaoSession dao;
 
     @Inject
-    public GankRepository(GankApi gankApi) {
+    public GankRepository(GankApi gankApi, DaoSession daoSession) {
         this.gankApi = gankApi;
+        this.dao = daoSession;
     }
 
     /**
@@ -48,8 +51,15 @@ public class GankRepository {
     public Flowable<GankHttpResponse<List<GankItemBean>>> getGirlList(int num, int page) {
         if (NetWorkUtils.isNetworkConnected(app)) {
             return gankApi.getGirlList(num, page);
-        }else {
-            return Flowable.error(new ApiException("没有网络哟"));
+        } else {
+            GankItemBeanDao gankItemBeanDao = dao.getGankItemBeanDao();
+            List<GankItemBean> list = gankItemBeanDao.queryBuilder()
+                    .offset(page * num)
+                    .limit(num)
+                    .list();
+            GankHttpResponse<List<GankItemBean>>
+                    gankHttpResponse = new GankHttpResponse<>(false, list);
+            return Flowable.just(gankHttpResponse);
         }
 
     }

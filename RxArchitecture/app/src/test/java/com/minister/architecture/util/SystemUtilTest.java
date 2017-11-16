@@ -7,6 +7,9 @@ import android.net.Uri;
 import android.os.Environment;
 import android.widget.Toast;
 
+import com.minister.architecture.model.bean.GankItemBean;
+import com.minister.architecture.model.http.result.GankHttpResponse;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,8 +21,12 @@ import org.powermock.reflect.Whitebox;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.minister.architecture.util.SystemUtil.PATH_SDCARD;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -103,7 +110,7 @@ public class SystemUtilTest {
 
         verify(context).sendBroadcast(sendIntent);
 
-        Assert.assertEquals(saveUri,uri);
+        Assert.assertEquals(saveUri, uri);
 
         verifyStatic();
         Toast.makeText(context, "保存图片成功", Toast.LENGTH_SHORT);
@@ -111,5 +118,45 @@ public class SystemUtilTest {
         Uri.fromFile(imgFile);
     }
 
+    @Test
+    public void aaa() throws Exception {
+        SystemUtil systemUtil = new SystemUtil();
+//        systemUtil = spy(systemUtil);
+//        final ArrayList list = new ArrayList();
+//        list.add(1);
+//        list.add(3);
+//        list.add(2);
 
+//        whenNew(ArrayList.class).withNoArguments().thenReturn(list);
+
+
+
+
+
+
+        final List<GankItemBean> list = new ArrayList<>();
+        ArrayList<String> strings = new ArrayList<>();
+        strings.add("http://img.gank.io/3b0b193d-6abf-4714-9d5a-5508404666f4");
+        list.add(
+                new GankItemBean(
+                        "59b667cf421aa9118887ac12",
+                        "2017-09-11T18:39:11.631Z",
+                        "用少量Rxjava代码，为retrofit添加退避重试功能",
+                        "2017-09-12T08:15:08.26Z",
+                        "web",
+                        "Android",
+                        "http://www.jianshu.com/p/fca90d0da2b5",
+                        true,
+                        "小鄧子",
+                        strings,
+                        0
+                )
+        );
+        GankHttpResponse gankHttpResponse = new GankHttpResponse<>(true, list);
+        whenNew(GankHttpResponse.class).withArguments(anyBoolean(),any(List.class)).thenReturn(gankHttpResponse);
+
+
+        List aaa = systemUtil.aaa();
+        Assert.assertEquals(list.size(), aaa.size());
+    }
 }

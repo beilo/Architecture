@@ -8,10 +8,15 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
+import com.minister.architecture.model.bean.GankItemBean;
+import com.minister.architecture.model.http.result.GankHttpResponse;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -67,5 +72,12 @@ public class SystemUtil {
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
         context.sendBroadcast(intent);
         return uri;
+    }
+
+    public List aaa(){
+        List list = new ArrayList();
+        List<GankItemBean> list1 = new ArrayList();
+        GankHttpResponse<List<GankItemBean>> gankHttpResponse = new GankHttpResponse<>(false,list1);
+        return list;
     }
 }
