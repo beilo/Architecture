@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.facebook.stetho.Stetho;
 import com.minister.architecture.BuildConfig;
 import com.minister.architecture.di.injector.AppInjector;
 import com.minister.architecture.model.bean.DaoMaster;
@@ -70,6 +71,8 @@ public class MyApp extends Application implements HasActivityInjector {
 
         // 初始化SqLite
         initGreenDao();
+
+        Stetho.initializeWithDefaults(this);
     }
 
     private void initGreenDao() {
