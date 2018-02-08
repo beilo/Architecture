@@ -11,11 +11,13 @@ import android.view.ViewGroup;
 import com.minister.architecture.R;
 import com.minister.architecture.base.BaseSupportFragment;
 import com.minister.architecture.event.TabEvent;
+import com.minister.architecture.model.bean.AlarmClock;
 import com.minister.architecture.ui.gank.GankTabFragment;
 import com.minister.architecture.ui.gank.TechDetailFragment;
 import com.minister.architecture.ui.weather.WeatherFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuDetailFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuTabFragment;
+import com.minister.architecture.util.MyUtil;
 import com.minister.architecture.widget.bottomBar.BottomBar;
 import com.minister.architecture.widget.bottomBar.BottomBarTab;
 
@@ -88,6 +90,17 @@ public class MainFragment extends BaseSupportFragment {
             mFragments[1] = findChildFragment(ZhiHuTabFragment.class);
             mFragments[2] = findChildFragment(WeatherFragment.class);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        AlarmClock clock = new AlarmClock();
+        clock.setId(1);
+        clock.setHour(12);
+        clock.setMinute(30);
+        clock.setWeeks("2,3,4,5,6,7,1");
+        MyUtil.startAlarmClock(_mActivity, clock);
     }
 
     private void initView() {
