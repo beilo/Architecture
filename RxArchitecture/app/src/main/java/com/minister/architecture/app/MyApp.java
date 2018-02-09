@@ -9,6 +9,8 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.facebook.stetho.Stetho;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechUtility;
 import com.minister.architecture.BuildConfig;
 import com.minister.architecture.di.injector.AppInjector;
 import com.minister.architecture.model.bean.DaoMaster;
@@ -73,6 +75,8 @@ public class MyApp extends Application implements HasActivityInjector {
         initGreenDao();
 
         Stetho.initializeWithDefaults(this);
+
+        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=5a7d30e7");
     }
 
     private void initGreenDao() {

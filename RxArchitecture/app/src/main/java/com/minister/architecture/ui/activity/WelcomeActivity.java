@@ -1,4 +1,4 @@
-package com.minister.architecture.ui;
+package com.minister.architecture.ui.activity;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
@@ -12,12 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.minister.architecture.MainActivity;
 import com.minister.architecture.R;
 import com.minister.architecture.base.BaseSupportActivity;
 import com.minister.architecture.model.bean.GankItemBean;
-import com.minister.architecture.viewmodel.GankViewModel;
 import com.minister.architecture.util.RxHelp;
+import com.minister.architecture.viewmodel.GankViewModel;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -79,7 +78,7 @@ public class WelcomeActivity extends BaseSupportActivity {
 
     private void goMainActivity(String url) {
         if ("".equals(url)) {
-            Intent intent = new Intent(mContext, MainActivity.class);
+            Intent intent = MainActivity.getIntent(mContext);
             startActivity(intent);
             finish();
             return;
@@ -94,7 +93,7 @@ public class WelcomeActivity extends BaseSupportActivity {
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(@NonNull Long aLong) throws Exception {
-                        Intent intent = new Intent(mContext, MainActivity.class);
+                        Intent intent = MainActivity.getIntent(mContext);
                         startActivity(intent);
                         finish();
                     }

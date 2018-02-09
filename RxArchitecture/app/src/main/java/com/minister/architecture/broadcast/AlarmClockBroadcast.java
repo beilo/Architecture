@@ -4,12 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.minister.architecture.event.WeatherEvent;
 import com.minister.architecture.model.bean.AlarmClock;
+import com.minister.architecture.ui.activity.AlarmClockActivity;
 import com.minister.architecture.ui.weather.WeacConstants;
 import com.minister.architecture.util.MyUtil;
-
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * @author leipe on 2018/2/8.
@@ -31,7 +29,7 @@ public class AlarmClockBroadcast extends BroadcastReceiver {
                     MyUtil.startAlarmClock(context, alarmClock);
                 }
             }
-            EventBus.getDefault().post(new WeatherEvent());
+            context.startActivity(AlarmClockActivity.getIntent(context));
         }
     }
 }

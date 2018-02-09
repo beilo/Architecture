@@ -33,6 +33,9 @@ android {
     sourceSets {
         androidTest.java.srcDirs += "src/test-common/java"
         test.java.srcDirs += "src/test-common/java"
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
     }
 }
 
@@ -103,4 +106,6 @@ dependencies {
 
     compile 'com.tencent.bugly:crashreport:2.6.5' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
     compile 'com.tencent.bugly:nativecrashreport:3.3.1' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+    // 讯飞语音
+    compile files('libs/Msc.jar')
 }

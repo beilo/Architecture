@@ -22,7 +22,8 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
         if (intent != null) {
             if (ACTION_BOOT.equals(intent.getAction())) {
                 Toast.makeText(context, "开机自启DaemonService", Toast.LENGTH_SHORT).show();
-                context.startService(new Intent(context, DaemonService.class));
+                 context.startService(new Intent(context, DaemonService.class));
+//                context.startActivity(new Intent(context, MainActivity.class));
             }
         }
     }

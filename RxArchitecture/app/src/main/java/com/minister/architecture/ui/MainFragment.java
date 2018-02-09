@@ -81,7 +81,7 @@ public class MainFragment extends BaseSupportFragment {
         if (firstFragment == null) {
             mFragments[0] = GankTabFragment.newInstance();
             mFragments[1] = ZhiHuTabFragment.newInstance();
-            mFragments[2] = WeatherFragment.newInstance();
+            mFragments[2] = WeatherFragment.newInstance(false);
             loadMultipleRootFragment(R.id.fl_container, 0, mFragments);
         } else {
             mFragments[0] = firstFragment;
