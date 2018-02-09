@@ -2,6 +2,7 @@ package com.minister.architecture.base;
 
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
+import android.content.Context;
 import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,6 +33,7 @@ public class BaseSupportActivity extends SupportActivity
     protected final String TAG = this.getClass().getSimpleName();
     private static final String NAVIGATIONBAR_IS_MIN = "navigationbar_is_min";
 
+    protected Context mContext;
     protected CompositeDisposable mDisposable = new CompositeDisposable();
     protected Unbinder unbinder;
     protected ImmersionBar mImmersionBar;
@@ -39,6 +41,7 @@ public class BaseSupportActivity extends SupportActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
         mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.keyboardEnable(true).navigationBarWithKitkatEnable(false).init();
         //解决华为emui3.0与3.1手机手动隐藏底部导航栏时，导航栏背景色未被隐藏的问题

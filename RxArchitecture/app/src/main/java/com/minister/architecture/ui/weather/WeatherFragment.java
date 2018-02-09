@@ -8,6 +8,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,13 +18,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.minister.architecture.R;
 import com.minister.architecture.base.BaseSupportFragment;
-import com.minister.architecture.event.WeatherEvent;
 import com.minister.architecture.model.bean.WeatherBean;
 import com.minister.architecture.util.RxHelp;
 import com.minister.architecture.viewmodel.WeatherViewModel;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import javax.inject.Inject;
 
@@ -74,7 +71,6 @@ public class WeatherFragment extends BaseSupportFragment {
         View inflate = inflater.inflate(R.layout.fragment_weather_home, container, false);
         unbinder = ButterKnife.bind(this, inflate);
         mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(WeatherViewModel.class);
-        EventBus.getDefault().register(this);
         return inflate;
     }
 
@@ -87,6 +83,18 @@ public class WeatherFragment extends BaseSupportFragment {
                 loadData();
             }
         });
+
+        toolbar.inflateMenu(R.menu.weather_menu);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_new) {
+                    AddWeatherSettingDialogFragment.newInstance()
+                            .show(getFragmentManager());
+                }
+                return true;
+            }
+        });
     }
 
     @Override
@@ -94,12 +102,6 @@ public class WeatherFragment extends BaseSupportFragment {
         super.onLazyInitView(savedInstanceState);
         refresh.setRefreshing(true);
         loadData();
-    }
-
-    @Override
-    public void onDestroyView() {
-        EventBus.getDefault().unregister(this);
-        super.onDestroyView();
     }
 
     private void loadData() {
@@ -135,26 +137,5 @@ public class WeatherFragment extends BaseSupportFragment {
         if (refresh.isRefreshing()) {
             refresh.setRefreshing(false);
         }
-    }
-
-
-    @Subscribe
-    public void invokeWeatherVoice(WeatherEvent event) {
-        mDisposable.add(mViewModel.getBroadcastWeather(WeacConstants.CITY)
-                .compose(RxHelp.<String>rxScheduler())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        // TODO: 2018/2/8 调用语音接口
-                        Toast.makeText(_mActivity, s, Toast.LENGTH_SHORT).show();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Toast.makeText(_mActivity, "语音播放发生异常" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }));
-
-
     }
 }
