@@ -109,4 +109,13 @@ public class WeatherBean {
     public void setCityIco(String cityIco) {
         this.cityIco = cityIco;
     }
+
+    @Override
+    public String toString() {
+        return "现在时间是" + this.date +
+                "天气" + this.weather +
+                this.humidity +
+                this.ultravioletRay +
+                this.windDirection;
+    }
 }

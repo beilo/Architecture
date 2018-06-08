@@ -26,16 +26,17 @@ public class MyUtil {
      */
     public static void startAlarmClock(Context context, AlarmClock alarmClock) {
         Intent intent = new Intent(context, AlarmClockBroadcast.class);
-        intent.putExtra(WeacConstants.ALARM_CLOCK, alarmClock);
+        intent.setAction(String.valueOf(alarmClock.getId()));
+        intent.putExtra(WeacConstants.ALARM_CLOCK, GsonUtil.GsonString(alarmClock));
         // FLAG_UPDATE_CURRENT：如果PendingIntent已经存在，保留它并且只替换它的extra数据。
         // FLAG_CANCEL_CURRENT：如果PendingIntent已经存在，那么当前的PendingIntent会取消掉，然后产生一个新的PendingIntent。
         PendingIntent pi = PendingIntent.getBroadcast(context, alarmClock.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         // 取得下次响铃时间
         long nextTime = calculateNextTime(alarmClock.getHour(), alarmClock.getMinute(), alarmClock.getWeeks());
         manager.setExact(AlarmManager.RTC_WAKEUP, nextTime, pi);
     }
-
 
     /**
      * 取消闹钟

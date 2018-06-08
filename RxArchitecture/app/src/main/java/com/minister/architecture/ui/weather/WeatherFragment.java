@@ -65,6 +65,9 @@ public class WeatherFragment extends BaseSupportFragment {
     @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
 
+    // 是否初始化成功
+    private static boolean IS_INIT_TTS = false;
+
     @Inject
     ViewModelProvider.Factory mViewModelFactory;
     WeatherViewModel mViewModel;
@@ -72,8 +75,6 @@ public class WeatherFragment extends BaseSupportFragment {
 
     // 语音合成对象
     private SpeechSynthesizer mTts;
-    // 是否初始化成功
-    private boolean mIsInitTTS = false;
     private boolean mIsPlayWeather = false;
     private RxPermissions mRxPermissions;
 
@@ -160,6 +161,9 @@ public class WeatherFragment extends BaseSupportFragment {
             tvNowTemperature.setText(weatherBean.getNowTemperature() + " ℃");
             tvWeather.setText(weatherBean.getWeather());
             tvTemperature.setText(weatherBean.getTemperature());
+            if (refresh.isRefreshing()) {
+                refresh.setRefreshing(false);
+            }
         }
     }
 
@@ -205,7 +209,7 @@ public class WeatherFragment extends BaseSupportFragment {
                 // 正确的做法是将onCreate中的startSpeaking调用移至这里
                 // final String strTextToSpeech = "科大讯飞，让世界聆听我们的声音";
                 // mTts.startSpeaking(strTextToSpeech, mTtsListener);
-                mIsInitTTS = true;
+                IS_INIT_TTS = true;
             }
         }
     };
@@ -273,21 +277,22 @@ public class WeatherFragment extends BaseSupportFragment {
                     @Override
                     public void accept(@NonNull Permission permission) throws Exception {
                         if (permission.granted) { // 用户已经同意该权限
-                            if (mIsInitTTS) {
-                                mDisposable.add(mViewModel.getBroadcastWeather(WeacConstants.CITY)
-                                        .compose(RxHelp.<String>rxScheduler())
-                                        .subscribe(new Consumer<String>() {
-                                            @Override
-                                            public void accept(String s) throws Exception {
-                                                mTts.startSpeaking(s, mTtsListener);
-                                                Toast.makeText(_mActivity, s, Toast.LENGTH_SHORT).show();
-                                            }
-                                        }, new Consumer<Throwable>() {
-                                            @Override
-                                            public void accept(Throwable throwable) throws Exception {
-                                                Toast.makeText(_mActivity, "语音播放发生异常" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                                            }
-                                        }));
+                            if (IS_INIT_TTS) {
+                                mDisposable.add(
+                                        mViewModel.getBroadcastWeather(WeacConstants.CITY)
+                                                .compose(RxHelp.<String>rxScheduler())
+                                                .subscribe(new Consumer<String>() {
+                                                    @Override
+                                                    public void accept(String s) throws Exception {
+                                                        mTts.startSpeaking(s, mTtsListener);
+                                                        Toast.makeText(_mActivity, s, Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }, new Consumer<Throwable>() {
+                                                    @Override
+                                                    public void accept(Throwable throwable) throws Exception {
+                                                        Toast.makeText(_mActivity, "语音播放发生异常" + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }));
                             }
                         } else if (permission.shouldShowRequestPermissionRationale) { // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
                             Toast.makeText(_mActivity, "没有选中『不再询问』", Toast.LENGTH_SHORT).show();

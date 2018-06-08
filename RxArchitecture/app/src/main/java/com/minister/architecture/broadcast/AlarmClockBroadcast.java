@@ -7,6 +7,7 @@ import android.content.Intent;
 import com.minister.architecture.model.bean.AlarmClock;
 import com.minister.architecture.ui.activity.AlarmClockActivity;
 import com.minister.architecture.ui.weather.WeacConstants;
+import com.minister.architecture.util.GsonUtil;
 import com.minister.architecture.util.MyUtil;
 
 /**
@@ -20,7 +21,8 @@ public class AlarmClockBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent != null) {
-            AlarmClock alarmClock = intent.getParcelableExtra(WeacConstants.ALARM_CLOCK);
+            String stringExtra = intent.getStringExtra(WeacConstants.ALARM_CLOCK);
+            AlarmClock alarmClock = GsonUtil.GsonToBean(stringExtra, AlarmClock.class);
             if (alarmClock != null) {
                 if (alarmClock.getWeeks() == null) {
                     // 此处指调用一次
@@ -29,7 +31,7 @@ public class AlarmClockBroadcast extends BroadcastReceiver {
                     MyUtil.startAlarmClock(context, alarmClock);
                 }
             }
-            context.startActivity(AlarmClockActivity.getIntent(context));
+            AlarmClockActivity.startAlarmClockActivity(context);
         }
     }
 }

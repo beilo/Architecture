@@ -20,7 +20,7 @@ public abstract class ActivityModule {
     @ContributesAndroidInjector
     abstract WelcomeActivity contributeWelcomeActivity();
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = FragmentModule.class)
     abstract AlarmClockActivity contributeAlarmClockActivity();
 
 }

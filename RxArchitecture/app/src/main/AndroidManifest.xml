@@ -69,18 +69,8 @@
         <activity android:name=".ui.activity.AlarmClockActivity"/>
 
         <receiver
-            android:name=".broadcast.AlarmClockBroadcast"
-            android:process=":daemon"/>
-        <receiver android:name=".broadcast.BootBroadcastReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
+            android:name=".broadcast.AlarmClockBroadcast"/>
 
-        <service
-            android:name=".service.DaemonService"
-            android:exported="true"
-            android:process=":daemon"/>
     </application>
 
 </manifest>

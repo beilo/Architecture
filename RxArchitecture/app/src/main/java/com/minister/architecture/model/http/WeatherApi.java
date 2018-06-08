@@ -14,7 +14,7 @@ import retrofit2.http.POST;
  */
 
 public interface WeatherApi {
-    String HOST = "http://172.20.16.25:8089/";
+    String HOST = "http://172.20.16.26:8089/";
 
     @Headers({
             "Connection:keep-alive",

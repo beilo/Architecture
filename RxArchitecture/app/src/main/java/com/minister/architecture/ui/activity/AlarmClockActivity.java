@@ -16,8 +16,11 @@ import com.minister.architecture.ui.weather.WeatherFragment;
 
 public class AlarmClockActivity extends BaseSupportActivity {
 
-    public static Intent getIntent(Context context) {
-        return new Intent(context, AlarmClockActivity.class);
+    public static void startAlarmClockActivity(Context context){
+        Intent intent = new Intent(context,AlarmClockActivity.class);
+        // http://blog.csdn.net/debuglog/article/details/7249444
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     @Override

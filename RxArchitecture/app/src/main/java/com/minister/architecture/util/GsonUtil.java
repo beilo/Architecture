@@ -1,8 +1,12 @@
 package com.minister.architecture.util;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +16,7 @@ import java.util.Map;
 
 public class GsonUtil {
     private static Gson gson = null;
+
     static {
         if (gson == null) {
             gson = new Gson();
@@ -58,10 +63,21 @@ public class GsonUtil {
      * @return
      */
     public static <T> List<T> GsonToList(String gsonString, Class<T> cls) {
-        List<T> list = null;
-        if (gson != null) {
-            list = gson.fromJson(gsonString, new TypeToken<List<T>>() {
-            }.getType());
+        //        List<T> list = null;
+        //        if (gson != null) {
+        //            list = gson.fromJson(gsonString, new TypeToken<List<T>>() {
+        //            }.getType());
+        //        }
+
+        //         http://lmh19941113.github.io/2015/12/24/GSON%E8%A7%A3%E6%9E%90Json/
+        List<T> list = new ArrayList<>();
+        try {
+            JsonArray array = new JsonParser().parse(gsonString).getAsJsonArray();
+            for (final JsonElement elem : array) {
+                list.add(new Gson().fromJson(elem, cls));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return list;
     }
