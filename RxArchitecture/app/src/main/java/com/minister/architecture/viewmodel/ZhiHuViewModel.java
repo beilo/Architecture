@@ -9,8 +9,6 @@ import com.minister.architecture.model.bean.ZhihuDetailBean;
 import com.minister.architecture.repository.ZhihuRepository;
 import com.minister.architecture.util.RxHelp;
 
-import javax.inject.Inject;
-
 import io.reactivex.Flowable;
 
 /** 知乎 viewModel, 知乎api没有提供异常控制,所以不需要 compose(RxHelp.<T>handleResult())
@@ -21,9 +19,8 @@ public class ZhiHuViewModel extends ViewModel {
 
     private ZhihuRepository repository;
 
-    @Inject
-    public ZhiHuViewModel(ZhihuRepository repository) {
-        this.repository = repository;
+    public ZhiHuViewModel() {
+        this.repository = ZhihuRepository.getInstall();
     }
 
     /**

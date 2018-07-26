@@ -1,7 +1,6 @@
 package com.minister.architecture.ui.weather;
 
 import android.Manifest;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -34,10 +33,6 @@ import com.minister.architecture.viewmodel.WeatherViewModel;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -47,29 +42,18 @@ import io.reactivex.functions.Consumer;
 
 public class WeatherFragment extends BaseSupportFragment {
 
-
-    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.tv_date)
     TextView tvDate;
-    @BindView(R.id.tv_nowTemperature)
     TextView tvNowTemperature;
-    @BindView(R.id.tv_weather)
     TextView tvWeather;
-    @BindView(R.id.tv_temperature)
     TextView tvTemperature;
-    @BindView(R.id.img_weatherIco)
     ImageView imgWeatherIco;
-    @BindView(R.id.cl_weather_top)
     ConstraintLayout clWeatherTop;
-    @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
 
     // 是否初始化成功
     private static boolean IS_INIT_TTS = false;
 
-    @Inject
-    ViewModelProvider.Factory mViewModelFactory;
     WeatherViewModel mViewModel;
 
 
@@ -91,20 +75,29 @@ public class WeatherFragment extends BaseSupportFragment {
         super.onCreate(savedInstanceState);
         mIsPlayWeather = getArguments().getBoolean("isPlayWeather");
     }
-
+private View mView;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_weather_home, container, false);
-        unbinder = ButterKnife.bind(this, inflate);
-        mViewModel = ViewModelProviders.of(this, mViewModelFactory).get(WeatherViewModel.class);
-        initTTS();
-        return inflate;
+        mView = inflater.inflate(R.layout.fragment_weather_home, container, false);
+        return mView;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        toolbar = mView.findViewById(R.id.toolbar);
+        tvDate = mView.findViewById(R.id.tv_date);
+        tvNowTemperature = mView.findViewById(R.id.tv_nowTemperature);
+        tvWeather = mView.findViewById(R.id.tv_weather);
+        tvTemperature = mView.findViewById(R.id.tv_temperature);
+        imgWeatherIco = mView.findViewById(R.id.img_weatherIco);
+        clWeatherTop = mView.findViewById(R.id.cl_weather_top);
+        refresh = mView.findViewById(R.id.refresh);
+
+        mViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
+        initTTS();
+
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

@@ -1,6 +1,5 @@
 package com.minister.architecture.base;
 
-import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportActivity;
 
 /** 基础AC
@@ -9,15 +8,11 @@ import me.yokeyword.fragmentation.SupportActivity;
 
 public class BaseActivity extends SupportActivity {
     protected final String TAG = this.getClass().getSimpleName();
-    protected Unbinder unbinder;
 
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (unbinder != null) {
-            unbinder.unbind();
-        }
     }
 }

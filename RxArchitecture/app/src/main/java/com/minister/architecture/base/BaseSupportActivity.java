@@ -8,17 +8,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.gyf.barlibrary.OSUtils;
-import com.minister.architecture.di.injector.Injectable;
 
-import javax.inject.Inject;
-
-import butterknife.Unbinder;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
 import io.reactivex.disposables.CompositeDisposable;
 import me.yokeyword.fragmentation.SupportActivity;
 
@@ -27,15 +20,12 @@ import me.yokeyword.fragmentation.SupportActivity;
  */
 
 public class BaseSupportActivity extends SupportActivity
-        implements HasSupportFragmentInjector,
-        LifecycleOwner,
-        Injectable {
+        implements  LifecycleOwner{
     protected final String TAG = this.getClass().getSimpleName();
     private static final String NAVIGATIONBAR_IS_MIN = "navigationbar_is_min";
 
     protected Context mContext;
     protected CompositeDisposable mDisposable = new CompositeDisposable();
-    protected Unbinder unbinder;
     protected ImmersionBar mImmersionBar;
 
     @Override
@@ -58,23 +48,12 @@ public class BaseSupportActivity extends SupportActivity
         if (mDisposable != null) {
             mDisposable.clear();
         }
-        if (unbinder != null) {
-            unbinder.unbind();
-        }
         if (mImmersionBar != null) {
             mImmersionBar.destroy();
         }
 
     }
 
-    // dagger-android
-    @Inject
-    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
-
-    @Override
-    public DispatchingAndroidInjector<Fragment> supportFragmentInjector() {
-        return dispatchingAndroidInjector;
-    }
 
     // lifecycle
     private final LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);

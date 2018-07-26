@@ -9,9 +9,6 @@ import com.bumptech.glide.Glide;
 import com.minister.architecture.R;
 import com.minister.architecture.base.BaseActivity;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 import static com.minister.architecture.ui.gank.GirlDetailFragment.IT_GANK_GRIL_URL;
 
 /** 查看美女大图
@@ -20,15 +17,13 @@ import static com.minister.architecture.ui.gank.GirlDetailFragment.IT_GANK_GRIL_
 
 
 public class GirlDetailActivity extends BaseActivity {
-    @BindView(R.id.iv_girl_detail)
     ImageView ivGirlDetail;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_girl_detail);
-        unbinder = ButterKnife.bind(this);
+        ivGirlDetail = findViewById(R.id.iv_girl_detail);
         Intent intent = getIntent();
         final String url = intent.getStringExtra(IT_GANK_GRIL_URL);
         if (url != null) {

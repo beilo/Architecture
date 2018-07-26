@@ -2,14 +2,12 @@ package com.minister.architecture.repository;
 
 import android.support.annotation.NonNull;
 
+import com.lmroom.baselib.http.RetrofitUtil;
 import com.minister.architecture.model.bean.DailyListBean;
 import com.minister.architecture.model.bean.HotListBean;
 import com.minister.architecture.model.bean.WelcomeBean;
 import com.minister.architecture.model.bean.ZhihuDetailBean;
 import com.minister.architecture.model.http.ZhihuApis;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import io.reactivex.Flowable;
 import io.reactivex.functions.Predicate;
@@ -18,13 +16,25 @@ import io.reactivex.functions.Predicate;
  * 知乎Api 数据提供工厂
  * Created by leipe on 2017/9/18.
  */
-@Singleton
-public class ZhihuRepository {
-    ZhihuApis zhihuApis;
 
-    @Inject
-    public ZhihuRepository(ZhihuApis zhihuApis) {
-        this.zhihuApis = zhihuApis;
+public class ZhihuRepository {
+    private static class ZhihuHolder {
+        private static final ZhihuRepository INSTALL = new ZhihuRepository();
+    }
+
+    private ZhihuRepository() {
+        this.zhihuApis = RetrofitUtil.getInstall().getRetrofit(ZhihuApis.HOST)
+                .create(ZhihuApis.class);
+    }
+
+    private ZhihuApis zhihuApis;
+
+    /**
+     * Singleton install
+     * @return ZhihuRepository
+     */
+    public static final ZhihuRepository getInstall() {
+        return ZhihuHolder.INSTALL;
     }
 
     /**
@@ -33,7 +43,7 @@ public class ZhihuRepository {
      * @return Flowable<HotListBean>
      */
     public Flowable<HotListBean> getHotList() {
-        Flowable<HotListBean> hotList = zhihuApis.getHotList();
+        Flowable<HotListBean> hotList = this.zhihuApis.getHotList();
         Flowable<HotListBean> hotListBeanFlowable = Flowable.concat(hotList, hotList)
                 .filter(new Predicate<HotListBean>() {
                     @Override

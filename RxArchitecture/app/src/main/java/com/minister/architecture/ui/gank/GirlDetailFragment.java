@@ -25,10 +25,6 @@ import com.minister.architecture.util.ShareUtil;
 import com.minister.architecture.util.SystemUtil;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -44,9 +40,8 @@ public class GirlDetailFragment extends BaseSupportFragment {
     String mImgUrl;
     Bitmap mBitmap;
 
-    @BindView(R.id.iv_girl_detail)
+    private View _mView;
     ImageView img_detail;
-    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     public static GirlDetailFragment newInstance(Bundle bundle) {
@@ -86,9 +81,16 @@ public class GirlDetailFragment extends BaseSupportFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_girl_detail, container, false);
-        unbinder = ButterKnife.bind(this, inflate);
+        _mView= inflater.inflate(R.layout.fragment_girl_detail, container, false);
+        img_detail = _mView.findViewById(R.id.iv_girl_detail);
+        toolbar  = _mView.findViewById(R.id.toolbar);
 
+        img_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
         setToolbar(toolbar, "图片详情");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +114,7 @@ public class GirlDetailFragment extends BaseSupportFragment {
             }
         });
 
-        return inflate;
+        return _mView;
     }
 
     private void checkPermissionAndAction(final int action) {
@@ -137,10 +139,5 @@ public class GirlDetailFragment extends BaseSupportFragment {
                         }
                     }
                 });
-    }
-
-    @OnClick(R.id.iv_girl_detail)
-    public void onViewClicked() {
-        pop();
     }
 }

@@ -10,10 +10,8 @@ import android.view.View;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.minister.architecture.R;
-import com.minister.architecture.di.injector.Injectable;
 import com.minister.architecture.util.ResourcesUtil;
 
-import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -22,12 +20,10 @@ import me.yokeyword.fragmentation.SupportFragment;
  */
 
 public class BaseSupportFragment extends SupportFragment
-        implements LifecycleOwner,
-        Injectable {
+        implements LifecycleOwner{
     protected final String TAG = this.getClass().getSimpleName();
 
     protected CompositeDisposable mDisposable = new CompositeDisposable();
-    protected Unbinder unbinder;
     protected ImmersionBar mImmersionBar;
 
 
@@ -90,8 +86,6 @@ public class BaseSupportFragment extends SupportFragment
             mDisposable.clear();
         if (mImmersionBar != null)
             mImmersionBar.destroy();
-        if (unbinder != null)
-            unbinder.unbind();
 
     }
 

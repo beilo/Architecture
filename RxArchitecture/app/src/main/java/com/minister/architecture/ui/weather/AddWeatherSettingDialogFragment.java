@@ -36,11 +36,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-
 import static com.minister.architecture.ui.weather.WeacConstants.ALARM_CLOCK;
 
 /**
@@ -51,10 +46,7 @@ public class AddWeatherSettingDialogFragment extends DialogFragment {
 
     private static final String TAG = "AddWeatherSetting";
 
-    Unbinder unbinder;
-    @BindView(R.id.recycler)
     RecyclerView recycler;
-    @BindView(R.id.btn_add)
     Button btnAdd;
     private TimePickerDialog mTimePickerDialog;
 
@@ -83,7 +75,6 @@ public class AddWeatherSettingDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.dialog_add_weather_setting, container, false);
-        unbinder = ButterKnife.bind(this, mView);
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         return mView;
     }
@@ -91,6 +82,8 @@ public class AddWeatherSettingDialogFragment extends DialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        recycler = mView.findViewById(R.id.recycler);
+        btnAdd = mView.findViewById(R.id.btn_add);
 
         mAdapter = new AlarmClockAdapter(R.layout.dialog_add_weather_setting_item);
         ItemDragAndSwipeCallback itemDragAndSwipeCallback = new ItemDragAndSwipeCallback(mAdapter);
@@ -106,6 +99,13 @@ public class AddWeatherSettingDialogFragment extends DialogFragment {
         String jsonString = mACache.getAsString(ALARM_CLOCK);
         List<AlarmClock> clocks = GsonUtil.GsonToList(jsonString, AlarmClock.class);
         mAdapter.replaceData(clocks);
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onViewClicked();
+            }
+        });
     }
 
     @Override
@@ -123,7 +123,6 @@ public class AddWeatherSettingDialogFragment extends DialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 
     private OnItemSwipeListener onItemSwipeListener = new OnItemSwipeListener() {
@@ -187,7 +186,6 @@ public class AddWeatherSettingDialogFragment extends DialogFragment {
         ft.commitAllowingStateLoss();
     }
 
-    @OnClick(R.id.btn_add)
     public void onViewClicked() {
         getTimePickerDialog(new TimePickerDialog.OnTimeSetListener() {
             @Override

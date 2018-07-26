@@ -20,8 +20,6 @@ import com.minister.architecture.ui.gank.child.GirlListFragment;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.ISupportFragment;
 
@@ -31,14 +29,11 @@ import me.yokeyword.fragmentation.ISupportFragment;
  */
 public class GankTabFragment extends BaseSupportFragment {
 
-    @BindView(R.id.tab)
     TabLayout tab;
-    @BindView(R.id.vp_container)
     ViewPager vpContainer;
-    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.view)
-    View view;
+    View _mView;
+
 
     public static GankTabFragment newInstance() {
         GankTabFragment fragment = new GankTabFragment();
@@ -74,12 +69,20 @@ public class GankTabFragment extends BaseSupportFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_tab, container, false);
-        unbinder = ButterKnife.bind(this, inflate);
+        _mView = inflater.inflate(R.layout.fragment_tab, container, false);
+        EventBusActivityScope.getDefault(_mActivity).register(this);
+        return _mView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        tab = _mView.findViewById(R.id.tab);
+        vpContainer = _mView.findViewById(R.id.vp_container);
+        toolbar = _mView.findViewById(R.id.toolbar);
+
         setToolbar(toolbar, "干货集中营", 0);
         initView();
-        EventBusActivityScope.getDefault(_mActivity).register(this);
-        return inflate;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

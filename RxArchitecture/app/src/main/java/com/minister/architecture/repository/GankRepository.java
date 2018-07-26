@@ -1,5 +1,6 @@
 package com.minister.architecture.repository;
 
+import com.lmroom.baselib.http.RetrofitUtil;
 import com.minister.architecture.app.MyApp;
 import com.minister.architecture.model.bean.GankItemBean;
 import com.minister.architecture.model.http.GankApi;
@@ -9,25 +10,30 @@ import com.minister.architecture.util.NetWorkUtils;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import io.reactivex.Flowable;
 
 /**
  * Created by 被咯苏州 on 2017/9/4.
  */
-@Singleton
 public class GankRepository {
 
-    @Inject
-    MyApp app;
+    private static class GankHolder {
+        private static final GankRepository INSTALL = new GankRepository();
+    }
 
-    private final GankApi gankApi;
+    private GankApi gankApi;
 
-    @Inject
-    public GankRepository(GankApi gankApi) {
-        this.gankApi = gankApi;
+    private GankRepository() {
+        this.gankApi = RetrofitUtil.getInstall().getRetrofit(GankApi.HOST)
+                .create(GankApi.class);
+    }
+
+    /**
+     * Singleton install
+     * @return WeatherRepository
+     */
+    public static final GankRepository getInstall() {
+        return GankHolder.INSTALL;
     }
 
     /**
@@ -46,7 +52,7 @@ public class GankRepository {
      * @param page 页码
      */
     public Flowable<GankHttpResponse<List<GankItemBean>>> getGirlList(int num, int page) {
-        if (NetWorkUtils.isNetworkConnected(app)) {
+        if (NetWorkUtils.isNetworkConnected(MyApp.getInstance())) {
             return gankApi.getGirlList(num, page);
         }else {
             return Flowable.error(new ApiException("没有网络哟"));

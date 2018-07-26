@@ -1,7 +1,6 @@
 package com.minister.architecture.ui.activity;
 
 import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -22,10 +20,6 @@ import com.minister.architecture.viewmodel.GankViewModel;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Consumer;
 
@@ -36,22 +30,17 @@ import io.reactivex.functions.Consumer;
  */
 public class WelcomeActivity extends BaseSupportActivity {
 
-    @Inject
-    ViewModelProvider.Factory mViewModelFactory;
     GankViewModel mGankViewModel;
     private Context mContext;
 
-    @BindView(R.id.img_welcome)
     ImageView imgWelcome;
-    @BindView(R.id.tv_welcome_author)
-    TextView tvWelcomeAuthor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         mContext = this;
-        unbinder = ButterKnife.bind(this);
+        imgWelcome = findViewById(R.id.img_welcome);
         mGankViewModel = (GankViewModel) setViewModel(GankViewModel.class);
         initView();
     }
@@ -102,7 +91,7 @@ public class WelcomeActivity extends BaseSupportActivity {
     }
 
     public ViewModel setViewModel(Class className){
-        return ViewModelProviders.of(this, mViewModelFactory).get(className);
+        return ViewModelProviders.of(this).get(className);
     }
 
     @Override

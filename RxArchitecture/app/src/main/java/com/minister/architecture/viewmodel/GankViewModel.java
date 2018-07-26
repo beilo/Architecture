@@ -3,6 +3,7 @@ package com.minister.architecture.viewmodel;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
+import com.minister.architecture.app.MyApp;
 import com.minister.architecture.model.bean.DaoSession;
 import com.minister.architecture.model.bean.GankItemBean;
 import com.minister.architecture.model.bean.GankItemBeanDao;
@@ -14,8 +15,6 @@ import com.minister.architecture.util.RxHelp;
 import org.reactivestreams.Publisher;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
@@ -42,10 +41,9 @@ public class GankViewModel extends ViewModel {
     private int techPage = 1;
     private String tech = "Android";
 
-    @Inject
-    public GankViewModel(GankRepository mGankRepository,DaoSession daoSession) {
-        this.mGankRepository = mGankRepository;
-        this.daoSession = daoSession;
+    public GankViewModel() {
+        this.mGankRepository = GankRepository.getInstall();
+        this.daoSession = MyApp.getInstance().getDaoSession();
     }
 
     /**

@@ -19,9 +19,6 @@ import com.minister.architecture.ui.zhihu.ZhiHuTabFragment;
 import com.minister.architecture.widget.bottomBar.BottomBar;
 import com.minister.architecture.widget.bottomBar.BottomBarTab;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.ISupportFragment;
 
@@ -30,8 +27,7 @@ import me.yokeyword.fragmentation.ISupportFragment;
  * Created by 被咯苏州 on 2017/9/4.
  */
 public class MainFragment extends BaseSupportFragment {
-    protected Unbinder unbinder;
-    @BindView(R.id.bottom)
+    private View _mView;
     BottomBar mBottomBar;
     private ISupportFragment[] mFragments = new ISupportFragment[3];
 
@@ -68,10 +64,8 @@ public class MainFragment extends BaseSupportFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_main, container, false);
-        unbinder = ButterKnife.bind(this, inflate);
-        initView();
-        return inflate;
+        _mView = inflater.inflate(R.layout.fragment_main, container, false);
+        return _mView;
     }
 
     @Override
@@ -91,11 +85,9 @@ public class MainFragment extends BaseSupportFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    private void initView() {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mBottomBar = _mView.findViewById(R.id.bottom);
         mBottomBar
                 .addItem(new BottomBarTab(_mActivity, R.drawable.android, "安卓"))
                 .addItem(new BottomBarTab(_mActivity, R.drawable.zhihu, "知乎"))
@@ -118,4 +110,10 @@ public class MainFragment extends BaseSupportFragment {
             }
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.minister.architecture.ui.gank.child;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -30,10 +29,6 @@ import com.minister.architecture.viewmodel.GankViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
@@ -50,13 +45,9 @@ import static com.minister.architecture.ui.gank.GirlDetailFragment.IT_GANK_GRIL_
 
 public class GirlListFragment extends BaseSupportFragment {
 
-    @BindView(R.id.products_list)
+    private View _mView;
     RecyclerView mRecycler;
-    @BindView(R.id.refresh)
     SwipeRefreshLayout mRefresh;
-
-    @Inject
-    ViewModelProvider.Factory mViewModelFactory;
 
     GankViewModel mGankViewModel;
 
@@ -99,16 +90,17 @@ public class GirlListFragment extends BaseSupportFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.list_fragment, container, false);
-        unbinder = ButterKnife.bind(this, inflate);
-        initView();
-        return inflate;
+        _mView = inflater.inflate(R.layout.list_fragment, container, false);
+        return _mView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mGankViewModel = ViewModelProviders.of(this, mViewModelFactory).get(GankViewModel.class);
+        mRecycler  = _mView.findViewById(R.id.products_list);
+        mRefresh  = _mView.findViewById(R.id.refresh);
+        initView();
+        mGankViewModel = ViewModelProviders.of(this).get(GankViewModel.class);
         main();
         creaI();
     }

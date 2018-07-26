@@ -1,6 +1,5 @@
 package com.minister.architecture.ui.zhihu;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -28,10 +27,6 @@ import com.minister.architecture.util.HtmlUtil;
 import com.minister.architecture.util.RxHelp;
 import com.minister.architecture.viewmodel.ZhiHuViewModel;
 
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -42,15 +37,11 @@ import io.reactivex.functions.Consumer;
 public class ZhiHuDetailFragment extends BaseSupportFragment {
     private static final String ID = "id";
 
-    @Inject
-    ViewModelProvider.Factory mViewModelFactory;
     ZhiHuViewModel mZhihuViewModel;
 
-    @BindView(R.id.img_container)
+    private View _mView;
     ImageView mImgContainer;
-    @BindView(R.id.web_container)
     WebView mWebContainer;
-    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     public static ZhiHuDetailFragment newInstance(int id) {
@@ -64,13 +55,21 @@ public class ZhiHuDetailFragment extends BaseSupportFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_daily_detail, container, false);
-        unbinder = ButterKnife.bind(this, inflate);
-        mZhihuViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ZhiHuViewModel.class);
+        _mView = inflater.inflate(R.layout.fragment_daily_detail, container, false);
+        mZhihuViewModel = ViewModelProviders.of(this).get(ZhiHuViewModel.class);
+        return _mView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mImgContainer = _mView.findViewById(R.id.img_container);
+        mWebContainer = _mView.findViewById(R.id.web_container);
+        toolbar = _mView.findViewById(R.id.toolbar);
+
         setToolbar(toolbar,"知乎日报详情");
         initToolbar();
         initWebView();
-        return inflate;
     }
 
     private void initToolbar() {

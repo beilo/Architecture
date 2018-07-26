@@ -1,6 +1,5 @@
 package com.minister.architecture.ui.zhihu.child;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,10 +24,6 @@ import com.minister.architecture.viewmodel.ZhiHuViewModel;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -38,13 +33,10 @@ import io.reactivex.functions.Consumer;
 
 public class HotListFragment extends BaseSupportFragment {
 
-    @Inject
-    ViewModelProvider.Factory mViewModelFactory;
     ZhiHuViewModel mZhihuViewModel;
 
-    @BindView(R.id.products_list)
+    private View mView;
     RecyclerView mRecyclerView;
-    @BindView(R.id.refresh)
     SwipeRefreshLayout mRefresh;
 
     HotAdapter mAdapter;
@@ -59,11 +51,12 @@ public class HotListFragment extends BaseSupportFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.list_fragment, container, false);
-        unbinder = ButterKnife.bind(this, inflate);
-        mZhihuViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ZhiHuViewModel.class);
+        mView = inflater.inflate(R.layout.list_fragment, container, false);
+        mRecyclerView = mView.findViewById(R.id.products_list);
+        mRefresh = mView.findViewById(R.id.refresh);
+        mZhihuViewModel = ViewModelProviders.of(this).get(ZhiHuViewModel.class);
         initView();
-        return inflate;
+        return mView;
     }
 
     private void initView() {

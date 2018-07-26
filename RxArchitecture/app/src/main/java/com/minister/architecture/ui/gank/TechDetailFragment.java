@@ -18,9 +18,6 @@ import com.minister.architecture.R;
 import com.minister.architecture.app.MyApp;
 import com.minister.architecture.base.BaseSupportFragment;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Gank detail
  * Created by leipe on 2017/9/22.
@@ -29,9 +26,8 @@ import butterknife.ButterKnife;
 public class TechDetailFragment extends BaseSupportFragment {
     public static final String URL = "url";
 
-    @BindView(R.id.toolbar)
+    private View _mView;
     Toolbar toolbar;
-    @BindView(R.id.web_container)
     WebView webContainer;
 
     public static TechDetailFragment newInstance(String url) {
@@ -45,10 +41,16 @@ public class TechDetailFragment extends BaseSupportFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_tech_detail, container, false);
-        unbinder = ButterKnife.bind(this, inflate);
+        _mView = inflater.inflate(R.layout.fragment_tech_detail, container, false);
+        return _mView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        toolbar = _mView.findViewById(R.id.toolbar);
+        webContainer = _mView.findViewById(R.id.web_container);
         initView();
-        return inflate;
     }
 
     private void initView() {

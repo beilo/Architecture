@@ -1,6 +1,5 @@
 package com.minister.architecture.ui.gank.child;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -30,10 +29,6 @@ import com.minister.architecture.viewmodel.GankViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.Flowable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
@@ -46,13 +41,10 @@ import io.reactivex.functions.Consumer;
 public class TechListFragment extends BaseSupportFragment {
 
 
-    @Inject
-    ViewModelProvider.Factory mViewModelFactory;
     GankViewModel mGankViewModel;
 
-    @BindView(R.id.products_list)
+    private View _mView;
     RecyclerView mRecycleView;
-    @BindView(R.id.refresh)
     SwipeRefreshLayout mRefresh;
 
     private TechAdapter mBaseAdapter;
@@ -65,16 +57,17 @@ public class TechListFragment extends BaseSupportFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_fragment, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        initView();
-        return view;
+        _mView = inflater.inflate(R.layout.list_fragment, container, false);
+        return _mView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mGankViewModel = ViewModelProviders.of(this, mViewModelFactory).get(GankViewModel.class);
+        mRecycleView = _mView.findViewById(R.id.products_list);
+        mRefresh = _mView.findViewById(R.id.refresh);
+        mGankViewModel = ViewModelProviders.of(this).get(GankViewModel.class);
+        initView();
     }
 
     private void initView() {
@@ -175,7 +168,7 @@ public class TechListFragment extends BaseSupportFragment {
                                 return map;
                             }
                         })
-                        .compose(RxHelp.<ArrayMap<String,List<GankItemBean>>>rxScheduler())
+                        .compose(RxHelp.<ArrayMap<String, List<GankItemBean>>>rxScheduler())
                         .subscribe(new Consumer<ArrayMap<String, List<GankItemBean>>>() {
                             @Override
                             public void accept(@NonNull ArrayMap<String, List<GankItemBean>> stringListArrayMap) throws Exception {

@@ -1,6 +1,5 @@
 package com.minister.architecture.app;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,25 +11,19 @@ import com.facebook.stetho.Stetho;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 import com.minister.architecture.BuildConfig;
-import com.minister.architecture.di.injector.AppInjector;
 import com.minister.architecture.model.bean.DaoMaster;
 import com.minister.architecture.model.bean.DaoSession;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
 
-import javax.inject.Inject;
-
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasActivityInjector;
 import me.yokeyword.fragmentation.Fragmentation;
 
 /**
  * Created by leipe on 2017/8/24.
  */
 
-public class MyApp extends Application implements HasActivityInjector {
+public class MyApp extends Application  {
 
     private static MyApp instance;
 
@@ -45,16 +38,10 @@ public class MyApp extends Application implements HasActivityInjector {
 
     private DaoSession daoSession;
 
-    @Inject
-    DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
-
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
-
-        //初始化Injector
-        AppInjector.init(this);
 
         //初始化Logger
         Logger.addLogAdapter(new AndroidLogAdapter());
@@ -110,8 +97,4 @@ public class MyApp extends Application implements HasActivityInjector {
         }
     }
 
-    @Override
-    public AndroidInjector<Activity> activityInjector() {
-        return dispatchingAndroidInjector;
-    }
 }

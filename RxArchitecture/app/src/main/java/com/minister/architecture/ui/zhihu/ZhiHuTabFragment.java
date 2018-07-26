@@ -18,8 +18,6 @@ import com.minister.architecture.event.TabEvent;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 
 /**
@@ -29,14 +27,10 @@ import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 
 public class ZhiHuTabFragment extends BaseSupportFragment {
 
-    @BindView(R.id.tab)
     TabLayout tab;
-    @BindView(R.id.vp_container)
     ViewPager vpContainer;
-    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.view)
-    View view;
+    View mView;
 
     public static ZhiHuTabFragment newInstance() {
         Bundle bundle = new Bundle();
@@ -58,12 +52,16 @@ public class ZhiHuTabFragment extends BaseSupportFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_tab, container, false);
-        unbinder = ButterKnife.bind(this, inflate);
+        mView = inflater.inflate(R.layout.fragment_tab, container, false);
+
+        tab = mView.findViewById(R.id.tab);
+        vpContainer = mView.findViewById(R.id.vp_container);
+        toolbar = mView.findViewById(R.id.toolbar);
+
         setToolbar(toolbar,"知乎日报",0);
         initView();
         EventBusActivityScope.getDefault(_mActivity).register(this);
-        return inflate;
+        return mView;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

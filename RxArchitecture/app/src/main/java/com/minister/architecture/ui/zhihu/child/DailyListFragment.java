@@ -1,6 +1,5 @@
 package com.minister.architecture.ui.zhihu.child;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,10 +30,6 @@ import com.youth.banner.listener.OnBannerListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -44,13 +39,10 @@ import io.reactivex.functions.Consumer;
 
 public class DailyListFragment extends BaseSupportFragment {
 
-    @Inject
-    ViewModelProvider.Factory mViewModelFactory;
     ZhiHuViewModel mZhiHuViewModel;
 
-    @BindView(R.id.products_list)
+    private View mView;
     RecyclerView mRecyclerView;
-    @BindView(R.id.refresh)
     SwipeRefreshLayout mRefresh;
     Banner banner;
     View bannerPreView;
@@ -68,11 +60,17 @@ public class DailyListFragment extends BaseSupportFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.list_fragment, container, false);
-        unbinder = ButterKnife.bind(this, inflate);
+        mView = inflater.inflate(R.layout.list_fragment, container, false);
+        mZhiHuViewModel = ViewModelProviders.of(this).get(ZhiHuViewModel.class);
+        return mView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mRecyclerView = mView.findViewById(R.id.products_list);
+        mRefresh = mView.findViewById(R.id.refresh);
         initView();
-        mZhiHuViewModel = ViewModelProviders.of(this, mViewModelFactory).get(ZhiHuViewModel.class);
-        return inflate;
     }
 
     private void initView() {
