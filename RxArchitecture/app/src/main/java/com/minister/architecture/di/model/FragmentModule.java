@@ -19,9 +19,10 @@ package com.minister.architecture.di.model;
 import com.minister.architecture.ui.MainFragment;
 import com.minister.architecture.ui.gank.GankTabFragment;
 import com.minister.architecture.ui.gank.GirlDetailFragment;
-import com.minister.architecture.ui.gank.child.GirlListFragment;
 import com.minister.architecture.ui.gank.TechDetailFragment;
+import com.minister.architecture.ui.gank.child.GirlListFragment;
 import com.minister.architecture.ui.gank.child.TechListFragment;
+import com.minister.architecture.ui.weather.WeatherFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuDetailFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuTabFragment;
 import com.minister.architecture.ui.zhihu.child.DailyListFragment;
@@ -61,4 +62,7 @@ public abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract HotListFragment contributeHotListFragment();
+
+    @ContributesAndroidInjector
+    abstract WeatherFragment contributeWeatherFragment();
 }

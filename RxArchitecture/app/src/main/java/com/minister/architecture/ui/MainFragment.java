@@ -13,6 +13,7 @@ import com.minister.architecture.base.BaseSupportFragment;
 import com.minister.architecture.event.TabEvent;
 import com.minister.architecture.ui.gank.GankTabFragment;
 import com.minister.architecture.ui.gank.TechDetailFragment;
+import com.minister.architecture.ui.weather.WeatherFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuDetailFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuTabFragment;
 import com.minister.architecture.widget.bottomBar.BottomBar;
@@ -24,14 +25,15 @@ import butterknife.Unbinder;
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.ISupportFragment;
 
-/** 主 fragment
+/**
+ * 主 fragment
  * Created by 被咯苏州 on 2017/9/4.
  */
 public class MainFragment extends BaseSupportFragment {
     protected Unbinder unbinder;
     @BindView(R.id.bottom)
     BottomBar mBottomBar;
-    private ISupportFragment[] mFragments = new ISupportFragment[2];
+    private ISupportFragment[] mFragments = new ISupportFragment[3];
 
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
@@ -54,11 +56,11 @@ public class MainFragment extends BaseSupportFragment {
         }
     }
 
-    public void startDailyDetailFragment(ZhiHuDetailFragment zhiHuDetailFragment){ // 第二种:子fg和父fg通信的方式
+    public void startDailyDetailFragment(ZhiHuDetailFragment zhiHuDetailFragment) { // 第二种:子fg和父fg通信的方式
         start(zhiHuDetailFragment);
     }
 
-    public void startTechDetailFragment(TechDetailFragment techDetailFragment){
+    public void startTechDetailFragment(TechDetailFragment techDetailFragment) {
         start(techDetailFragment);
     }
 
@@ -72,10 +74,33 @@ public class MainFragment extends BaseSupportFragment {
         return inflate;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        GankTabFragment firstFragment = findChildFragment(GankTabFragment.class);
+        if (firstFragment == null) {
+            mFragments[0] = GankTabFragment.newInstance();
+            mFragments[1] = ZhiHuTabFragment.newInstance();
+            mFragments[2] = WeatherFragment.newInstance(false);
+            loadMultipleRootFragment(R.id.fl_container, 0, mFragments);
+        } else {
+            mFragments[0] = firstFragment;
+            mFragments[1] = findChildFragment(ZhiHuTabFragment.class);
+            mFragments[2] = findChildFragment(WeatherFragment.class);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     private void initView() {
         mBottomBar
-                .addItem(new BottomBarTab(_mActivity, R.drawable.android, "android"))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.zhihu, "zhihu"));
+                .addItem(new BottomBarTab(_mActivity, R.drawable.android, "安卓"))
+                .addItem(new BottomBarTab(_mActivity, R.drawable.zhihu, "知乎"))
+                .addItem(new BottomBarTab(_mActivity, R.drawable.tianqi, "天气"))
+        ;
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position, int prePosition) {
@@ -92,25 +117,5 @@ public class MainFragment extends BaseSupportFragment {
                 EventBusActivityScope.getDefault(_mActivity).post(new TabEvent(position));
             }
         });
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        GankTabFragment firstFragment = findChildFragment(GankTabFragment.class);
-        if (firstFragment == null) {
-            mFragments[0] = GankTabFragment.newInstance();
-            mFragments[1] = ZhiHuTabFragment.newInstance();
-            loadMultipleRootFragment(R.id.fl_container, 0, mFragments);
-        } else {
-            mFragments[0] = firstFragment;
-            mFragments[1] = findChildFragment(ZhiHuTabFragment.class);
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
     }
 }
