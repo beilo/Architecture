@@ -1,5 +1,7 @@
 package com.minister.architecture.repository;
 
+import android.support.annotation.NonNull;
+
 import com.minister.architecture.model.bean.DailyListBean;
 import com.minister.architecture.model.bean.HotListBean;
 import com.minister.architecture.model.bean.WelcomeBean;
@@ -10,7 +12,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Flowable;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Predicate;
 
 /**
