@@ -11,9 +11,11 @@ public class RetrofitUtil {
     }
 
     private RetrofitUtil() {
+        client = OkHttpUtil.getInstall().getOkHttpClient();
+        builder = new Retrofit.Builder();
     }
 
-    private OkHttpClient client = OkHttpUtil.getInstall().getOkHttpClient();
+    private OkHttpClient client;
     private Retrofit.Builder builder;
 
     public static final RetrofitUtil getInstall() {
@@ -21,9 +23,6 @@ public class RetrofitUtil {
     }
 
     public Retrofit getRetrofit(String url) {
-        if (builder == null) {
-            builder = new Retrofit.Builder();
-        }
         return builder
                 .baseUrl(url)
                 .client(client)
@@ -32,10 +31,7 @@ public class RetrofitUtil {
                 .build();
     }
 
-    public Retrofit getRetrofit(String url,OkHttpClient client) {
-        if (builder == null) {
-            builder = new Retrofit.Builder();
-        }
+    public Retrofit getRetrofit(String url, OkHttpClient client) {
         return builder
                 .baseUrl(url)
                 .client(client)

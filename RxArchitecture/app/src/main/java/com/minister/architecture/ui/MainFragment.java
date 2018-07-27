@@ -13,7 +13,7 @@ import com.minister.architecture.base.BaseSupportFragment;
 import com.minister.architecture.event.TabEvent;
 import com.minister.architecture.ui.gank.GankTabFragment;
 import com.minister.architecture.ui.gank.TechDetailFragment;
-import com.minister.architecture.ui.weather.WeatherFragment;
+import com.minister.architecture.ui.journalism.JournalismTabFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuDetailFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuTabFragment;
 import com.minister.architecture.widget.bottomBar.BottomBar;
@@ -75,12 +75,12 @@ public class MainFragment extends BaseSupportFragment {
         if (firstFragment == null) {
             mFragments[0] = GankTabFragment.newInstance();
             mFragments[1] = ZhiHuTabFragment.newInstance();
-            mFragments[2] = WeatherFragment.newInstance(false);
+            mFragments[2] = JournalismTabFragment.newInstance();
             loadMultipleRootFragment(R.id.fl_container, 0, mFragments);
         } else {
             mFragments[0] = firstFragment;
             mFragments[1] = findChildFragment(ZhiHuTabFragment.class);
-            mFragments[2] = findChildFragment(WeatherFragment.class);
+            mFragments[2] = findChildFragment(JournalismTabFragment.class);
         }
     }
 

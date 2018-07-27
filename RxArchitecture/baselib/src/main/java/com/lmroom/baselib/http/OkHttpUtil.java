@@ -3,8 +3,6 @@ package com.lmroom.baselib.http;
 import android.os.Environment;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
-import com.lmroom.baselib.BuildConfig;
-import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -17,8 +15,10 @@ public class OkHttpUtil {
     private static class OkHttpHolder {
         private static final OkHttpUtil INSTALL = new OkHttpUtil();
     }
+
     private OkHttpUtil() {
     }
+
     private OkHttpClient.Builder builder;
 
     public static final OkHttpUtil getInstall() {
@@ -30,16 +30,9 @@ public class OkHttpUtil {
             builder = new OkHttpClient.Builder();
         }
 
-        if (BuildConfig.DEBUG) {
-            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-                @Override
-                public void log(String message) {
-                    Logger.t("OkHttp").d(message);
-                }
-            });
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            builder.addInterceptor(loggingInterceptor);
-        }
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        builder.addInterceptor(loggingInterceptor);
 
         File cacheFile = new File(Environment.getDataDirectory().getPath() + File.separator + "data" + "/NetCache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
