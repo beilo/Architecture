@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'com.alibaba.arouter'
 
 android {
     compileSdkVersion Versions.compileSdkVersion
@@ -91,6 +92,10 @@ dependencies {
 //    compile Libs.javax_inject
     // 讯飞语音
     compile files('libs/Msc.jar')
+    // ARouter
+    compile Libs.arouter_api
+    compile Libs.arouter_annotation
+    annotationProcessor Libs.arouter_compiler
 
     testCompile Libs.test_junit
     testCompile Libs.test_mockito_core

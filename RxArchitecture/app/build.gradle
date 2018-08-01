@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.alibaba.arouter'
 apply plugin: 'org.greenrobot.greendao'
-apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion Versions.compileSdkVersion
@@ -43,4 +43,10 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':baselib')
+    if (!isModule.toBoolean()) {
+        compile project(':model_zhihu')
+        compile project(':model_gank')
+        compile project(':model_journalism')
+    }
+
 }

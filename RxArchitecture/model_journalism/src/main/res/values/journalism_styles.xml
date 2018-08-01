@@ -1,0 +1,45 @@
+<resources>
+
+<!-- Base application theme. -->
+<style name="Journalism_AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/journalism_colorPrimary</item>
+    <item name="colorPrimaryDark">@color/journalism_colorPrimaryDark</item>
+    <item name="colorAccent">@color/journalism_colorAccent</item>
+
+</style>
+
+<style name="Journalism_SplashTheme" parent="Journalism_AppTheme">
+    <item name="android:windowBackground">@drawable/journalism_splash_bg</item>
+    <item name="android:windowIsTranslucent">false</item>
+</style>
+
+
+<style name="Journalism_ToolBarStyle" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:background">@color/journalism_colorAccent</item>
+    <item name="android:textColorPrimary">@android:color/white</item>
+    <item name="android:textSize">14sp</item>
+
+    <item name="android:popupTheme">@style/ToolbarPopupTheme</item>
+    <item name="android:actionMenuTextAppearance">@style/Journalism_ToolbarMenuTextSize</item>
+    <item name="android:theme">@style/Theme.ToolBar.Journalism</item>
+</style>
+
+<style name="Journalism_ToolbarMenuTextSize" parent="TextAppearance.AppCompat.Menu">
+    <item name="android:textSize">12sp</item>
+    <item name="android:textColor">#ffffff</item>
+    <item name="android:colorBackground">#212121</item>
+</style>
+<!-- toolbar弹出菜单样式 -->
+<style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat">
+    <item name="android:colorBackground">#212121</item>
+</style>
+
+<!--右边三个点的样式-->
+<style name="Theme.ToolBar.Journalism" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="actionOverflowButtonStyle">@style/ActionButton.Overflow.Journalism</item>
+</style>
+<style name="ActionButton.Overflow.Journalism" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
+    <item name="android:src">@drawable/journalism_ic_action_overflow</item>
+</style>
+</resources>

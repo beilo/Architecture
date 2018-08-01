@@ -2,7 +2,6 @@ package com.minister.architecture.util;
 
 import android.support.annotation.NonNull;
 
-import com.minister.architecture.model.http.result.GankHttpResponse;
 import com.minister.architecture.model.http.result.JokeResponse;
 import com.minister.architecture.model.http.result.JournalismResponse;
 
@@ -23,35 +22,6 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class RxHelp {
-
-    public static <T> FlowableTransformer<GankHttpResponse<T>, T> handleResult() {
-        return new FlowableTransformer<GankHttpResponse<T>, T>() {
-            @Override
-            public Publisher<T> apply(@NonNull Flowable<GankHttpResponse<T>> upstream) {
-                return upstream
-                        .flatMap(new Function<GankHttpResponse<T>, Publisher<T>>() {
-                            @Override
-                            public Publisher<T> apply(@NonNull final GankHttpResponse<T> tGankHttpResponse) throws Exception {
-                                if (tGankHttpResponse.getError()) {
-                                    return Flowable.error(new ApiException("接口逻辑错误"));
-                                } else {
-                                    return Flowable.create(new FlowableOnSubscribe<T>() {
-                                        @Override
-                                        public void subscribe(@NonNull FlowableEmitter<T> flowable) throws Exception {
-                                            try {
-                                                flowable.onNext(tGankHttpResponse.getResults());
-                                                flowable.onComplete();
-                                            } catch (Exception e) {
-                                                flowable.onError(e);
-                                            }
-                                        }
-                                    }, BackpressureStrategy.ERROR);
-                                }
-                            }
-                        });
-            }
-        };
-    }
 
     public static <T> FlowableTransformer<JournalismResponse<T>, T> handleResultForJournalism() {
         return new FlowableTransformer<JournalismResponse<T>, T>() {

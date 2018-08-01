@@ -1,7 +1,12 @@
 object Versions {
+    val applicationId = "com.minister.architecture"
+    val applicationId_zhihu = "com.minister.architecture.zhihu"
+    val applicationId_xinwen = "com.minister.architecture.xinwen"
+    val applicationId_gank = "com.minister.architecture.gank"
+
     val compileSdkVersion = 26
     val buildToolsVersion = "26.0.2"
-    val applicationId = "com.minister.architecture"
+
     val minSdkVersion = 22
     val targetSdkVersion = 26
     val versionCode = 1
@@ -34,6 +39,9 @@ object Versions {
     val test_core_testing = "1.0.0-alpha9-1"
     val bugly_crashreport = "2.6.5"
     val bugly_nativecrashreport = "3.3.1"
+
+    val arouter_api = "1.3.1";
+    val arouter_compiler = "1.1.4";
 }
 
 object Libs {
@@ -79,4 +87,8 @@ object Libs {
     val bugly_crashreport = "com.tencent.bugly:crashreport:${Versions.bugly_crashreport}"
     val bugly_nativecrashreport = "com.tencent.bugly:nativecrashreport:${Versions.bugly_nativecrashreport}"
     val javax_inject = "javax.inject:javax.inject:1"
+
+    val arouter_api = "com.alibaba:arouter-api:${Versions.arouter_api}"
+    val arouter_annotation = "com.alibaba:arouter-annotation:1.0.4"
+    val arouter_compiler = "com.alibaba:arouter-compiler:${Versions.arouter_compiler}"
 }

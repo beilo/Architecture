@@ -11,11 +11,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.lmroom.baselib.base.BaseSupportActivity;
+import com.lmroom.gank.bean.GankItemBean;
+import com.lmroom.gank.viewmodel.GankViewModel;
 import com.minister.architecture.R;
-import com.minister.architecture.base.BaseSupportActivity;
-import com.minister.architecture.model.bean.GankItemBean;
 import com.minister.architecture.util.RxHelp;
-import com.minister.architecture.viewmodel.GankViewModel;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;

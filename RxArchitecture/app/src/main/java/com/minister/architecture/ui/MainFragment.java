@@ -2,22 +2,25 @@ package com.minister.architecture.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lmroom.baselib.base.BaseSupportFragment;
+import com.lmroom.gank.event.GankEvent;
+import com.lmroom.gank.view.GankTabFragment;
+import com.lmroom.gank.view.GirlDetailFragment;
+import com.lmroom.gank.view.TechDetailFragment;
+import com.lmroom.journalism.view.JournalismTabFragment;
+import com.lmroom.zhihu.event.ZhiHuEvent;
+import com.lmroom.zhihu.view.ZhiHuDetailFragment;
+import com.lmroom.zhihu.view.ZhiHuTabFragment;
 import com.minister.architecture.R;
-import com.minister.architecture.base.BaseSupportFragment;
-import com.minister.architecture.event.TabEvent;
-import com.minister.architecture.ui.gank.GankTabFragment;
-import com.minister.architecture.ui.gank.TechDetailFragment;
-import com.minister.architecture.ui.journalism.JournalismTabFragment;
-import com.minister.architecture.ui.zhihu.ZhiHuDetailFragment;
-import com.minister.architecture.ui.zhihu.ZhiHuTabFragment;
 import com.minister.architecture.widget.bottomBar.BottomBar;
 import com.minister.architecture.widget.bottomBar.BottomBarTab;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.ISupportFragment;
@@ -36,35 +39,11 @@ public class MainFragment extends BaseSupportFragment {
         return fragment;
     }
 
-
-    @Override
-    public void onAttachFragment(Fragment childFragment) {
-        super.onAttachFragment(childFragment);
-        if (childFragment instanceof GankTabFragment) { // 第一种:子fg和父fg通信的方式
-            ((GankTabFragment) childFragment).setOnGankTabFragmentListener(new GankTabFragment.OnGankTabFragmentListener() {
-                @Override
-                public void onStartGirlDetail(View view, ISupportFragment supportFragment) {
-                    extraTransaction()
-                            .addSharedElement(view, ViewCompat.getTransitionName(view))
-                            .start(supportFragment);
-                }
-            });
-        }
-    }
-
-    public void startDailyDetailFragment(ZhiHuDetailFragment zhiHuDetailFragment) { // 第二种:子fg和父fg通信的方式
-        start(zhiHuDetailFragment);
-    }
-
-    public void startTechDetailFragment(TechDetailFragment techDetailFragment) {
-        start(techDetailFragment);
-    }
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         _mView = inflater.inflate(R.layout.fragment_main, container, false);
+        EventBusActivityScope.getDefault(_mActivity).register(this);
         return _mView;
     }
 
@@ -106,14 +85,28 @@ public class MainFragment extends BaseSupportFragment {
 
             @Override
             public void onTabReselected(int position) {
-                EventBusActivityScope.getDefault(_mActivity).post(new TabEvent(position));
             }
         });
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onDestroy() {
+        EventBusActivityScope.getDefault(_mActivity).unregister(this);
+        super.onDestroy();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void startDailyDetailFragment(ZhiHuEvent.StartDetailEvent event) { // 第二种:子fg和父fg通信的方式
+        start(ZhiHuDetailFragment.newInstance(event.getId()));
+    }
+
+    @Subscribe
+    public void startDailyDetailFragment(GankEvent.StartTechDetailEvent event) { // 第二种:子fg和父fg通信的方式
+        start(TechDetailFragment.newInstance(event.getUrl()));
+    }
+
+    @Subscribe
+    public void startGirlDetailFragment(GankEvent.StartGirlDetailEvent event) {
+        start(GirlDetailFragment.newInstance(event.getId(), event.getUrl()));
+    }
 }
