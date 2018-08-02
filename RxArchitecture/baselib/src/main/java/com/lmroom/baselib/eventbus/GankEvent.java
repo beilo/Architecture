@@ -1,4 +1,4 @@
-package com.lmroom.gank.event;
+package com.lmroom.baselib.eventbus;
 
 public class GankEvent {
     public static class TabEvent {

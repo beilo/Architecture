@@ -6,15 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.lmroom.baselib.base.BaseSupportFragment;
-import com.lmroom.gank.event.GankEvent;
-import com.lmroom.gank.view.GankTabFragment;
-import com.lmroom.gank.view.GirlDetailFragment;
-import com.lmroom.gank.view.TechDetailFragment;
-import com.lmroom.journalism.view.JournalismTabFragment;
-import com.lmroom.zhihu.event.ZhiHuEvent;
-import com.lmroom.zhihu.view.ZhiHuDetailFragment;
-import com.lmroom.zhihu.view.ZhiHuTabFragment;
+import com.lmroom.baselib.eventbus.GankEvent;
+import com.lmroom.baselib.eventbus.ZhiHuEvent;
 import com.minister.architecture.R;
 import com.minister.architecture.widget.bottomBar.BottomBar;
 import com.minister.architecture.widget.bottomBar.BottomBarTab;
@@ -24,6 +19,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.ISupportFragment;
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * 主 fragment
@@ -50,16 +46,23 @@ public class MainFragment extends BaseSupportFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        GankTabFragment firstFragment = findChildFragment(GankTabFragment.class);
-        if (firstFragment == null) {
-            mFragments[0] = GankTabFragment.newInstance();
-            mFragments[1] = ZhiHuTabFragment.newInstance();
-            mFragments[2] = JournalismTabFragment.newInstance();
+        SupportFragment gankTabFragment = (SupportFragment) ARouter.getInstance().build("/gank/tab").navigation();
+        SupportFragment zhihuTabFragment = (SupportFragment) ARouter.getInstance().build("/zhihu/tab").navigation();
+        SupportFragment journalismTabFragment = (SupportFragment) ARouter.getInstance().build("/journalism/tab").navigation();
+
+        Class<SupportFragment> gankTabClass = (Class<SupportFragment>) gankTabFragment.getClass();
+        Class<SupportFragment> zhihuTabClass = (Class<SupportFragment>) zhihuTabFragment.getClass();
+        Class<SupportFragment> journalismTabClass = (Class<SupportFragment>) journalismTabFragment.getClass();
+
+        if (findChildFragment(gankTabClass) == null) {
+            mFragments[0] = gankTabFragment;
+            mFragments[1] = zhihuTabFragment;
+            mFragments[2] = journalismTabFragment;
             loadMultipleRootFragment(R.id.fl_container, 0, mFragments);
         } else {
-            mFragments[0] = firstFragment;
-            mFragments[1] = findChildFragment(ZhiHuTabFragment.class);
-            mFragments[2] = findChildFragment(JournalismTabFragment.class);
+            mFragments[0] = findChildFragment(gankTabClass);
+            mFragments[1] = findChildFragment(zhihuTabClass);
+            mFragments[2] = findChildFragment(journalismTabClass);
         }
     }
 
@@ -97,16 +100,29 @@ public class MainFragment extends BaseSupportFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void startDailyDetailFragment(ZhiHuEvent.StartDetailEvent event) { // 第二种:子fg和父fg通信的方式
-        start(ZhiHuDetailFragment.newInstance(event.getId()));
+        Object dailyDetail = ARouter.getInstance()
+                .build("/zhihu/detail")
+                .withInt("id", event.getId())
+                .navigation();
+        start((ISupportFragment) dailyDetail);
     }
 
     @Subscribe
     public void startDailyDetailFragment(GankEvent.StartTechDetailEvent event) { // 第二种:子fg和父fg通信的方式
-        start(TechDetailFragment.newInstance(event.getUrl()));
+        Object dailyDetail = ARouter.getInstance()
+                .build("/gank/tech/detail")
+                .withString("url", event.getUrl())
+                .navigation();
+        start((ISupportFragment) dailyDetail);
     }
 
     @Subscribe
     public void startGirlDetailFragment(GankEvent.StartGirlDetailEvent event) {
-        start(GirlDetailFragment.newInstance(event.getId(), event.getUrl()));
+        Object girlDetail = ARouter.getInstance()
+                .build("/gank/girl/detail")
+                .withString("gank_girl_id", event.getId())
+                .withString("gank_girl_url", event.getUrl())
+                .navigation();
+        start((ISupportFragment) girlDetail);
     }
 }

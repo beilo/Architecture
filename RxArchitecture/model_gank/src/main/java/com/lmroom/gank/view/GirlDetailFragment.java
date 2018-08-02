@@ -16,7 +16,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -36,30 +38,20 @@ import io.reactivex.functions.Consumer;
 @Route(path = "/gank/girl/detail")
 public class GirlDetailFragment extends BaseSupportFragment {
 
-    public static final String IT_GANK_GRIL_URL = "gank_girl_url";
-    public static final String IT_GANK_GRIL_ID = "gank_girl_id";
-
     RxPermissions mRxPermissions;
-    String mImgUrl;
     Bitmap mBitmap;
 
     private View _mView;
     ImageView img_detail;
     Toolbar toolbar;
-
-    public static GirlDetailFragment newInstance(String id,String url) {
-        GirlDetailFragment fragment = new GirlDetailFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(GirlDetailFragment.IT_GANK_GRIL_URL, url);
-        bundle.putString(GirlDetailFragment.IT_GANK_GRIL_ID, id);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
+    @Autowired(name = "gank_girl_id")
+    String id;
+    @Autowired(name = "gank_girl_url")
+    String mImgUrl;
 
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        mImgUrl = getArguments().getString(IT_GANK_GRIL_URL);
         if (mImgUrl != null) {
             Glide.with(_mActivity).load(mImgUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
                 @Override
@@ -70,7 +62,6 @@ public class GirlDetailFragment extends BaseSupportFragment {
             });
         }
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,9 +78,16 @@ public class GirlDetailFragment extends BaseSupportFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        _mView= inflater.inflate(R.layout.gank_fragment_girl_detail, container, false);
+        _mView = inflater.inflate(R.layout.gank_fragment_girl_detail, container, false);
+        ARouter.getInstance().inject(this);
+        return _mView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         img_detail = _mView.findViewById(R.id.iv_girl_detail);
-        toolbar  = _mView.findViewById(R.id.toolbar);
+        toolbar = _mView.findViewById(R.id.toolbar);
 
         img_detail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,8 +115,6 @@ public class GirlDetailFragment extends BaseSupportFragment {
                 return true;
             }
         });
-
-        return _mView;
     }
 
     @Override
@@ -136,9 +132,9 @@ public class GirlDetailFragment extends BaseSupportFragment {
                     @Override
                     public void accept(@NonNull Permission permission) throws Exception {
                         if (permission.granted) { // 用户已经同意该权限
-                            if (action == R.id.gank_action_share){
+                            if (action == R.id.gank_action_share) {
                                 ShareUtil.shareImage(_mActivity, SystemUtil.saveBitmapToFile(_mActivity, mImgUrl, mBitmap, true), "图片分享");
-                            }else if (action == R.id.gank_action_save){
+                            } else if (action == R.id.gank_action_save) {
                                 SystemUtil.saveBitmapToFile(_mActivity, mImgUrl, mBitmap, false);
                             }
                         } else if (permission.shouldShowRequestPermissionRationale) { // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框

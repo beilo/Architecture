@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lmroom.baselib.base.BaseSupportFragment;
@@ -21,6 +22,7 @@ import com.lmroom.journalism.viewmodel.JournalismViewModel;
 
 import io.reactivex.functions.Consumer;
 
+@Route(path = "/journalism/joke/list")
 public class JokeListFragment extends BaseSupportFragment {
 
     public static JokeListFragment newInstance() {

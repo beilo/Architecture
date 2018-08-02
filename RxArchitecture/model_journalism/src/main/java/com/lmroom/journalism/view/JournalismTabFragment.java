@@ -12,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.lmroom.baselib.base.BaseSupportFragment;
 import com.lmroom.journalism.R;
 import com.lmroom.journalism.view.child.JokeListFragment;
 import com.lmroom.journalism.view.child.JournalismListFragment;
 
+@Route(path = "/journalism/tab")
 public class JournalismTabFragment extends BaseSupportFragment {
     public static JournalismTabFragment newInstance() {
         Bundle args = new Bundle();

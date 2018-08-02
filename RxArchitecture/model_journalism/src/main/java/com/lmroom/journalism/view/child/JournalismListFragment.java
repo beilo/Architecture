@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import io.reactivex.functions.Consumer;
 
+@Route(path = "/journalism/journalism/list")
 public class JournalismListFragment extends BaseSupportFragment {
 
     private View mView;

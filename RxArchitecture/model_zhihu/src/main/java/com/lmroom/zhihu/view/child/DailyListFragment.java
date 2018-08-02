@@ -18,7 +18,7 @@ import com.lmroom.baselib.base.BaseSupportFragment;
 import com.lmroom.baselib.util.GlideImageLoader;
 import com.lmroom.zhihu.R;
 import com.lmroom.zhihu.bean.DailyListBean;
-import com.lmroom.zhihu.event.ZhiHuEvent;
+import com.lmroom.baselib.eventbus.ZhiHuEvent;
 import com.lmroom.zhihu.util.ZhiHuRxHelp;
 import com.lmroom.zhihu.viewmodel.ZhiHuViewModel;
 import com.youth.banner.Banner;

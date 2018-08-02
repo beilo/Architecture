@@ -11,7 +11,7 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/zhihu_colorAccent"/>
+        android:background="@color/base_colorAccent"/>
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:contentScrim="@color/zhihu_colorAccent"
+                app:contentScrim="@color/base_colorAccent"
                 android:textColorPrimary="@android:color/white"
                 app:toolbarId="@+id/toolbar"
                 >
@@ -41,7 +41,7 @@
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
-                    style="@style/ZhiHu_ToolBarStyle"
+                    style="@style/Base_ToolBarStyle"
                     android:background="@null"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"

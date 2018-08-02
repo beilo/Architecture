@@ -7,16 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.lmroom.baselib.base.BaseSupportFragment;
 import com.lmroom.gank.R;
-import com.lmroom.gank.event.GankEvent;
+import com.lmroom.baselib.eventbus.GankEvent;
 import com.lmroom.gank.view.GankTabFragment;
-import com.lmroom.gank.view.GirlDetailFragment;
-import com.lmroom.gank.view.TechDetailFragment;
 
 import org.greenrobot.eventbus.Subscribe;
 
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
+import me.yokeyword.fragmentation.ISupportFragment;
 
 @Route(path = "/gank/main")
 public class GankMainFragment extends BaseSupportFragment {
@@ -54,12 +54,21 @@ public class GankMainFragment extends BaseSupportFragment {
 
     @Subscribe
     public void startDailyDetailFragment(GankEvent.StartTechDetailEvent event) { // 第二种:子fg和父fg通信的方式
-        start(TechDetailFragment.newInstance(event.getUrl()));
+        Object dailyDetail = ARouter.getInstance()
+                .build("/gank/tech/detail")
+                .withString("url", event.getUrl())
+                .navigation();
+        start((ISupportFragment) dailyDetail);
     }
 
     @Subscribe
     public void startGirlDetailFragment(GankEvent.StartGirlDetailEvent event) {
-        start(GirlDetailFragment.newInstance(event.getId(), event.getUrl()));
+        Object girlDetail = ARouter.getInstance()
+                .build("/gank/girl/detail")
+                .withString("gank_girl_id", event.getId())
+                .withString("gank_girl_url", event.getUrl())
+                .navigation();
+        start((ISupportFragment) girlDetail);
     }
 
 }

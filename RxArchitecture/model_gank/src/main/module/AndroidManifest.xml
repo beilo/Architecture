@@ -6,7 +6,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Gank_AppTheme">
+        android:theme="@style/Base_AppTheme">
         <activity android:name="debug.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

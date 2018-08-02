@@ -17,7 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lmroom.baselib.base.BaseSupportFragment;
 import com.lmroom.zhihu.R;
 import com.lmroom.zhihu.bean.HotListBean;
-import com.lmroom.zhihu.event.ZhiHuEvent;
+import com.lmroom.baselib.eventbus.ZhiHuEvent;
 import com.lmroom.zhihu.util.ZhiHuRxHelp;
 import com.lmroom.zhihu.viewmodel.ZhiHuViewModel;
 

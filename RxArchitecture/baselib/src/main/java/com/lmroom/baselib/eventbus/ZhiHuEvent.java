@@ -1,4 +1,4 @@
-package com.lmroom.zhihu.event;
+package com.lmroom.baselib.eventbus;
 
 public class ZhiHuEvent {
     public static class StartDetailEvent{

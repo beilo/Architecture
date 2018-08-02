@@ -14,7 +14,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.lmroom.baselib.base.BaseApplication;
 import com.lmroom.baselib.base.BaseSupportFragment;
 import com.lmroom.gank.R;
@@ -31,18 +33,14 @@ public class TechDetailFragment extends BaseSupportFragment {
     Toolbar toolbar;
     WebView webContainer;
 
-    public static TechDetailFragment newInstance(String url) {
-        Bundle bundle = new Bundle();
-        bundle.putString(URL, url);
-        TechDetailFragment fragment = new TechDetailFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
+    @Autowired
+    String url;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         _mView = inflater.inflate(R.layout.gank_fragment_tech_detail, container, false);
+        ARouter.getInstance().inject(this);
         return _mView;
     }
 
@@ -57,7 +55,7 @@ public class TechDetailFragment extends BaseSupportFragment {
     private void initView() {
         setToolbar(toolbar, "Android Detail");
         initWebView();
-        webContainer.loadUrl(getArguments().getString(URL));
+        webContainer.loadUrl(url);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -22,7 +22,7 @@ import com.lmroom.baselib.base.BaseApplication;
 import com.lmroom.baselib.base.BaseSupportFragment;
 import com.lmroom.gank.R;
 import com.lmroom.gank.bean.GankItemBean;
-import com.lmroom.gank.event.GankEvent;
+import com.lmroom.baselib.eventbus.GankEvent;
 import com.lmroom.gank.util.GankRxHelp;
 import com.lmroom.gank.viewmodel.GankViewModel;
 

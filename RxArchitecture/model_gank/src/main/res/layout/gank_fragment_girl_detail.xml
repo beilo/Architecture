@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <include layout="@layout/gank_view_toolbar"/>
+    <include layout="@layout/base_view_toolbar"/>
 
     <ImageView
         android:layout_margin="20dp"

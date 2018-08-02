@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.lmroom.baselib.base.BaseSupportFragment;
 import com.lmroom.gank.R;
-import com.lmroom.gank.event.GankEvent;
+import com.lmroom.baselib.eventbus.GankEvent;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

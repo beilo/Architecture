@@ -18,7 +18,9 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.lmroom.baselib.base.BaseApplication;
 import com.lmroom.baselib.base.BaseSupportFragment;
@@ -36,8 +38,6 @@ import io.reactivex.functions.Consumer;
  */
 @Route(path = "/zhihu/detail")
 public class ZhiHuDetailFragment extends BaseSupportFragment {
-    private static final String ID = "id";
-
     ZhiHuViewModel mZhihuViewModel;
 
     private View _mView;
@@ -45,18 +45,14 @@ public class ZhiHuDetailFragment extends BaseSupportFragment {
     WebView mWebContainer;
     Toolbar toolbar;
 
-    public static ZhiHuDetailFragment newInstance(int id) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(ID, id);
-        ZhiHuDetailFragment fragment = new ZhiHuDetailFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
+    @Autowired
+    int id;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         _mView = inflater.inflate(R.layout.zhihu_fragment_daily_detail, container, false);
+        ARouter.getInstance().inject(this);
         mZhihuViewModel = ViewModelProviders.of(this).get(ZhiHuViewModel.class);
         return _mView;
     }
@@ -119,7 +115,7 @@ public class ZhiHuDetailFragment extends BaseSupportFragment {
         super.onLazyInitView(savedInstanceState);
         mDisposable
                 .add(mZhihuViewModel
-                        .getDetailInfo(getArguments().getInt(ID))
+                        .getDetailInfo(id)
                         .compose(ZhiHuRxHelp.<ZhihuDetailBean>rxScheduler())
                         .subscribe(new Consumer<ZhihuDetailBean>() {
                             @Override
