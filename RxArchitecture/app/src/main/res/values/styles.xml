@@ -15,13 +15,14 @@
     </style>
 
 
-    <style name="ToolBarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+    <style name="ToolBarStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:background">@color/colorAccent</item>
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textSize">14sp</item>
 
         <item name="android:popupTheme">@style/ToolbarPopupTheme</item>
         <item name="android:actionMenuTextAppearance">@style/ToolbarMenuTextSize</item>
+        <item name="android:theme">@style/Theme.ToolBar.ZhiHu</item>
     </style>
     
     <style name="ToolbarMenuTextSize" parent="TextAppearance.AppCompat.Menu">
@@ -32,5 +33,13 @@
     <!-- toolbar弹出菜单样式 -->
     <style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat">
         <item name="android:colorBackground">#212121</item>
+    </style>
+
+    <!--右边三个点的样式-->
+    <style name="Theme.ToolBar.ZhiHu" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="actionOverflowButtonStyle">@style/ActionButton.Overflow.ZhiHu</item>
+    </style>
+    <style name="ActionButton.Overflow.ZhiHu" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_action_overflow</item>
     </style>
 </resources>
