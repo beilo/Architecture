@@ -3,12 +3,10 @@ package com.minister.architecture.di.model;
 import android.content.Context;
 import android.net.ConnectivityManager;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.minister.architecture.BuildConfig;
 import com.minister.architecture.app.MyApp;
 import com.minister.architecture.model.bean.DaoSession;
 import com.minister.architecture.model.http.GankApi;
-import com.minister.architecture.model.http.WeatherApi;
 import com.minister.architecture.model.http.ZhihuApis;
 import com.orhanobut.logger.Logger;
 
@@ -31,8 +29,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * HTTP 请求model,包含了ViewModel
+/** HTTP 请求model,包含了ViewModel
  * Created by leipe on 2017/8/24.
  */
 
@@ -41,17 +38,9 @@ public class HttpModel {
 
     @Singleton
     @Provides
-    public DaoSession providesDaoSession(MyApp app) {
+    public DaoSession providesDaoSession(MyApp app){
         return app.getDaoSession();
     }
-
-
-    @Singleton
-    @Provides
-    public WeatherApi providesWeatherApi(Retrofit.Builder builder, OkHttpClient client) {
-        return createRetrofit(builder, client, WeatherApi.HOST).create(WeatherApi.class);
-    }
-
 
     @Singleton
     @Provides
@@ -130,7 +119,7 @@ public class HttpModel {
     @Singleton
     @Provides
     public OkHttpClient.Builder providesOkHttpClientBuilder() {
-        return new OkHttpClient.Builder().addNetworkInterceptor(new StethoInterceptor());
+        return new OkHttpClient.Builder();
     }
 
     private Retrofit createRetrofit(Retrofit.Builder builder, OkHttpClient client, String url) {

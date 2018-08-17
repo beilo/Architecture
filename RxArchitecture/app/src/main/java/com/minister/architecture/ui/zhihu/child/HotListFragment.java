@@ -3,7 +3,6 @@ package com.minister.architecture.ui.zhihu.child;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,8 +19,8 @@ import com.minister.architecture.base.BaseSupportFragment;
 import com.minister.architecture.model.bean.HotListBean;
 import com.minister.architecture.ui.MainFragment;
 import com.minister.architecture.ui.zhihu.ZhiHuDetailFragment;
-import com.minister.architecture.util.RxHelp;
 import com.minister.architecture.viewmodel.ZhiHuViewModel;
+import com.minister.architecture.util.RxHelp;
 
 import java.util.ArrayList;
 
@@ -29,6 +28,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
 /**

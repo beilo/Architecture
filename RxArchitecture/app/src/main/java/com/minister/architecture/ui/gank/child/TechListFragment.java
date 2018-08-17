@@ -3,7 +3,6 @@ package com.minister.architecture.ui.gank.child;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.ArrayMap;
@@ -23,9 +22,9 @@ import com.minister.architecture.R;
 import com.minister.architecture.base.BaseSupportFragment;
 import com.minister.architecture.model.bean.GankItemBean;
 import com.minister.architecture.ui.MainFragment;
+import com.minister.architecture.viewmodel.GankViewModel;
 import com.minister.architecture.ui.gank.TechDetailFragment;
 import com.minister.architecture.util.RxHelp;
-import com.minister.architecture.viewmodel.GankViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +34,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Flowable;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 

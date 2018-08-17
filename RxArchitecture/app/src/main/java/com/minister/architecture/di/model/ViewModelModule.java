@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import com.minister.architecture.di.ViewModelKey;
 import com.minister.architecture.viewmodel.GankViewModel;
-import com.minister.architecture.viewmodel.WeatherViewModel;
 import com.minister.architecture.viewmodel.ZhiHuViewModel;
 import com.minister.architecture.viewmodel.GithubViewModelFactory;
 
@@ -24,11 +23,6 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ZhiHuViewModel.class)
     abstract ViewModel bindZhihuViewModel(ZhiHuViewModel zhiHuViewModel);
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(WeatherViewModel.class)
-    abstract ViewModel bindWeatherViewModel(WeatherViewModel weatherViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(GithubViewModelFactory factory);

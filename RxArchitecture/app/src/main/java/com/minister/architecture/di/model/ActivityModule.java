@@ -1,9 +1,8 @@
 package com.minister.architecture.di.model;
 
 
-import com.minister.architecture.ui.activity.AlarmClockActivity;
-import com.minister.architecture.ui.activity.MainActivity;
-import com.minister.architecture.ui.activity.WelcomeActivity;
+import com.minister.architecture.MainActivity;
+import com.minister.architecture.ui.WelcomeActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -19,8 +18,5 @@ public abstract class ActivityModule {
 
     @ContributesAndroidInjector
     abstract WelcomeActivity contributeWelcomeActivity();
-
-    @ContributesAndroidInjector(modules = FragmentModule.class)
-    abstract AlarmClockActivity contributeAlarmClockActivity();
 
 }

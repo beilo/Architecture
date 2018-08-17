@@ -1,7 +1,6 @@
 package com.minister.architecture.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
-import android.support.annotation.NonNull;
 
 import com.minister.architecture.model.bean.DaoSession;
 import com.minister.architecture.model.bean.GankItemBean;
@@ -22,6 +21,7 @@ import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.FlowableTransformer;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.subscribers.DefaultSubscriber;

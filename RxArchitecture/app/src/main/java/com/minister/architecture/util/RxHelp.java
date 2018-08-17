@@ -1,7 +1,5 @@
 package com.minister.architecture.util;
 
-import android.support.annotation.NonNull;
-
 import com.minister.architecture.model.http.result.GankHttpResponse;
 
 import org.reactivestreams.Publisher;
@@ -12,6 +10,7 @@ import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.FlowableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 

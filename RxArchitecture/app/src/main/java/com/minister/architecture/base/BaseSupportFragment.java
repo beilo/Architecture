@@ -54,16 +54,16 @@ public class BaseSupportFragment extends SupportFragment
         }
     }
 
-    protected void setToolbar(Toolbar toolbar, String title, @DrawableRes int navIconId) {
-        if (navIconId != 0) {
+    protected void setToolbar(Toolbar toolbar, String title , @DrawableRes int navIconId){
+        if(navIconId != 0){
             toolbar.setNavigationIcon(navIconId);
         }
         toolbar.setTitle(title);
         toolbar.setTitleTextColor(ResourcesUtil.getColor(_mActivity, R.color.white));
     }
 
-    protected void setToolbar(Toolbar toolbar, String title) {
-        setToolbar(toolbar, title, R.drawable.ic_back);
+    protected void setToolbar(Toolbar toolbar, String title){
+        setToolbar(toolbar,title,R.drawable.ic_back);
     }
 
     private boolean isImmersionBarEnabled() {
@@ -81,19 +81,26 @@ public class BaseSupportFragment extends SupportFragment
     @Override
     public void onStop() {
         super.onStop();
+        if (mDisposable != null) {
+            mDisposable.clear();
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mDisposable != null)
-            mDisposable.clear();
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         if (mImmersionBar != null)
             mImmersionBar.destroy();
-        if (unbinder != null)
-            unbinder.unbind();
-
     }
+
 
     // lifecycle
     LifecycleRegistry mLifecycleRegistry = new LifecycleRegistry(this);
