@@ -1,11 +1,13 @@
 package com.lmroom.gank.view.child;
 
+import android.graphics.Bitmap;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lmroom.baselib.base.BaseApplication;
@@ -13,6 +15,8 @@ import com.lmroom.baselib.widget.ScaleImageView;
 import com.lmroom.gank.R;
 import com.lmroom.gank.bean.GankItemBean;
 
+import java.lang.ref.WeakReference;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -21,7 +25,6 @@ import java.util.List;
 
 public class GirlAdapter extends BaseQuickAdapter<GankItemBean, BaseViewHolder> {
 
-    public static int LOAD_MORE_ITEM_TYPE = 1;
 
     public GirlAdapter(@LayoutRes int layoutResId, @Nullable List<GankItemBean> data) {
         super(layoutResId, data);
@@ -41,17 +44,35 @@ public class GirlAdapter extends BaseQuickAdapter<GankItemBean, BaseViewHolder> 
     }
 
     @Override
-    protected void convert(final BaseViewHolder helper, GankItemBean item) {
-        ScaleImageView imageView = helper.getView(R.id.imageView);
-        ViewCompat.setTransitionName(imageView, String.valueOf(helper.getAdapterPosition()) + "_image");
-        imageView.setInitSize(BaseApplication.SCREEN_WIDTH / 2, item.getHeight());
-        if (item.getHeight() > 0) {
-            Glide
-                    .with(mContext)
-                    .load(item.getUrl())
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .crossFade()
-                    .into(imageView);
+    protected void convert(final BaseViewHolder helper, final GankItemBean item) {
+        final ScaleImageView imageView = helper.getView(R.id.imageView);
+        Glide
+                .with(mContext)
+                .load(item.getUrl())
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade()
+                .listener(new RequestListener<String, Bitmap>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        imageCache.put(item.get_id(), new WeakReference<>(resource));
+                        return false;
+                    }
+                })
+                .into(imageView);
+    }
+
+    private HashMap<String, WeakReference<Bitmap>> imageCache = new HashMap<>();
+
+    public Bitmap getImageCache(String key) {
+        if (key == null || imageCache == null || imageCache.get(key) == null) {
+            return null;
         }
+        return imageCache.get(key).get();
     }
 }
