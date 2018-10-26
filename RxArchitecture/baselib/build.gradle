@@ -38,71 +38,68 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.jar'], dir: 'libs')
     // view
-    compile Libs.support_appcompat_v7
-    compile Libs.support_cardview
-    compile Libs.support_recyclerview
-    compile Libs.support_design
-    compile Libs.support_support_v4
-    compile Libs.support_constraint_layout
+    api Libs.support_appcompat_v7
+    api Libs.support_cardview
+    api Libs.support_recyclerview
+    api Libs.support_design
+    api Libs.support_support_v4
+    api Libs.support_constraint_layout
 
     // lifecycle
     // https://github.com/rebeccahughes/react-native-device-info/issues/414
-    compile Libs.arch_lifecycle_runtime
-    compile Libs.arch_lifecycle_extensions
+    api Libs.arch_lifecycle_runtime
+    api Libs.arch_lifecycle_extensions
     annotationProcessor Libs.arch_lifecycle_compiler
 
     // glide
-    compile Libs.glide
+    api Libs.glide
     // 沉浸式状态栏和沉浸式导航栏管理
-    compile Libs.barlibrary
+    api Libs.barlibrary
     // fragmentation
-    compile Libs.fragmentation
+    api Libs.fragmentation
     // baseAdapter
-    compile Libs.baseRecyclerViewAdapterHelper
+    api Libs.baseRecyclerViewAdapterHelper
 //    // Butter Knife
-//    compile Libs.butterknife
+//    api Libs.butterknife
 //    annotationProcessor Libs.butterknife_compiler
     // RxJava
-    compile Libs.rxandroid
-    compile Libs.rxjava
-    compile Libs.rxPermission
+    api Libs.rxandroid
+    api Libs.rxjava
+    api Libs.rxPermission
     // greendao
-    compile Libs.greendao
+    api Libs.greendao
     // newWork
-    compile Libs.retrofit
-    compile Libs.retrofit_converter_gson
-    compile Libs.retrofit_adapter_rxjava2
+    api Libs.retrofit
+    api Libs.retrofit_converter_gson
+    api Libs.retrofit_adapter_rxjava2
 
-    compile Libs.okhttp3_interceptor
-    compile Libs.okhttp3
-    compile Libs.stetho
-    compile Libs.stetho_okhttp3
+    api Libs.okhttp3_interceptor
+    api Libs.okhttp3
+    api Libs.stetho
+    api Libs.stetho_okhttp3
     // logger
-    compile Libs.logger
+    api Libs.logger
     // banner
-    compile Libs.banner
+    api Libs.banner
 
-    compile Libs.eventbus_activity_scope
-    compile Libs.eventbus
+    api Libs.eventbus_activity_scope
+    api Libs.eventbus
 
-    compile Libs.bugly_crashreport //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
-    compile Libs.bugly_nativecrashreport //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
-//    compile Libs.javax_inject
-    // 讯飞语音
-    compile files('libs/Msc.jar')
+    api Libs.bugly_crashreport //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    api Libs.bugly_nativecrashreport //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
     // ARouter
-    compile Libs.arouter_api
-    compile Libs.arouter_annotation
+    api Libs.arouter_api
+    api Libs.arouter_annotation
     annotationProcessor Libs.arouter_compiler
 
-    testCompile Libs.test_junit
-    testCompile Libs.test_mockito_core
-    testCompile Libs.robolectric
-    testCompile Libs.robolectric_shadows_support_v4
-    testCompile Libs.okhttp3_mockwebserver
-    testCompile (Libs.core_testing, {
+    testImplementation Libs.test_junit
+    testImplementation Libs.test_mockito_core
+    testImplementation Libs.robolectric
+    testImplementation Libs.robolectric_shadows_support_v4
+    testImplementation Libs.okhttp3_mockwebserver
+    testImplementation (Libs.core_testing, {
         exclude group: 'com.android.support', module: 'support-compat'
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.android.support', module: 'support-core-utils'
