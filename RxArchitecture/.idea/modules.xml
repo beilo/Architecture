@@ -4,7 +4,11 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/RxArchitecture.iml" filepath="$PROJECT_DIR$/RxArchitecture.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/baselib/baselib.iml" filepath="$PROJECT_DIR$/baselib/baselib.iml" />
       <module fileurl="file://$PROJECT_DIR$/buildSrc/buildSrc.iml" filepath="$PROJECT_DIR$/buildSrc/buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model_gank/model_gank.iml" filepath="$PROJECT_DIR$/model_gank/model_gank.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model_journalism/model_journalism.iml" filepath="$PROJECT_DIR$/model_journalism/model_journalism.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model_zhihu/model_zhihu.iml" filepath="$PROJECT_DIR$/model_zhihu/model_zhihu.iml" />
     </modules>
   </component>
 </project>

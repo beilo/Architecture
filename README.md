@@ -33,6 +33,9 @@
 - [x] toolbar代码的编写
 - [x] 图片瀑布流滑动造成混乱
 - [x] RxHelper.rxSchedulerHelper 从VM层迁移到V层.这不应该属于VM管理
-- [ ] 去除dogger2 (待定)
+- [x] 去除dogger2
+- [x] 组件化第一步完成
+- [x] flutter初步了解  
+- [x] 新增了新闻模块 
 - [ ] repository的完善,增加SQLite本地缓存
 - [ ] 更多的功能

@@ -1,0 +1,107 @@
+apply plugin: 'com.android.library'
+apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'com.alibaba.arouter'
+
+android {
+    compileSdkVersion Versions.compileSdkVersion
+    buildToolsVersion Versions.buildToolsVersion
+
+
+    defaultConfig {
+        minSdkVersion Versions.minSdkVersion
+        targetSdkVersion Versions.targetSdkVersion
+        versionCode Versions.versionCode
+        versionName Versions.versionName
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    // view
+    api Libs.support_appcompat_v7
+    api Libs.support_cardview
+    api Libs.support_recyclerview
+    api Libs.support_design
+    api Libs.support_support_v4
+    api Libs.support_constraint_layout
+
+    // lifecycle
+    // https://github.com/rebeccahughes/react-native-device-info/issues/414
+    api Libs.arch_lifecycle_runtime
+    api Libs.arch_lifecycle_extensions
+    annotationProcessor Libs.arch_lifecycle_compiler
+
+    // glide
+    api Libs.glide
+    // 沉浸式状态栏和沉浸式导航栏管理
+    api Libs.barlibrary
+    // fragmentation
+    api Libs.fragmentation
+    // baseAdapter
+    api Libs.baseRecyclerViewAdapterHelper
+//    // Butter Knife
+//    api Libs.butterknife
+//    annotationProcessor Libs.butterknife_compiler
+    // RxJava
+    api Libs.rxandroid
+    api Libs.rxjava
+    api Libs.rxPermission
+    // greendao
+    api Libs.greendao
+    // newWork
+    api Libs.retrofit
+    api Libs.retrofit_converter_gson
+    api Libs.retrofit_adapter_rxjava2
+
+    api Libs.okhttp3_interceptor
+    api Libs.okhttp3
+    api Libs.stetho
+    api Libs.stetho_okhttp3
+    // logger
+    api Libs.logger
+    // banner
+    api Libs.banner
+
+    api Libs.eventbus_activity_scope
+    api Libs.eventbus
+
+    api Libs.bugly_crashreport //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    api Libs.bugly_nativecrashreport //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+    // ARouter
+    api Libs.arouter_api
+    api Libs.arouter_annotation
+    annotationProcessor Libs.arouter_compiler
+
+    testImplementation Libs.test_junit
+    testImplementation Libs.test_mockito_core
+    testImplementation Libs.robolectric
+    testImplementation Libs.robolectric_shadows_support_v4
+    testImplementation Libs.okhttp3_mockwebserver
+    testImplementation (Libs.core_testing, {
+        exclude group: 'com.android.support', module: 'support-compat'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support', module: 'support-core-utils'
+    })
+}

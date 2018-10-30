@@ -1,9 +1,8 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion Versions.compileSdkVersion
-    buildToolsVersion Versions.buildToolsVersion
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId Versions.applicationId
         minSdkVersion Versions.minSdkVersion
@@ -20,7 +19,7 @@ android {
 
         ndk {
             // 设置支持的SO库架构
-            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
     }
     buildTypes {
@@ -40,73 +39,12 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    // view
-    compile Libs.support_appcompat_v7
-    compile Libs.support_cardview
-    compile Libs.support_recyclerview
-    compile Libs.support_design
-    compile Libs.support_support_v4
-    compile Libs.support_constraint_layout
-    // glide
-    compile Libs.glide
-    // 沉浸式状态栏和沉浸式导航栏管理
-    compile Libs.barlibrary
-    // lifecycle
-    compile Libs.arch_lifecycle_runtime
-    compile Libs.arch_lifecycle_extensions
-    annotationProcessor Libs.arch_lifecycle_compiler
-    // fragmentation
-    compile Libs.fragmentation
-    // baseAdapter
-    compile Libs.baseRecyclerViewAdapterHelper
-    // dagger-android
-    compile Libs.dagger
-    compile Libs.dagger_android
-    compile Libs.dagger_android_support
-    // if you use the support libraries
-    annotationProcessor Libs.dagger_android_processor
-    annotationProcessor Libs.dagger_compiler
-    // Butter Knife
-    compile Libs.butterknife
-    annotationProcessor Libs.butterknife_compiler
-    // RxJava
-    compile Libs.rxandroid
-    compile Libs.rxjava
-    compile Libs.rxPermission
-    // greendao
-    compile Libs.greendao
-    // newWork
-    compile Libs.retrofit
-    compile Libs.retrofit_converter_gson
-    compile Libs.retrofit_adapter_rxjava2
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':baselib')
+    if (!isModule.toBoolean()) {
+        implementation project(':model_zhihu')
+        implementation project(':model_gank')
+        implementation project(':model_journalism')
+    }
 
-    compile Libs.okhttp3_interceptor
-    compile Libs.okhttp3
-    compile Libs.stetho
-    compile Libs.stetho_okhttp3
-    // logger
-    compile Libs.logger
-    // banner
-    compile Libs.banner
-
-    compile Libs.eventbus_activity_scope
-    compile Libs.eventbus
-
-    compile Libs.bugly_crashreport //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
-    compile Libs.bugly_nativecrashreport //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
-    // 讯飞语音
-    compile files('libs/Msc.jar')
-
-    testCompile Libs.test_junit
-    testCompile Libs.test_mockito_core
-    testCompile Libs.daggermock
-    testCompile Libs.robolectric
-    testCompile Libs.robolectric_shadows_support_v4
-    testCompile Libs.okhttp3_mockwebserver
-    testCompile (Libs.core_testing, {
-        exclude group: 'com.android.support', module: 'support-compat'
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude group: 'com.android.support', module: 'support-core-utils'
-    })
 }

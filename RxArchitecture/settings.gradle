@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':baselib', ':model_zhihu', ':model_gank', ':model_gank', ':model_journalism'

@@ -1,0 +1,35 @@
+http://flutter.icopy.site/
+
+flutter doctor
+
+Flutter由两个插件支持：
+Flutter 插件支持Flutter开发人员工作流程（运行，调试，热重载等）。
+Dart 插件提供了代码分析（代码验证，键入代码，完成代码等）。
+
+
+Flutter带有一套强大的基本小部件，其中以下是非常常用的：
+Text ：“ Text小部件可让您在应用程序中创建一组样式文本。
+Row ， Column ：这些柔性小部件可让您在水平（ Row ）和垂直（ Column ）方向上创建灵活的布局。 其设计基于网络的Flexbox布局模型。
+Stack ： Stack （ Stack小部件不是以线性方式（水平或垂直方向）进行Stack ，而是使用堆叠顺序将小部件堆叠在彼此之上。 然后，您可以在Stack子项上使用Positioned小部件，以相对于Stack的顶部，右侧，底部或左侧边缘定位它们。 堆栈基于Web的绝对定位布局模型。
+Container ：“ Container小部件可让您创建矩形视觉元素。 一个容器可以装饰一个BoxDecoration ，比如背景，边框或阴影。 Container也可以有边距，填充和约束应用于其大小。 另外， Container可以使用矩阵在三维空间中转换。
+
+
+一次性生成
+flutter packages pub run build_runner build
+持续生成
+flutter packages pub run build_runner watch
+
+杀死flutter 进程
+ps dart | kill
+
+get
+flutter packages get
+
+upgrade
+flutter packages upgrade
+
+更新flutter
+flutter upgrade
+
+查看分支
+flutter channel

@@ -5,20 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
+import com.lmroom.baselib.base.BaseSupportActivity;
 import com.minister.architecture.R;
-import com.minister.architecture.base.BaseSupportActivity;
-import com.minister.architecture.model.bean.AlarmClock;
 import com.minister.architecture.ui.MainFragment;
-import com.minister.architecture.util.ACache;
-import com.minister.architecture.util.GsonUtil;
-import com.minister.architecture.util.MyUtil;
-
-import java.util.List;
 
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
-import static com.minister.architecture.ui.weather.WeacConstants.ALARM_CLOCK;
 
 public class MainActivity extends BaseSupportActivity {
 
@@ -34,8 +27,6 @@ public class MainActivity extends BaseSupportActivity {
             loadRootFragment(R.id.fl_container,
                     MainFragment.newInstance());
         }
-
-        getAlarmClocks();
     }
 
     @Override
@@ -75,16 +66,4 @@ public class MainActivity extends BaseSupportActivity {
         Glide.get(this).clearMemory();
     }
 
-    /**
-     * 获取全部闹钟并且启动闹钟
-     */
-    private void getAlarmClocks() {
-        String string = ACache.get(this).getAsString(ALARM_CLOCK);
-        List<AlarmClock> alarmClocks = GsonUtil.GsonToList(string,AlarmClock.class);
-        if (alarmClocks != null) {
-            for (AlarmClock item : alarmClocks) {
-                MyUtil.startAlarmClock(this, item);
-            }
-        }
-    }
 }
