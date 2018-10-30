@@ -4,15 +4,15 @@ object Versions {
     val applicationId_xinwen = "com.minister.architecture.xinwen"
     val applicationId_gank = "com.minister.architecture.gank"
 
-    val compileSdkVersion = 26
-    val buildToolsVersion = "26.0.2"
+    val compileSdkVersion = 28
+    val buildToolsVersion = "28.0.0-alpha1"
 
     val minSdkVersion = 22
-    val targetSdkVersion = 26
+    val targetSdkVersion = 28
     val versionCode = 1
     val versionName = "1.0"
 
-    val support_lib = "26.1.0"
+    val support_lib = "28.0.0-alpha1"
     val constraint_layout = "1.1.1"
     val lifecycle_lib = "1.1.1"
     val fragmentation = "1.3.3"
@@ -28,7 +28,7 @@ object Versions {
     val stetho_lib = "1.5.0"
     val logger = "2.1.1"
     val banner = "1.4.10"
-    val eventbus = "3.0.0"
+    val eventbus = "3.1.1"
     val eventbus_activity_scope = "1.0.0"
 
     val test_junit = "4.12"
